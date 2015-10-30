@@ -1,0 +1,6 @@
+Change Component Designator: OldDesignator=C? NewDesignator=C1
+Change Component Designator: OldDesignator=C? NewDesignator=C2
+Added Pin To Net: NetName=GND Pin=C1-1
+Added Pin To Net: NetName=PA1 Pin=C1-2
+Added Pin To Net: NetName=NetJP1_17 Pin=JP1-17
+Added Member To Class: ClassName=FAT42 Member=Component C2 10pF

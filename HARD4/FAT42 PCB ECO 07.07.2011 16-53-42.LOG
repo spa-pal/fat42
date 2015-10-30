@@ -1,0 +1,6 @@
+Added Component: Designator=J1(jmp)
+Added Component: Designator=J2(jmp)
+Added Pin To Net: NetName=GND Pin=J1-1
+Added Pin To Net: NetName=GND Pin=J2-1
+Added Member To Class: ClassName=FAT42 Member=Component J1 
+Added Member To Class: ClassName=FAT42 Member=Component J2 

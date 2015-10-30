@@ -1,0 +1,36 @@
+Added Component: Designator=R44(_1206)
+Added Component: Designator=R48(_1206)
+Added Component: Designator=R50(_1206)
+Added Component: Designator=R?(_1206)
+Added Component: Designator=U10(tlp115)
+Added Component: Designator=U13(tlp115)
+Change Net Name : Old Net Name=Net1_1 New Net Name=Net3_1
+Change Net Name : Old Net Name=Net3_1 New Net Name=Net1_1
+Change Net Name : Old Net Name=NetU2_3 New Net Name=NetR50_1
+Added Pin To Net: NetName=NetR44_1 Pin=R44-1
+Added Pin To Net: NetName=NetR44_1 Pin=U10-1
+Added Net: Name=NetR44_1
+Added Pin To Net: NetName=NetR50_2 Pin=R50-2
+Added Pin To Net: NetName=NetR50_2 Pin=U13-1
+Added Net: Name=NetR50_2
+Added Pin To Net: NetName=NetR?_1 Pin=R?-1
+Added Pin To Net: NetName=NetR?_1 Pin=U2-1
+Added Pin To Net: NetName=NetR?_1 Pin=U10-5
+Added Net: Name=NetR?_1
+Added Pin To Net: NetName=NetU2_4 Pin=U2-4
+Added Pin To Net: NetName=NetU2_4 Pin=U13-3
+Added Net: Name=NetU2_4
+Added Pin To Net: NetName=+5V Pin=R44-2
+Added Pin To Net: NetName=PG1 Pin=R48-1
+Added Pin To Net: NetName=+5V Pin=R48-2
+Added Pin To Net: NetName=PG0 Pin=U10-3
+Added Pin To Net: NetName=Net1_1 Pin=U10-4
+Added Pin To Net: NetName=GND Pin=U13-4
+Added Pin To Net: NetName=PG1 Pin=U13-5
+Added Pin To Net: NetName=+5V Pin=U13-6
+Added Member To Class: ClassName=FAT42 Member=Component R44 Res2
+Added Member To Class: ClassName=FAT42 Member=Component R48 Res2
+Added Member To Class: ClassName=FAT42 Member=Component R50 Res2
+Added Member To Class: ClassName=FAT42 Member=Component R? Res2
+Added Member To Class: ClassName=FAT42 Member=Component U10 TLP115
+Added Member To Class: ClassName=FAT42 Member=Component U13 TLP115

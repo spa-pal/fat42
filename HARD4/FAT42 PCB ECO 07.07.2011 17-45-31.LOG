@@ -1,0 +1,4 @@
+Added Component: Designator=C17(_1206)
+Change Net Name : Old Net Name=NetC?_2 New Net Name=NetC17_2
+Added Pin To Net: NetName=GND Pin=C17-1
+Added Member To Class: ClassName=FAT42 Member=Component C17 1.0

@@ -1,0 +1,9 @@
+Added Component: Designator=JP3(HDR1X2)
+Added Component: Designator=U4(SO-G5/P.95)
+Added Pin To Net: NetName=NetJP3_2 Pin=JP3-2
+Added Pin To Net: NetName=NetJP3_2 Pin=U4-1
+Added Net: Name=NetJP3_2
+Added Pin To Net: NetName=GND Pin=U4-2
+Added Pin To Net: NetName=+5V Pin=U4-5
+Added Member To Class: ClassName=FAT42 Member=Component JP3 PLS2
+Added Member To Class: ClassName=FAT42 Member=Component U4 TPS3823

@@ -1,0 +1,5 @@
+Change Component Comment : Designator=R30 Old Comment=Res2 New Comment=1K0
+Change Component Comment : Designator=R31 Old Comment=Res2 New Comment=1K0
+Change Component Designator: OldDesignator=R30 NewDesignator=R5
+Change Component Designator: OldDesignator=R31 NewDesignator=R4
+Added Pin To Net: NetName=NetJP1_17 Pin=JP1-17

@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=PB7 Pin=U1-14
+Change Net Name : Old Net Name=PB7 New Net Name=PB0
+Added Pin To Net: NetName=NetJP1_17 Pin=JP1-17
+Added Member To Class: ClassName=FAT42 Member=Component R8 39K

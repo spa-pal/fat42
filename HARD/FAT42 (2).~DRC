@@ -1,0 +1,33 @@
+Protel Design System Design Rule Check
+PCB File : \Users\Pal\DEVICES\FAT42\HARD\FAT42.PcbDoc
+Date     : 05.07.2011
+Time     : 17:59:06
+
+Processing Rule : Hole Size Constraint (Min=0.0254mm) (Max=2.54mm) (All)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=0.254mm) (Max=2mm) (Preferred=0.254mm) (All)
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0.3mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Broken-Net Constraint ( (All) )
+   Violation         Net NetR2_2   is broken into 3 sub-nets. Routed To 0.00%
+     Subnet : R2-2          Subnet : R3-1          Subnet : U2-6        Violation         Net GND   is broken into 7 sub-nets. Routed To 0.00%
+     Subnet : JP1-1         Subnet : JP1-2         Subnet : R2-1          Subnet : U2-2          Subnet : R1-2          Subnet : JP2-5         Subnet : U2-8        Violation         Net +5V   is broken into 2 sub-nets. Routed To 0.00%
+     Subnet : JP2-1         Subnet : U2-3        Violation         Net NetR1_1   is broken into 3 sub-nets. Routed To 0.00%
+     Subnet : R3-2          Subnet : R1-1          Subnet : U2-7     Rule Violations :4
+
+Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0.2mm) (InComponent(U1) ),(All)
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0.5mm) (InPoly),(All)
+Rule Violations :0
+
+
+Violations Detected : 4
+Time Elapsed        : 00:00:00

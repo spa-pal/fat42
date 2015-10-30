@@ -1,0 +1,13 @@
+Added Component: Designator=JP1(HDR1X30)
+Added Component: Designator=JP2(HDR1X5_uart)
+Added Pin To Net: NetName=GND Pin=JP1-1
+Added Pin To Net: NetName=GND Pin=JP1-2
+Added Pin To Net: NetName=GND Pin=JP1-24
+Added Pin To Net: NetName=GND Pin=JP1-25
+Added Pin To Net: NetName=GND Pin=JP1-26
+Added Pin To Net: NetName=GND Pin=JP1-29
+Added Pin To Net: NetName=GND Pin=JP1-30
+Added Pin To Net: NetName=+5V Pin=JP2-1
+Added Pin To Net: NetName=GND Pin=JP2-5
+Added Member To Class: ClassName=FAT42 Member=Component JP1 Header 30
+Added Member To Class: ClassName=FAT42 Member=Component JP2 

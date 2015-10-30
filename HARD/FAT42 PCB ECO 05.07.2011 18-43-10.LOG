@@ -1,0 +1,18 @@
+Added Component: Designator=U1(QFP10X10-G44/G10N)
+Added Pin To Net: NetName=NetJP1_17 Pin=JP1-17
+Added Pin To Net: NetName=PA1 Pin=U1-2
+Added Pin To Net: NetName=PA2 Pin=U1-3
+Added Pin To Net: NetName=GND Pin=U1-4
+Added Pin To Net: NetName=GND Pin=U1-5
+Added Pin To Net: NetName=+5V Pin=U1-7
+Added Pin To Net: NetName=+5V Pin=U1-8
+Added Pin To Net: NetName=GND Pin=U1-13
+Added Pin To Net: NetName=PC1 Pin=U1-24
+Added Pin To Net: NetName=PC2 Pin=U1-25
+Added Pin To Net: NetName=PC3 Pin=U1-26
+Added Pin To Net: NetName=PC5 Pin=U1-27
+Added Pin To Net: NetName=GND Pin=U1-28
+Added Pin To Net: NetName=+5V Pin=U1-29
+Added Pin To Net: NetName=PG0 Pin=U1-32
+Added Pin To Net: NetName=PG1 Pin=U1-33
+Added Member To Class: ClassName=FAT42 Member=Component U1 

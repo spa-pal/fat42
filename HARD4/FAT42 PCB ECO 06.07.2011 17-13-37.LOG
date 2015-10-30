@@ -1,0 +1,6 @@
+Added Pin To Net: NetName=PD1 Pin=JP2-3
+Added Pin To Net: NetName=PD1 Pin=U1-38
+Added Net: Name=PD1
+Added Pin To Net: NetName=RST Pin=JP2-4
+Added Pin To Net: NetName=RST Pin=U1-1
+Added Net: Name=RST

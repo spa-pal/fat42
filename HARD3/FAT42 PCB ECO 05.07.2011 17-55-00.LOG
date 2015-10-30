@@ -1,0 +1,3 @@
+Added Component: Designator=JP1(HDR1X30)
+Added Component: Designator=JP?(HDR1X5_uart)
+Added Pin To Net: NetName=+5V Pin=U2-3

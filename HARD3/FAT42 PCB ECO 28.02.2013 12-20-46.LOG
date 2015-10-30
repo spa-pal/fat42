@@ -1,0 +1,6 @@
+Added Component: Designator=C19(el3)
+Change Net Name : Old Net Name=Net1_1 New Net Name=Net3_1
+Change Net Name : Old Net Name=Net3_1 New Net Name=Net1_1
+Added Pin To Net: NetName=+5V Pin=C19-1
+Added Pin To Net: NetName=GND Pin=C19-2
+Added Member To Class: ClassName=FAT42 Member=Component C19 22.0x50

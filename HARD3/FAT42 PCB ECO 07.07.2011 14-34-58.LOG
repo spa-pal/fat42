@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=PB5 Pin=U1-19
+Added Component: Designator=C12(_1206)
+Added Component: Designator=C13(_1206)
+Added Component: Designator=C14(_1206)
+Added Component: Designator=C15(_1206)
+Added Component: Designator=R16(_1206)
+Added Component: Designator=R17(_1206)
+Added Component: Designator=R18(_1206)
+Added Component: Designator=R19(_1206)
+Added Component: Designator=R20(_1206)
+Added Component: Designator=R21(_1206)
+Added Component: Designator=R22(_1206)
+Added Component: Designator=R23(_1206)
+Added Pin To Net: NetName=PB2 Pin=U1-19

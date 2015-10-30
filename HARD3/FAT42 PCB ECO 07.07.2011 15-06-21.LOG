@@ -1,0 +1,4 @@
+Added Pin To Net: NetName=IN4 Pin=JP1-10
+Added Pin To Net: NetName=IN4 Pin=R19-2
+Added Net: Name=IN4
+Added Pin To Net: NetName=IN3 Pin=JP1-11

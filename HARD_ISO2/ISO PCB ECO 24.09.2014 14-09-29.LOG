@@ -1,0 +1,35 @@
+Removed Pin From Net: NetName=RST Pin=JP3-1
+Removed Pin From Net: NetName=NetJP3_2 Pin=JP3-2
+Added Component: Designator=C1(C3216-1206)
+Added Component: Designator=C2(C3216-1206)
+Added Component: Designator=U1(SO-G16/D10.4)
+Added Component: Designator=X1(PIN1)
+Added Component: Designator=X2(PIN1)
+Added Component: Designator=X3(PIN1)
+Added Component: Designator=X4(PIN1)
+Added Component: Designator=X5(PIN1)
+Added Component: Designator=X6(PIN1)
+Added Component: Designator=X7(PIN1)
+Added Component: Designator=X8(PIN1)
+Change Net Name : Old Net Name=NetJP3_2 New Net Name=NetC1_1
+Change Net Name : Old Net Name=RST New Net Name=NetC2_1
+Added Pin To Net: NetName=NetU1_3 Pin=U1-3
+Added Pin To Net: NetName=NetU1_3 Pin=X4-1
+Added Net: Name=NetU1_3
+Added Pin To Net: NetName=NetU1_5 Pin=U1-5
+Added Pin To Net: NetName=NetU1_5 Pin=X3-1
+Added Net: Name=NetU1_5
+Added Pin To Net: NetName=NetU1_12 Pin=U1-12
+Added Pin To Net: NetName=NetU1_12 Pin=X8-1
+Added Net: Name=NetU1_12
+Added Pin To Net: NetName=NetU1_14 Pin=U1-14
+Added Pin To Net: NetName=NetU1_14 Pin=X7-1
+Added Net: Name=NetU1_14
+Added Pin To Net: NetName=NetC1_2 Pin=C1-2
+Added Pin To Net: NetName=NetC2_2 Pin=C2-2
+Added Pin To Net: NetName=NetC1_2 Pin=U1-1
+Added Pin To Net: NetName=NetC2_2 Pin=U1-16
+Added Pin To Net: NetName=NetC1_2 Pin=X1-1
+Added Pin To Net: NetName=NetC2_2 Pin=X5-1
+Added Class: Name=ISO
+Added Room: Name=ISO

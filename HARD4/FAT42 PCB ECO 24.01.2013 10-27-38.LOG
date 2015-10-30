@@ -1,0 +1,4 @@
+Change Component Comment : Designator=JP1 Old Comment=Header 30 New Comment=PLSR19
+Change Component Comment : Designator=U4 Old Comment=TPS3823 New Comment=TPS3823-50
+Change Net Name : Old Net Name=Net1_1 New Net Name=Net3_1
+Change Net Name : Old Net Name=Net3_1 New Net Name=Net1_1

@@ -1,0 +1,6 @@
+Change Component Comment : Designator=R48 Old Comment=Res2 New Comment=1K0
+Change Component Comment : Designator=R25 Old Comment=Res2 New Comment=1K0
+Change Component Comment : Designator=R50 Old Comment=Res2 New Comment=510R
+Change Component Comment : Designator=R44 Old Comment=Res2 New Comment=510R
+Change Net Name : Old Net Name=Net1_1 New Net Name=Net3_1
+Change Net Name : Old Net Name=Net3_1 New Net Name=Net1_1

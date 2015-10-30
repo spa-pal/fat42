@@ -1,0 +1,26 @@
+Added Component: Designator=C1(C3216-1206)
+Added Component: Designator=C2(C3216-1206)
+Added Component: Designator=U1(SO-G16/D10.4)
+Added Component: Designator=X1(PIN1)
+Added Component: Designator=X2(PIN1)
+Added Component: Designator=X3(PIN1)
+Added Component: Designator=X4(PIN1)
+Added Component: Designator=X5(PIN1)
+Added Component: Designator=X6(PIN1)
+Added Component: Designator=X7(PIN1)
+Added Component: Designator=X8(PIN1)
+Added Pin To Net: NetName=NetC1_1 Pin=C1-1
+Added Pin To Net: NetName=NetC1_2 Pin=C1-2
+Added Pin To Net: NetName=NetC2_1 Pin=C2-1
+Added Pin To Net: NetName=NetC2_2 Pin=C2-2
+Added Pin To Net: NetName=NetC1_2 Pin=U1-1
+Added Pin To Net: NetName=NetC1_1 Pin=U1-2
+Added Pin To Net: NetName=NetC1_1 Pin=U1-8
+Added Pin To Net: NetName=NetC2_1 Pin=U1-9
+Added Pin To Net: NetName=NetC2_1 Pin=U1-15
+Added Pin To Net: NetName=NetC2_2 Pin=U1-16
+Added Pin To Net: NetName=NetC1_2 Pin=X1-1
+Added Pin To Net: NetName=NetC1_1 Pin=X2-1
+Added Pin To Net: NetName=NetC2_2 Pin=X5-1
+Added Pin To Net: NetName=NetC2_1 Pin=X6-1
+Added Class: Name=ISO
