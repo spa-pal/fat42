@@ -1,5 +1,5 @@
 [WorkState_v1-Edit.Breakpoints]
-Break0=TypeFile, main.c, 1937, 0, 0, 1,
+Break0=TypeFile, main.c, 1938, 0, 0, 1,
 
 [WorkState_v1_2]
 ptn_Child1=DockState
@@ -273,7 +273,7 @@ ResourceID=0
 
 [WorkState_v1_2.DockState.Bar-6]
 BarID=59421
-Bars=32
+Bars=52
 Bar#0=0
 Bar#1=35103
 Bar#2=35102
@@ -306,6 +306,26 @@ Bar#28=0
 Bar#29=0
 Bar#30=73537
 Bar#31=0
+Bar#32=0
+Bar#33=0
+Bar#34=0
+Bar#35=0
+Bar#36=0
+Bar#37=0
+Bar#38=0
+Bar#39=0
+Bar#40=0
+Bar#41=0
+Bar#42=0
+Bar#43=0
+Bar#44=0
+Bar#45=0
+Bar#46=0
+Bar#47=0
+Bar#48=0
+Bar#49=0
+Bar#50=0
+Bar#51=0
 Style=0
 ExStyle=0
 PrevFloating=False
@@ -1541,7 +1561,7 @@ ptn_Child2=ChildFrames
 
 [WorkState_v1_2.Frames.MainFrame]
 WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAAADIPPPPAADIPPPPPPPPPPPPPPPPPPPPHLAAAAAAEHAAAAAAEGEAAAAADBDAAAAA
-Title=ST Visual Develop - Fat42_ws.stw* - [main.c]
+Title=ST Visual Develop - Fat42_ws.stw - [main.c]
 
 [WorkState_v1_2.Frames.ChildFrames]
 ptn_Child1=Document-0

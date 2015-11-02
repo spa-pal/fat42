@@ -3509,13 +3509,13 @@
 7862                     ; 1597       if(res_fl_)
 7864  1663 725d0008      	tnz	_res_fl_
 7865  1667 2603          	jrne	L202
-7866  1669 cc1b87        	jp	L1243
+7866  1669 cc1b9a        	jp	L1243
 7867  166c               L202:
 7868                     ; 1599       	res_fl_=0;
 7870  166c 4f            	clr	a
 7871  166d ae0008        	ldw	x,#_res_fl_
 7872  1670 cd0000        	call	c_eewrc
-7874  1673 ac871b87      	jpf	L1243
+7874  1673 ac9a1b9a      	jpf	L1243
 7875  1677               L5543:
 7876                     ; 1602 else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==KLBR)&&(mess[9]==mess[10]))
 7878  1677 b6c6          	ld	a,_mess+6
@@ -3818,13 +3818,13 @@
 8252                     ; 1710      if(res_fl_)
 8254  1879 725d0008      	tnz	_res_fl_
 8255  187d 2603          	jrne	L412
-8256  187f cc1b87        	jp	L1243
+8256  187f cc1b9a        	jp	L1243
 8257  1882               L412:
 8258                     ; 1712       	res_fl_=0;
 8260  1882 4f            	clr	a
 8261  1883 ae0008        	ldw	x,#_res_fl_
 8262  1886 cd0000        	call	c_eewrc
-8264  1889 ac871b87      	jpf	L1243
+8264  1889 ac9a1b9a      	jpf	L1243
 8265  188d               L5053:
 8266                     ; 1718 else if((mess[6]==0xff)&&(mess[7]==0xff)&&(mess[8]==MEM_KF))
 8268  188d b6c6          	ld	a,_mess+6
@@ -3897,38 +3897,38 @@
 8349  18ef ce0004        	ldw	x,_ee_AVT_MODE
 8350  18f2 a30055        	cpw	x,#85
 8351  18f5 2603          	jrne	L222
-8352  18f7 cc1b87        	jp	L1243
+8352  18f7 cc1b9a        	jp	L1243
 8353  18fa               L222:
 8356  18fa ae0055        	ldw	x,#85
 8357  18fd 89            	pushw	x
 8358  18fe ae0004        	ldw	x,#_ee_AVT_MODE
 8359  1901 cd0000        	call	c_eewrw
 8361  1904 85            	popw	x
-8362  1905 ac871b87      	jpf	L1243
+8362  1905 ac9a1b9a      	jpf	L1243
 8363  1909               L3463:
 8364                     ; 1729 	else if(ee_AVT_MODE==0x55)ee_AVT_MODE=0;	
 8366  1909 ce0004        	ldw	x,_ee_AVT_MODE
 8367  190c a30055        	cpw	x,#85
 8368  190f 2703          	jreq	L422
-8369  1911 cc1b87        	jp	L1243
+8369  1911 cc1b9a        	jp	L1243
 8370  1914               L422:
 8373  1914 5f            	clrw	x
 8374  1915 89            	pushw	x
 8375  1916 ae0004        	ldw	x,#_ee_AVT_MODE
 8376  1919 cd0000        	call	c_eewrw
 8378  191c 85            	popw	x
-8379  191d ac871b87      	jpf	L1243
+8379  191d ac9a1b9a      	jpf	L1243
 8380  1921               L5363:
 8381                     ; 1732 else if((mess[6]==0xff)&&(mess[7]==0xff)&&((mess[8]==MEM_KF1)||(mess[8]==MEM_KF4)))
 8383  1921 b6c6          	ld	a,_mess+6
 8384  1923 a1ff          	cp	a,#255
 8385  1925 2703          	jreq	L622
-8386  1927 cc19e5        	jp	L5563
+8386  1927 cc19f8        	jp	L5563
 8387  192a               L622:
 8389  192a b6c7          	ld	a,_mess+7
 8390  192c a1ff          	cp	a,#255
 8391  192e 2703          	jreq	L032
-8392  1930 cc19e5        	jp	L5563
+8392  1930 cc19f8        	jp	L5563
 8393  1933               L032:
 8395  1933 b6c8          	ld	a,_mess+8
 8396  1935 a126          	cp	a,#38
@@ -3936,7 +3936,7 @@
 8399  1939 b6c8          	ld	a,_mess+8
 8400  193b a129          	cp	a,#41
 8401  193d 2703          	jreq	L232
-8402  193f cc19e5        	jp	L5563
+8402  193f cc19f8        	jp	L5563
 8403  1942               L232:
 8404  1942               L7563:
 8405                     ; 1735 	tempSS=mess[9]+(mess[10]*256);
@@ -4018,7 +4018,7 @@
 8501  19ad b6c8          	ld	a,_mess+8
 8502  19af a129          	cp	a,#41
 8503  19b1 2703          	jreq	L432
-8504  19b3 cc1b87        	jp	L1243
+8504  19b3 cc1b9a        	jp	L1243
 8505  19b6               L432:
 8506                     ; 1748 		if(ee_DEVICE!=1)ee_DEVICE=1;
 8508  19b6 ce0002        	ldw	x,_ee_DEVICE
@@ -4035,1187 +4035,1197 @@
 8523  19cb 5f            	clrw	x
 8524  19cc 97            	ld	xl,a
 8525  19cd c30000        	cpw	x,_ee_IMAXVENT
-8526  19d0 2603          	jrne	L632
-8527  19d2 cc1b87        	jp	L1243
-8528  19d5               L632:
-8531  19d5 b6cd          	ld	a,_mess+13
-8532  19d7 5f            	clrw	x
-8533  19d8 97            	ld	xl,a
-8534  19d9 89            	pushw	x
-8535  19da ae0000        	ldw	x,#_ee_IMAXVENT
-8536  19dd cd0000        	call	c_eewrw
-8538  19e0 85            	popw	x
-8539  19e1 ac871b87      	jpf	L1243
-8540  19e5               L5563:
-8541                     ; 1753 else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==CMND)&&(mess[9]==ALRM_RES))
-8543  19e5 b6c6          	ld	a,_mess+6
-8544  19e7 c10001        	cp	a,_adress
-8545  19ea 262d          	jrne	L3073
-8547  19ec b6c7          	ld	a,_mess+7
-8548  19ee c10001        	cp	a,_adress
-8549  19f1 2626          	jrne	L3073
-8551  19f3 b6c8          	ld	a,_mess+8
-8552  19f5 a116          	cp	a,#22
-8553  19f7 2620          	jrne	L3073
-8555  19f9 b6c9          	ld	a,_mess+9
-8556  19fb a163          	cp	a,#99
-8557  19fd 261a          	jrne	L3073
-8558                     ; 1755 	flags&=0b11100001;
-8560  19ff b60a          	ld	a,_flags
-8561  1a01 a4e1          	and	a,#225
-8562  1a03 b70a          	ld	_flags,a
-8563                     ; 1756 	tsign_cnt=0;
-8565  1a05 5f            	clrw	x
-8566  1a06 bf4a          	ldw	_tsign_cnt,x
-8567                     ; 1757 	tmax_cnt=0;
-8569  1a08 5f            	clrw	x
-8570  1a09 bf48          	ldw	_tmax_cnt,x
-8571                     ; 1758 	umax_cnt=0;
-8573  1a0b 5f            	clrw	x
-8574  1a0c bf62          	ldw	_umax_cnt,x
-8575                     ; 1759 	umin_cnt=0;
-8577  1a0e 5f            	clrw	x
-8578  1a0f bf60          	ldw	_umin_cnt,x
-8579                     ; 1760 	led_drv_cnt=30;
-8581  1a11 351e0019      	mov	_led_drv_cnt,#30
-8583  1a15 ac871b87      	jpf	L1243
-8584  1a19               L3073:
-8585                     ; 1762 else if((mess[6]==0xff)&&(mess[7]==0xff)&&(mess[8]==CMND)&&(mess[9]==CMND))
-8587  1a19 b6c6          	ld	a,_mess+6
-8588  1a1b a1ff          	cp	a,#255
-8589  1a1d 265f          	jrne	L7073
-8591  1a1f b6c7          	ld	a,_mess+7
-8592  1a21 a1ff          	cp	a,#255
-8593  1a23 2659          	jrne	L7073
-8595  1a25 b6c8          	ld	a,_mess+8
-8596  1a27 a116          	cp	a,#22
-8597  1a29 2653          	jrne	L7073
-8599  1a2b b6c9          	ld	a,_mess+9
-8600  1a2d a116          	cp	a,#22
-8601  1a2f 264d          	jrne	L7073
-8602                     ; 1764 	if((mess[10]==0x55)&&(mess[11]==0x55)) _x_++;
-8604  1a31 b6ca          	ld	a,_mess+10
-8605  1a33 a155          	cp	a,#85
-8606  1a35 260f          	jrne	L1173
-8608  1a37 b6cb          	ld	a,_mess+11
-8609  1a39 a155          	cp	a,#85
-8610  1a3b 2609          	jrne	L1173
-8613  1a3d be5b          	ldw	x,__x_
-8614  1a3f 1c0001        	addw	x,#1
-8615  1a42 bf5b          	ldw	__x_,x
-8617  1a44 2024          	jra	L3173
-8618  1a46               L1173:
-8619                     ; 1765 	else if((mess[10]==0x66)&&(mess[11]==0x66)) _x_--; 
-8621  1a46 b6ca          	ld	a,_mess+10
-8622  1a48 a166          	cp	a,#102
-8623  1a4a 260f          	jrne	L5173
-8625  1a4c b6cb          	ld	a,_mess+11
-8626  1a4e a166          	cp	a,#102
-8627  1a50 2609          	jrne	L5173
-8630  1a52 be5b          	ldw	x,__x_
-8631  1a54 1d0001        	subw	x,#1
-8632  1a57 bf5b          	ldw	__x_,x
-8634  1a59 200f          	jra	L3173
-8635  1a5b               L5173:
-8636                     ; 1766 	else if((mess[10]==0x77)&&(mess[11]==0x77)) _x_=0;
-8638  1a5b b6ca          	ld	a,_mess+10
-8639  1a5d a177          	cp	a,#119
-8640  1a5f 2609          	jrne	L3173
-8642  1a61 b6cb          	ld	a,_mess+11
-8643  1a63 a177          	cp	a,#119
-8644  1a65 2603          	jrne	L3173
-8647  1a67 5f            	clrw	x
-8648  1a68 bf5b          	ldw	__x_,x
-8649  1a6a               L3173:
-8650                     ; 1767      gran(&_x_,-XMAX,XMAX);
-8652  1a6a ae0019        	ldw	x,#25
-8653  1a6d 89            	pushw	x
-8654  1a6e aeffe7        	ldw	x,#65511
-8655  1a71 89            	pushw	x
-8656  1a72 ae005b        	ldw	x,#__x_
-8657  1a75 cd0000        	call	_gran
-8659  1a78 5b04          	addw	sp,#4
-8661  1a7a ac871b87      	jpf	L1243
-8662  1a7e               L7073:
-8663                     ; 1769 else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==CMND)&&(mess[9]==mess[10])&&(mess[9]==0xee))
-8665  1a7e b6c6          	ld	a,_mess+6
-8666  1a80 c10001        	cp	a,_adress
-8667  1a83 2665          	jrne	L5273
-8669  1a85 b6c7          	ld	a,_mess+7
-8670  1a87 c10001        	cp	a,_adress
-8671  1a8a 265e          	jrne	L5273
-8673  1a8c b6c8          	ld	a,_mess+8
-8674  1a8e a116          	cp	a,#22
-8675  1a90 2658          	jrne	L5273
-8677  1a92 b6c9          	ld	a,_mess+9
-8678  1a94 b1ca          	cp	a,_mess+10
-8679  1a96 2652          	jrne	L5273
-8681  1a98 b6c9          	ld	a,_mess+9
-8682  1a9a a1ee          	cp	a,#238
-8683  1a9c 264c          	jrne	L5273
-8684                     ; 1771 	rotor_int++;
-8686  1a9e be1a          	ldw	x,_rotor_int
-8687  1aa0 1c0001        	addw	x,#1
-8688  1aa3 bf1a          	ldw	_rotor_int,x
-8689                     ; 1772      tempI=pwm_u;
-8691  1aa5 be0b          	ldw	x,_pwm_u
-8692  1aa7 1f04          	ldw	(OFST-1,sp),x
-8693                     ; 1773 	ee_U_AVT=tempI;
-8695  1aa9 1e04          	ldw	x,(OFST-1,sp)
-8696  1aab 89            	pushw	x
-8697  1aac ae000a        	ldw	x,#_ee_U_AVT
-8698  1aaf cd0000        	call	c_eewrw
-8700  1ab2 85            	popw	x
-8701                     ; 1774 	UU_AVT=Un;
-8703  1ab3 be69          	ldw	x,_Un
-8704  1ab5 89            	pushw	x
-8705  1ab6 ae0006        	ldw	x,#_UU_AVT
-8706  1ab9 cd0000        	call	c_eewrw
-8708  1abc 85            	popw	x
-8709                     ; 1775 	delay_ms(100);
-8711  1abd ae0064        	ldw	x,#100
-8712  1ac0 cd004c        	call	_delay_ms
-8714                     ; 1776 	if(ee_U_AVT==tempI)can_transmit(0x18e,adress,PUTID,0xdd,0xdd,0,0,0,0);
-8716  1ac3 ce000a        	ldw	x,_ee_U_AVT
-8717  1ac6 1304          	cpw	x,(OFST-1,sp)
-8718  1ac8 2703          	jreq	L042
-8719  1aca cc1b87        	jp	L1243
-8720  1acd               L042:
-8723  1acd 4b00          	push	#0
-8724  1acf 4b00          	push	#0
-8725  1ad1 4b00          	push	#0
-8726  1ad3 4b00          	push	#0
-8727  1ad5 4bdd          	push	#221
-8728  1ad7 4bdd          	push	#221
-8729  1ad9 4b91          	push	#145
-8730  1adb 3b0001        	push	_adress
-8731  1ade ae018e        	ldw	x,#398
-8732  1ae1 cd13c5        	call	_can_transmit
-8734  1ae4 5b08          	addw	sp,#8
-8735  1ae6 ac871b87      	jpf	L1243
-8736  1aea               L5273:
-8737                     ; 1781 else if((mess[7]==PUTTM1)&&(mess[6]!=adress)&&(mess[6]>=0)&&(mess[6]<=5))
-8739  1aea b6c7          	ld	a,_mess+7
-8740  1aec a1da          	cp	a,#218
-8741  1aee 2652          	jrne	L3373
-8743  1af0 b6c6          	ld	a,_mess+6
-8744  1af2 c10001        	cp	a,_adress
-8745  1af5 274b          	jreq	L3373
-8747  1af7 b6c6          	ld	a,_mess+6
-8748  1af9 a106          	cp	a,#6
-8749  1afb 2445          	jruge	L3373
-8750                     ; 1783 	i_main_bps_cnt[mess[6]]=0;
-8752  1afd b6c6          	ld	a,_mess+6
-8753  1aff 5f            	clrw	x
-8754  1b00 97            	ld	xl,a
-8755  1b01 6f06          	clr	(_i_main_bps_cnt,x)
-8756                     ; 1784 	i_main_flag[mess[6]]=1;
-8758  1b03 b6c6          	ld	a,_mess+6
-8759  1b05 5f            	clrw	x
-8760  1b06 97            	ld	xl,a
-8761  1b07 a601          	ld	a,#1
-8762  1b09 e711          	ld	(_i_main_flag,x),a
-8763                     ; 1785 	if(bMAIN)
-8765                     	btst	_bMAIN
-8766  1b10 2475          	jruge	L1243
-8767                     ; 1787 		i_main[mess[6]]=(signed short)mess[8]+(((signed short)mess[9])*256);
-8769  1b12 b6c9          	ld	a,_mess+9
-8770  1b14 5f            	clrw	x
-8771  1b15 97            	ld	xl,a
-8772  1b16 4f            	clr	a
-8773  1b17 02            	rlwa	x,a
-8774  1b18 1f01          	ldw	(OFST-4,sp),x
-8775  1b1a b6c8          	ld	a,_mess+8
-8776  1b1c 5f            	clrw	x
-8777  1b1d 97            	ld	xl,a
-8778  1b1e 72fb01        	addw	x,(OFST-4,sp)
-8779  1b21 b6c6          	ld	a,_mess+6
-8780  1b23 905f          	clrw	y
-8781  1b25 9097          	ld	yl,a
-8782  1b27 9058          	sllw	y
-8783  1b29 90ef17        	ldw	(_i_main,y),x
-8784                     ; 1788 		i_main[adress]=I;
-8786  1b2c c60001        	ld	a,_adress
-8787  1b2f 5f            	clrw	x
-8788  1b30 97            	ld	xl,a
-8789  1b31 58            	sllw	x
-8790  1b32 90be6b        	ldw	y,_I
-8791  1b35 ef17          	ldw	(_i_main,x),y
-8792                     ; 1789      	i_main_flag[adress]=1;
-8794  1b37 c60001        	ld	a,_adress
-8795  1b3a 5f            	clrw	x
-8796  1b3b 97            	ld	xl,a
-8797  1b3c a601          	ld	a,#1
-8798  1b3e e711          	ld	(_i_main_flag,x),a
-8799  1b40 2045          	jra	L1243
-8800  1b42               L3373:
-8801                     ; 1793 else if((mess[7]==PUTTM2)&&(mess[6]!=adress)&&(mess[6]>=0)&&(mess[6]<=5))
-8803  1b42 b6c7          	ld	a,_mess+7
-8804  1b44 a1db          	cp	a,#219
-8805  1b46 263f          	jrne	L1243
-8807  1b48 b6c6          	ld	a,_mess+6
-8808  1b4a c10001        	cp	a,_adress
-8809  1b4d 2738          	jreq	L1243
-8811  1b4f b6c6          	ld	a,_mess+6
-8812  1b51 a106          	cp	a,#6
-8813  1b53 2432          	jruge	L1243
-8814                     ; 1795 	i_main_bps_cnt[mess[6]]=0;
-8816  1b55 b6c6          	ld	a,_mess+6
-8817  1b57 5f            	clrw	x
-8818  1b58 97            	ld	xl,a
-8819  1b59 6f06          	clr	(_i_main_bps_cnt,x)
-8820                     ; 1796 	i_main_flag[mess[6]]=1;		
-8822  1b5b b6c6          	ld	a,_mess+6
-8823  1b5d 5f            	clrw	x
-8824  1b5e 97            	ld	xl,a
-8825  1b5f a601          	ld	a,#1
-8826  1b61 e711          	ld	(_i_main_flag,x),a
-8827                     ; 1797 	if(bMAIN)
-8829                     	btst	_bMAIN
-8830  1b68 241d          	jruge	L1243
-8831                     ; 1799 		if(mess[9]==0)i_main_flag[i]=1;
-8833  1b6a 3dc9          	tnz	_mess+9
-8834  1b6c 260a          	jrne	L5473
-8837  1b6e 7b03          	ld	a,(OFST-2,sp)
-8838  1b70 5f            	clrw	x
-8839  1b71 97            	ld	xl,a
-8840  1b72 a601          	ld	a,#1
-8841  1b74 e711          	ld	(_i_main_flag,x),a
-8843  1b76 2006          	jra	L7473
-8844  1b78               L5473:
-8845                     ; 1800 		else i_main_flag[i]=0;
-8847  1b78 7b03          	ld	a,(OFST-2,sp)
-8848  1b7a 5f            	clrw	x
-8849  1b7b 97            	ld	xl,a
-8850  1b7c 6f11          	clr	(_i_main_flag,x)
-8851  1b7e               L7473:
-8852                     ; 1801 		i_main_flag[adress]=1;
-8854  1b7e c60001        	ld	a,_adress
-8855  1b81 5f            	clrw	x
-8856  1b82 97            	ld	xl,a
-8857  1b83 a601          	ld	a,#1
-8858  1b85 e711          	ld	(_i_main_flag,x),a
-8859  1b87               L1243:
-8860                     ; 1807 can_in_an_end:
-8860                     ; 1808 bCAN_RX=0;
-8862  1b87 3f09          	clr	_bCAN_RX
-8863                     ; 1809 }   
-8866  1b89 5b05          	addw	sp,#5
-8867  1b8b 81            	ret
-8890                     ; 1812 void t4_init(void){
-8891                     	switch	.text
-8892  1b8c               _t4_init:
-8896                     ; 1813 	TIM4->PSCR = 4;
-8898  1b8c 35045345      	mov	21317,#4
-8899                     ; 1814 	TIM4->ARR= 77;
-8901  1b90 354d5346      	mov	21318,#77
-8902                     ; 1815 	TIM4->IER|= TIM4_IER_UIE;					// enable break interrupt
-8904  1b94 72105341      	bset	21313,#0
-8905                     ; 1817 	TIM4->CR1=(TIM4_CR1_URS | TIM4_CR1_CEN | TIM4_CR1_ARPE);	
-8907  1b98 35855340      	mov	21312,#133
-8908                     ; 1819 }
-8911  1b9c 81            	ret
-8934                     ; 1822 void t1_init(void)
-8934                     ; 1823 {
-8935                     	switch	.text
-8936  1b9d               _t1_init:
-8940                     ; 1824 TIM1->ARRH= 0x03;
-8942  1b9d 35035262      	mov	21090,#3
-8943                     ; 1825 TIM1->ARRL= 0xff;
-8945  1ba1 35ff5263      	mov	21091,#255
-8946                     ; 1826 TIM1->CCR1H= 0x00;	
-8948  1ba5 725f5265      	clr	21093
-8949                     ; 1827 TIM1->CCR1L= 0xff;
-8951  1ba9 35ff5266      	mov	21094,#255
-8952                     ; 1828 TIM1->CCR2H= 0x00;	
-8954  1bad 725f5267      	clr	21095
-8955                     ; 1829 TIM1->CCR2L= 0x00;
-8957  1bb1 725f5268      	clr	21096
-8958                     ; 1830 TIM1->CCR3H= 0x00;	
-8960  1bb5 725f5269      	clr	21097
-8961                     ; 1831 TIM1->CCR3L= 0x64;
-8963  1bb9 3564526a      	mov	21098,#100
-8964                     ; 1833 TIM1->CCMR1= ((6<<4) & TIM1_CCMR_OCM) | TIM1_CCMR_OCxPE; //OC2 toggle mode, prelouded
-8966  1bbd 35685258      	mov	21080,#104
-8967                     ; 1834 TIM1->CCMR2= ((6<<4) & TIM1_CCMR_OCM) | TIM1_CCMR_OCxPE; //OC2 toggle mode, prelouded
-8969  1bc1 35685259      	mov	21081,#104
-8970                     ; 1835 TIM1->CCMR3= ((6<<4) & TIM1_CCMR_OCM) | TIM1_CCMR_OCxPE; //OC2 toggle mode, prelouded
-8972  1bc5 3568525a      	mov	21082,#104
-8973                     ; 1836 TIM1->CCER1= TIM1_CCER1_CC1E | TIM1_CCER1_CC2E ; //OC1, OC2 output pins enabled
-8975  1bc9 3511525c      	mov	21084,#17
-8976                     ; 1837 TIM1->CCER2= TIM1_CCER2_CC3E; //OC1, OC2 output pins enabled
-8978  1bcd 3501525d      	mov	21085,#1
-8979                     ; 1838 TIM1->CR1=(TIM1_CR1_CEN | TIM1_CR1_ARPE);
-8981  1bd1 35815250      	mov	21072,#129
-8982                     ; 1839 TIM1->BKR|= TIM1_BKR_AOE;
-8984  1bd5 721c526d      	bset	21101,#6
-8985                     ; 1840 }
-8988  1bd9 81            	ret
-9013                     ; 1844 void adc2_init(void)
-9013                     ; 1845 {
-9014                     	switch	.text
-9015  1bda               _adc2_init:
-9019                     ; 1846 adc_plazma[0]++;
-9021  1bda beb2          	ldw	x,_adc_plazma
-9022  1bdc 1c0001        	addw	x,#1
-9023  1bdf bfb2          	ldw	_adc_plazma,x
-9024                     ; 1870 GPIOB->DDR&=~(1<<4);
-9026  1be1 72195007      	bres	20487,#4
-9027                     ; 1871 GPIOB->CR1&=~(1<<4);
-9029  1be5 72195008      	bres	20488,#4
-9030                     ; 1872 GPIOB->CR2&=~(1<<4);
-9032  1be9 72195009      	bres	20489,#4
-9033                     ; 1874 GPIOB->DDR&=~(1<<5);
-9035  1bed 721b5007      	bres	20487,#5
-9036                     ; 1875 GPIOB->CR1&=~(1<<5);
-9038  1bf1 721b5008      	bres	20488,#5
-9039                     ; 1876 GPIOB->CR2&=~(1<<5);
-9041  1bf5 721b5009      	bres	20489,#5
-9042                     ; 1878 GPIOB->DDR&=~(1<<6);
-9044  1bf9 721d5007      	bres	20487,#6
-9045                     ; 1879 GPIOB->CR1&=~(1<<6);
-9047  1bfd 721d5008      	bres	20488,#6
-9048                     ; 1880 GPIOB->CR2&=~(1<<6);
-9050  1c01 721d5009      	bres	20489,#6
-9051                     ; 1882 GPIOB->DDR&=~(1<<7);
-9053  1c05 721f5007      	bres	20487,#7
-9054                     ; 1883 GPIOB->CR1&=~(1<<7);
-9056  1c09 721f5008      	bres	20488,#7
-9057                     ; 1884 GPIOB->CR2&=~(1<<7);
-9059  1c0d 721f5009      	bres	20489,#7
-9060                     ; 1894 ADC2->TDRL=0xff;
-9062  1c11 35ff5407      	mov	21511,#255
-9063                     ; 1896 ADC2->CR2=0x08;
-9065  1c15 35085402      	mov	21506,#8
-9066                     ; 1897 ADC2->CR1=0x40;
-9068  1c19 35405401      	mov	21505,#64
-9069                     ; 1900 	ADC2->CSR=0x20+adc_ch+3;
-9071  1c1d b6bf          	ld	a,_adc_ch
-9072  1c1f ab23          	add	a,#35
-9073  1c21 c75400        	ld	21504,a
-9074                     ; 1902 	ADC2->CR1|=1;
-9076  1c24 72105401      	bset	21505,#0
-9077                     ; 1903 	ADC2->CR1|=1;
-9079  1c28 72105401      	bset	21505,#0
-9080                     ; 1906 adc_plazma[1]=adc_ch;
-9082  1c2c b6bf          	ld	a,_adc_ch
-9083  1c2e 5f            	clrw	x
-9084  1c2f 97            	ld	xl,a
-9085  1c30 bfb4          	ldw	_adc_plazma+2,x
-9086                     ; 1907 }
-9089  1c32 81            	ret
-9123                     ; 1916 @far @interrupt void TIM4_UPD_Interrupt (void) 
-9123                     ; 1917 {
-9125                     	switch	.text
-9126  1c33               f_TIM4_UPD_Interrupt:
-9130                     ; 1918 TIM4->SR1&=~TIM4_SR1_UIF;
-9132  1c33 72115342      	bres	21314,#0
-9133                     ; 1920 if(++pwm_vent_cnt>=10)pwm_vent_cnt=0;
-9135  1c37 3c05          	inc	_pwm_vent_cnt
-9136  1c39 b605          	ld	a,_pwm_vent_cnt
-9137  1c3b a10a          	cp	a,#10
-9138  1c3d 2502          	jrult	L1104
-9141  1c3f 3f05          	clr	_pwm_vent_cnt
-9142  1c41               L1104:
-9143                     ; 1921 GPIOB->ODR|=(1<<3);
-9145  1c41 72165005      	bset	20485,#3
-9146                     ; 1922 if(pwm_vent_cnt>=5)GPIOB->ODR&=~(1<<3);
-9148  1c45 b605          	ld	a,_pwm_vent_cnt
-9149  1c47 a105          	cp	a,#5
-9150  1c49 2504          	jrult	L3104
-9153  1c4b 72175005      	bres	20485,#3
-9154  1c4f               L3104:
-9155                     ; 1927 if(++t0_cnt0>=100)
-9157  1c4f 9c            	rvf
-9158  1c50 be00          	ldw	x,_t0_cnt0
-9159  1c52 1c0001        	addw	x,#1
-9160  1c55 bf00          	ldw	_t0_cnt0,x
-9161  1c57 a30064        	cpw	x,#100
-9162  1c5a 2f3f          	jrslt	L5104
-9163                     ; 1929 	t0_cnt0=0;
-9165  1c5c 5f            	clrw	x
-9166  1c5d bf00          	ldw	_t0_cnt0,x
-9167                     ; 1930 	b100Hz=1;
-9169  1c5f 72100008      	bset	_b100Hz
-9170                     ; 1932 	if(++t0_cnt1>=10)
-9172  1c63 3c02          	inc	_t0_cnt1
-9173  1c65 b602          	ld	a,_t0_cnt1
-9174  1c67 a10a          	cp	a,#10
-9175  1c69 2506          	jrult	L7104
-9176                     ; 1934 		t0_cnt1=0;
-9178  1c6b 3f02          	clr	_t0_cnt1
-9179                     ; 1935 		b10Hz=1;
-9181  1c6d 72100007      	bset	_b10Hz
-9182  1c71               L7104:
-9183                     ; 1938 	if(++t0_cnt2>=20)
-9185  1c71 3c03          	inc	_t0_cnt2
-9186  1c73 b603          	ld	a,_t0_cnt2
-9187  1c75 a114          	cp	a,#20
-9188  1c77 2506          	jrult	L1204
-9189                     ; 1940 		t0_cnt2=0;
-9191  1c79 3f03          	clr	_t0_cnt2
-9192                     ; 1941 		b5Hz=1;
-9194  1c7b 72100006      	bset	_b5Hz
-9195  1c7f               L1204:
-9196                     ; 1945 	if(++t0_cnt4>=50)
-9198  1c7f 3c05          	inc	_t0_cnt4
-9199  1c81 b605          	ld	a,_t0_cnt4
-9200  1c83 a132          	cp	a,#50
-9201  1c85 2506          	jrult	L3204
-9202                     ; 1947 		t0_cnt4=0;
-9204  1c87 3f05          	clr	_t0_cnt4
-9205                     ; 1948 		b2Hz=1;
-9207  1c89 72100005      	bset	_b2Hz
-9208  1c8d               L3204:
-9209                     ; 1951 	if(++t0_cnt3>=100)
-9211  1c8d 3c04          	inc	_t0_cnt3
-9212  1c8f b604          	ld	a,_t0_cnt3
-9213  1c91 a164          	cp	a,#100
-9214  1c93 2506          	jrult	L5104
-9215                     ; 1953 		t0_cnt3=0;
-9217  1c95 3f04          	clr	_t0_cnt3
-9218                     ; 1954 		b1Hz=1;
-9220  1c97 72100004      	bset	_b1Hz
-9221  1c9b               L5104:
-9222                     ; 1960 }
-9225  1c9b 80            	iret
-9250                     ; 1963 @far @interrupt void CAN_RX_Interrupt (void) 
-9250                     ; 1964 {
-9251                     	switch	.text
-9252  1c9c               f_CAN_RX_Interrupt:
-9256                     ; 1966 CAN->PSR= 7;									// page 7 - read messsage
-9258  1c9c 35075427      	mov	21543,#7
-9259                     ; 1968 memcpy(&mess[0], &CAN->Page.RxFIFO.MFMI, 14); // compare the message content
-9261  1ca0 ae000e        	ldw	x,#14
-9262  1ca3               L452:
-9263  1ca3 d65427        	ld	a,(21543,x)
-9264  1ca6 e7bf          	ld	(_mess-1,x),a
-9265  1ca8 5a            	decw	x
-9266  1ca9 26f8          	jrne	L452
-9267                     ; 1979 bCAN_RX=1;
-9269  1cab 35010009      	mov	_bCAN_RX,#1
-9270                     ; 1980 CAN->RFR|=(1<<5);
-9272  1caf 721a5424      	bset	21540,#5
-9273                     ; 1982 }
-9276  1cb3 80            	iret
-9299                     ; 1985 @far @interrupt void CAN_TX_Interrupt (void) 
-9299                     ; 1986 {
-9300                     	switch	.text
-9301  1cb4               f_CAN_TX_Interrupt:
-9305                     ; 1987 if((CAN->TSR)&(1<<0))
-9307  1cb4 c65422        	ld	a,21538
-9308  1cb7 a501          	bcp	a,#1
-9309  1cb9 2708          	jreq	L7404
-9310                     ; 1989 	bTX_FREE=1;	
-9312  1cbb 35010008      	mov	_bTX_FREE,#1
-9313                     ; 1991 	CAN->TSR|=(1<<0);
-9315  1cbf 72105422      	bset	21538,#0
-9316  1cc3               L7404:
-9317                     ; 1993 }
-9320  1cc3 80            	iret
-9378                     ; 1996 @far @interrupt void ADC2_EOC_Interrupt (void) {
-9379                     	switch	.text
-9380  1cc4               f_ADC2_EOC_Interrupt:
-9382       00000009      OFST:	set	9
-9383  1cc4 be00          	ldw	x,c_x
-9384  1cc6 89            	pushw	x
-9385  1cc7 be00          	ldw	x,c_y
-9386  1cc9 89            	pushw	x
-9387  1cca be02          	ldw	x,c_lreg+2
-9388  1ccc 89            	pushw	x
-9389  1ccd be00          	ldw	x,c_lreg
-9390  1ccf 89            	pushw	x
-9391  1cd0 5209          	subw	sp,#9
-9394                     ; 2001 adc_plazma[2]++;
-9396  1cd2 beb6          	ldw	x,_adc_plazma+4
-9397  1cd4 1c0001        	addw	x,#1
-9398  1cd7 bfb6          	ldw	_adc_plazma+4,x
-9399                     ; 2008 ADC2->CSR&=~(1<<7);
-9401  1cd9 721f5400      	bres	21504,#7
-9402                     ; 2010 temp_adc=(((signed long)(ADC2->DRH))*256)+((signed long)(ADC2->DRL));
-9404  1cdd c65405        	ld	a,21509
-9405  1ce0 b703          	ld	c_lreg+3,a
-9406  1ce2 3f02          	clr	c_lreg+2
-9407  1ce4 3f01          	clr	c_lreg+1
-9408  1ce6 3f00          	clr	c_lreg
-9409  1ce8 96            	ldw	x,sp
-9410  1ce9 1c0001        	addw	x,#OFST-8
-9411  1cec cd0000        	call	c_rtol
-9413  1cef c65404        	ld	a,21508
-9414  1cf2 5f            	clrw	x
-9415  1cf3 97            	ld	xl,a
-9416  1cf4 90ae0100      	ldw	y,#256
-9417  1cf8 cd0000        	call	c_umul
-9419  1cfb 96            	ldw	x,sp
-9420  1cfc 1c0001        	addw	x,#OFST-8
-9421  1cff cd0000        	call	c_ladd
-9423  1d02 96            	ldw	x,sp
-9424  1d03 1c0006        	addw	x,#OFST-3
-9425  1d06 cd0000        	call	c_rtol
-9427                     ; 2015 if(adr_drv_stat==1)
-9429  1d09 b607          	ld	a,_adr_drv_stat
-9430  1d0b a101          	cp	a,#1
-9431  1d0d 260b          	jrne	L7704
-9432                     ; 2017 	adr_drv_stat=2;
-9434  1d0f 35020007      	mov	_adr_drv_stat,#2
-9435                     ; 2018 	adc_buff_[0]=temp_adc;
-9437  1d13 1e08          	ldw	x,(OFST-1,sp)
-9438  1d15 cf0005        	ldw	_adc_buff_,x
-9440  1d18 2020          	jra	L1014
-9441  1d1a               L7704:
-9442                     ; 2021 else if(adr_drv_stat==3)
-9444  1d1a b607          	ld	a,_adr_drv_stat
-9445  1d1c a103          	cp	a,#3
-9446  1d1e 260b          	jrne	L3014
-9447                     ; 2023 	adr_drv_stat=4;
-9449  1d20 35040007      	mov	_adr_drv_stat,#4
-9450                     ; 2024 	adc_buff_[1]=temp_adc;
-9452  1d24 1e08          	ldw	x,(OFST-1,sp)
-9453  1d26 cf0007        	ldw	_adc_buff_+2,x
-9455  1d29 200f          	jra	L1014
-9456  1d2b               L3014:
-9457                     ; 2027 else if(adr_drv_stat==5)
-9459  1d2b b607          	ld	a,_adr_drv_stat
-9460  1d2d a105          	cp	a,#5
-9461  1d2f 2609          	jrne	L1014
-9462                     ; 2029 	adr_drv_stat=6;
-9464  1d31 35060007      	mov	_adr_drv_stat,#6
-9465                     ; 2030 	adc_buff_[9]=temp_adc;
-9467  1d35 1e08          	ldw	x,(OFST-1,sp)
-9468  1d37 cf0017        	ldw	_adc_buff_+18,x
-9469  1d3a               L1014:
-9470                     ; 2033 adc_buff[adc_ch][adc_cnt]=temp_adc;
-9472  1d3a b6be          	ld	a,_adc_cnt
-9473  1d3c 5f            	clrw	x
-9474  1d3d 97            	ld	xl,a
-9475  1d3e 58            	sllw	x
-9476  1d3f 1f03          	ldw	(OFST-6,sp),x
-9477  1d41 b6bf          	ld	a,_adc_ch
-9478  1d43 97            	ld	xl,a
-9479  1d44 a620          	ld	a,#32
-9480  1d46 42            	mul	x,a
-9481  1d47 72fb03        	addw	x,(OFST-6,sp)
-9482  1d4a 1608          	ldw	y,(OFST-1,sp)
-9483  1d4c df0019        	ldw	(_adc_buff,x),y
-9484                     ; 2039 adc_ch++;
-9486  1d4f 3cbf          	inc	_adc_ch
-9487                     ; 2040 if(adc_ch>=5)
-9489  1d51 b6bf          	ld	a,_adc_ch
-9490  1d53 a105          	cp	a,#5
-9491  1d55 250c          	jrult	L1114
-9492                     ; 2043 	adc_ch=0;
-9494  1d57 3fbf          	clr	_adc_ch
-9495                     ; 2044 	adc_cnt++;
-9497  1d59 3cbe          	inc	_adc_cnt
-9498                     ; 2045 	if(adc_cnt>=16)
-9500  1d5b b6be          	ld	a,_adc_cnt
-9501  1d5d a110          	cp	a,#16
-9502  1d5f 2502          	jrult	L1114
-9503                     ; 2047 		adc_cnt=0;
-9505  1d61 3fbe          	clr	_adc_cnt
-9506  1d63               L1114:
-9507                     ; 2051 if((adc_cnt&0x03)==0)
-9509  1d63 b6be          	ld	a,_adc_cnt
-9510  1d65 a503          	bcp	a,#3
-9511  1d67 264b          	jrne	L5114
-9512                     ; 2055 	tempSS=0;
-9514  1d69 ae0000        	ldw	x,#0
-9515  1d6c 1f08          	ldw	(OFST-1,sp),x
-9516  1d6e ae0000        	ldw	x,#0
-9517  1d71 1f06          	ldw	(OFST-3,sp),x
-9518                     ; 2056 	for(i=0;i<16;i++)
-9520  1d73 0f05          	clr	(OFST-4,sp)
-9521  1d75               L7114:
-9522                     ; 2058 		tempSS+=(signed long)adc_buff[adc_ch][i];
-9524  1d75 7b05          	ld	a,(OFST-4,sp)
-9525  1d77 5f            	clrw	x
-9526  1d78 97            	ld	xl,a
-9527  1d79 58            	sllw	x
-9528  1d7a 1f03          	ldw	(OFST-6,sp),x
-9529  1d7c b6bf          	ld	a,_adc_ch
-9530  1d7e 97            	ld	xl,a
-9531  1d7f a620          	ld	a,#32
-9532  1d81 42            	mul	x,a
-9533  1d82 72fb03        	addw	x,(OFST-6,sp)
-9534  1d85 de0019        	ldw	x,(_adc_buff,x)
-9535  1d88 cd0000        	call	c_itolx
-9537  1d8b 96            	ldw	x,sp
-9538  1d8c 1c0006        	addw	x,#OFST-3
-9539  1d8f cd0000        	call	c_lgadd
-9541                     ; 2056 	for(i=0;i<16;i++)
-9543  1d92 0c05          	inc	(OFST-4,sp)
-9546  1d94 7b05          	ld	a,(OFST-4,sp)
-9547  1d96 a110          	cp	a,#16
-9548  1d98 25db          	jrult	L7114
-9549                     ; 2060 	adc_buff_[adc_ch]=(signed short)(tempSS>>4);
-9551  1d9a 96            	ldw	x,sp
-9552  1d9b 1c0006        	addw	x,#OFST-3
-9553  1d9e cd0000        	call	c_ltor
-9555  1da1 a604          	ld	a,#4
-9556  1da3 cd0000        	call	c_lrsh
-9558  1da6 be02          	ldw	x,c_lreg+2
-9559  1da8 b6bf          	ld	a,_adc_ch
-9560  1daa 905f          	clrw	y
-9561  1dac 9097          	ld	yl,a
-9562  1dae 9058          	sllw	y
-9563  1db0 90df0005      	ldw	(_adc_buff_,y),x
-9564  1db4               L5114:
-9565                     ; 2071 adc_plazma_short++;
-9567  1db4 bebc          	ldw	x,_adc_plazma_short
-9568  1db6 1c0001        	addw	x,#1
-9569  1db9 bfbc          	ldw	_adc_plazma_short,x
-9570                     ; 2086 }
-9573  1dbb 5b09          	addw	sp,#9
-9574  1dbd 85            	popw	x
-9575  1dbe bf00          	ldw	c_lreg,x
-9576  1dc0 85            	popw	x
-9577  1dc1 bf02          	ldw	c_lreg+2,x
-9578  1dc3 85            	popw	x
-9579  1dc4 bf00          	ldw	c_y,x
-9580  1dc6 85            	popw	x
-9581  1dc7 bf00          	ldw	c_x,x
-9582  1dc9 80            	iret
-9645                     ; 2094 main()
-9645                     ; 2095 {
-9647                     	switch	.text
-9648  1dca               _main:
-9652                     ; 2097 CLK->ECKR|=1;
-9654  1dca 721050c1      	bset	20673,#0
-9656  1dce               L7314:
-9657                     ; 2098 while((CLK->ECKR & 2) == 0);
-9659  1dce c650c1        	ld	a,20673
-9660  1dd1 a502          	bcp	a,#2
-9661  1dd3 27f9          	jreq	L7314
-9662                     ; 2099 CLK->SWCR|=2;
-9664  1dd5 721250c5      	bset	20677,#1
-9665                     ; 2100 CLK->SWR=0xB4;
-9667  1dd9 35b450c4      	mov	20676,#180
-9668                     ; 2102 delay_ms(200);
-9670  1ddd ae00c8        	ldw	x,#200
-9671  1de0 cd004c        	call	_delay_ms
-9673                     ; 2103 FLASH_DUKR=0xae;
-9675  1de3 35ae5064      	mov	_FLASH_DUKR,#174
-9676                     ; 2104 FLASH_DUKR=0x56;
-9678  1de7 35565064      	mov	_FLASH_DUKR,#86
-9679                     ; 2105 enableInterrupts();
-9682  1deb 9a            rim
-9684                     ; 2108 adr_drv_v3();
-9687  1dec cd1013        	call	_adr_drv_v3
-9689                     ; 2112 t4_init();
-9691  1def cd1b8c        	call	_t4_init
-9693                     ; 2114 		GPIOG->DDR|=(1<<0);
-9695  1df2 72105020      	bset	20512,#0
-9696                     ; 2115 		GPIOG->CR1|=(1<<0);
-9698  1df6 72105021      	bset	20513,#0
-9699                     ; 2116 		GPIOG->CR2&=~(1<<0);	
-9701  1dfa 72115022      	bres	20514,#0
-9702                     ; 2119 		GPIOG->DDR&=~(1<<1);
-9704  1dfe 72135020      	bres	20512,#1
-9705                     ; 2120 		GPIOG->CR1|=(1<<1);
-9707  1e02 72125021      	bset	20513,#1
-9708                     ; 2121 		GPIOG->CR2&=~(1<<1);
-9710  1e06 72135022      	bres	20514,#1
-9711                     ; 2123 init_CAN();
-9713  1e0a cd1356        	call	_init_CAN
-9715                     ; 2128 GPIOC->DDR|=(1<<1);
-9717  1e0d 7212500c      	bset	20492,#1
-9718                     ; 2129 GPIOC->CR1|=(1<<1);
-9720  1e11 7212500d      	bset	20493,#1
-9721                     ; 2130 GPIOC->CR2|=(1<<1);
-9723  1e15 7212500e      	bset	20494,#1
-9724                     ; 2132 GPIOC->DDR|=(1<<2);
-9726  1e19 7214500c      	bset	20492,#2
-9727                     ; 2133 GPIOC->CR1|=(1<<2);
-9729  1e1d 7214500d      	bset	20493,#2
-9730                     ; 2134 GPIOC->CR2|=(1<<2);
-9732  1e21 7214500e      	bset	20494,#2
-9733                     ; 2141 t1_init();
-9735  1e25 cd1b9d        	call	_t1_init
-9737                     ; 2143 GPIOA->DDR|=(1<<5);
-9739  1e28 721a5002      	bset	20482,#5
-9740                     ; 2144 GPIOA->CR1|=(1<<5);
-9742  1e2c 721a5003      	bset	20483,#5
-9743                     ; 2145 GPIOA->CR2&=~(1<<5);
-9745  1e30 721b5004      	bres	20484,#5
-9746                     ; 2151 GPIOB->DDR|=(1<<3);
-9748  1e34 72165007      	bset	20487,#3
-9749                     ; 2152 GPIOB->CR1|=(1<<3);
-9751  1e38 72165008      	bset	20488,#3
-9752                     ; 2153 GPIOB->CR2|=(1<<3);
-9754  1e3c 72165009      	bset	20489,#3
-9755                     ; 2155 GPIOC->DDR|=(1<<3);
-9757  1e40 7216500c      	bset	20492,#3
-9758                     ; 2156 GPIOC->CR1|=(1<<3);
-9760  1e44 7216500d      	bset	20493,#3
-9761                     ; 2157 GPIOC->CR2|=(1<<3);
-9763  1e48 7216500e      	bset	20494,#3
-9764                     ; 2160 if(bps_class==bpsIPS) 
-9766  1e4c b601          	ld	a,_bps_class
-9767  1e4e a101          	cp	a,#1
-9768  1e50 260a          	jrne	L5414
-9769                     ; 2162 	pwm_u=ee_U_AVT;
-9771  1e52 ce000a        	ldw	x,_ee_U_AVT
-9772  1e55 bf0b          	ldw	_pwm_u,x
-9773                     ; 2163 	volum_u_main_=ee_U_AVT;
-9775  1e57 ce000a        	ldw	x,_ee_U_AVT
-9776  1e5a bf1c          	ldw	_volum_u_main_,x
-9777  1e5c               L5414:
-9778                     ; 2170 	if(bCAN_RX)
-9780  1e5c 3d09          	tnz	_bCAN_RX
-9781  1e5e 2705          	jreq	L1514
-9782                     ; 2172 		bCAN_RX=0;
-9784  1e60 3f09          	clr	_bCAN_RX
-9785                     ; 2173 		can_in_an();	
-9787  1e62 cd1561        	call	_can_in_an
-9789  1e65               L1514:
-9790                     ; 2175 	if(b100Hz)
-9792                     	btst	_b100Hz
-9793  1e6a 240a          	jruge	L3514
-9794                     ; 2177 		b100Hz=0;
-9796  1e6c 72110008      	bres	_b100Hz
-9797                     ; 2186 		adc2_init();
-9799  1e70 cd1bda        	call	_adc2_init
-9801                     ; 2187 		can_tx_hndl();
-9803  1e73 cd1449        	call	_can_tx_hndl
-9805  1e76               L3514:
-9806                     ; 2190 	if(b10Hz)
-9808                     	btst	_b10Hz
-9809  1e7b 2419          	jruge	L5514
-9810                     ; 2192 		b10Hz=0;
-9812  1e7d 72110007      	bres	_b10Hz
-9813                     ; 2194           matemat();
-9815  1e81 cd0bca        	call	_matemat
-9817                     ; 2195 	    	led_drv(); 
-9819  1e84 cd0711        	call	_led_drv
-9821                     ; 2196 	     link_drv();
-9823  1e87 cd07ff        	call	_link_drv
-9825                     ; 2197 	     pwr_hndl();		//вычисление воздействий на силу
-9827  1e8a cd0aae        	call	_pwr_hndl
-9829                     ; 2198 	     JP_drv();
-9831  1e8d cd0774        	call	_JP_drv
-9833                     ; 2199 	     flags_drv();
-9835  1e90 cd0fc8        	call	_flags_drv
-9837                     ; 2200 		net_drv();
-9839  1e93 cd14b3        	call	_net_drv
-9841  1e96               L5514:
-9842                     ; 2203 	if(b5Hz)
-9844                     	btst	_b5Hz
-9845  1e9b 240d          	jruge	L7514
-9846                     ; 2205 		b5Hz=0;
-9848  1e9d 72110006      	bres	_b5Hz
-9849                     ; 2207 		pwr_drv();		//воздействие на силу
-9851  1ea1 cd09aa        	call	_pwr_drv
-9853                     ; 2208 		led_hndl();
-9855  1ea4 cd008e        	call	_led_hndl
-9857                     ; 2210 		vent_drv();
-9859  1ea7 cd084e        	call	_vent_drv
-9861  1eaa               L7514:
-9862                     ; 2213 	if(b2Hz)
-9864                     	btst	_b2Hz
-9865  1eaf 2404          	jruge	L1614
-9866                     ; 2215 		b2Hz=0;
-9868  1eb1 72110005      	bres	_b2Hz
-9869  1eb5               L1614:
-9870                     ; 2224 	if(b1Hz)
-9872                     	btst	_b1Hz
-9873  1eba 24a0          	jruge	L5414
-9874                     ; 2226 		b1Hz=0;
-9876  1ebc 72110004      	bres	_b1Hz
-9877                     ; 2228 		temper_drv();			//вычисление аварий температуры
-9879  1ec0 cd0cf8        	call	_temper_drv
-9881                     ; 2229 		u_drv();
-9883  1ec3 cd0dcf        	call	_u_drv
-9885                     ; 2230           x_drv();
-9887  1ec6 cd0eaf        	call	_x_drv
-9889                     ; 2231           if(main_cnt<1000)main_cnt++;
-9891  1ec9 9c            	rvf
-9892  1eca be4e          	ldw	x,_main_cnt
-9893  1ecc a303e8        	cpw	x,#1000
-9894  1ecf 2e07          	jrsge	L5614
-9897  1ed1 be4e          	ldw	x,_main_cnt
-9898  1ed3 1c0001        	addw	x,#1
-9899  1ed6 bf4e          	ldw	_main_cnt,x
-9900  1ed8               L5614:
-9901                     ; 2232   		if((link==OFF)||(jp_mode==jp3))apv_hndl();
-9903  1ed8 b65f          	ld	a,_link
-9904  1eda a1aa          	cp	a,#170
-9905  1edc 2706          	jreq	L1714
-9907  1ede b647          	ld	a,_jp_mode
-9908  1ee0 a103          	cp	a,#3
-9909  1ee2 2603          	jrne	L7614
-9910  1ee4               L1714:
-9913  1ee4 cd0f29        	call	_apv_hndl
-9915  1ee7               L7614:
-9916                     ; 2235   		can_error_cnt++;
-9918  1ee7 3c6d          	inc	_can_error_cnt
-9919                     ; 2236   		if(can_error_cnt>=10)
-9921  1ee9 b66d          	ld	a,_can_error_cnt
-9922  1eeb a10a          	cp	a,#10
-9923  1eed 2505          	jrult	L3714
-9924                     ; 2238   			can_error_cnt=0;
-9926  1eef 3f6d          	clr	_can_error_cnt
-9927                     ; 2239 			init_CAN();
-9929  1ef1 cd1356        	call	_init_CAN
-9931  1ef4               L3714:
-9932                     ; 2243 		volum_u_main_drv();
-9934  1ef4 cd1203        	call	_volum_u_main_drv
-9936                     ; 2245 		pwm_stat++;
-9938  1ef7 3c04          	inc	_pwm_stat
-9939                     ; 2246 		if(pwm_stat>=10)pwm_stat=0;
-9941  1ef9 b604          	ld	a,_pwm_stat
-9942  1efb a10a          	cp	a,#10
-9943  1efd 2502          	jrult	L5714
-9946  1eff 3f04          	clr	_pwm_stat
-9947  1f01               L5714:
-9948                     ; 2247 adc_plazma_short++;
-9950  1f01 bebc          	ldw	x,_adc_plazma_short
-9951  1f03 1c0001        	addw	x,#1
-9952  1f06 bfbc          	ldw	_adc_plazma_short,x
-9953  1f08 ac5c1e5c      	jpf	L5414
-10967                     	xdef	_main
-10968                     	xdef	f_ADC2_EOC_Interrupt
-10969                     	xdef	f_CAN_TX_Interrupt
-10970                     	xdef	f_CAN_RX_Interrupt
-10971                     	xdef	f_TIM4_UPD_Interrupt
-10972                     	xdef	_adc2_init
-10973                     	xdef	_t1_init
-10974                     	xdef	_t4_init
-10975                     	xdef	_can_in_an
-10976                     	xdef	_net_drv
-10977                     	xdef	_can_tx_hndl
-10978                     	xdef	_can_transmit
-10979                     	xdef	_init_CAN
-10980                     	xdef	_volum_u_main_drv
-10981                     	xdef	_adr_drv_v3
-10982                     	xdef	_adr_drv_v4
-10983                     	xdef	_flags_drv
-10984                     	xdef	_apv_hndl
-10985                     	xdef	_apv_stop
-10986                     	xdef	_apv_start
-10987                     	xdef	_x_drv
-10988                     	xdef	_u_drv
-10989                     	xdef	_temper_drv
-10990                     	xdef	_matemat
-10991                     	xdef	_pwr_hndl
-10992                     	xdef	_pwr_drv
-10993                     	xdef	_vent_drv
-10994                     	xdef	_link_drv
-10995                     	xdef	_JP_drv
-10996                     	xdef	_led_drv
-10997                     	xdef	_led_hndl
-10998                     	xdef	_delay_ms
-10999                     	xdef	_granee
-11000                     	xdef	_gran
-11001                     .eeprom:	section	.data
-11002  0000               _ee_IMAXVENT:
-11003  0000 0000          	ds.b	2
-11004                     	xdef	_ee_IMAXVENT
-11005                     	switch	.ubsct
-11006  0001               _bps_class:
-11007  0001 00            	ds.b	1
-11008                     	xdef	_bps_class
-11009  0002               _vent_pwm:
-11010  0002 0000          	ds.b	2
-11011                     	xdef	_vent_pwm
-11012  0004               _pwm_stat:
-11013  0004 00            	ds.b	1
-11014                     	xdef	_pwm_stat
-11015  0005               _pwm_vent_cnt:
-11016  0005 00            	ds.b	1
-11017                     	xdef	_pwm_vent_cnt
-11018                     	switch	.eeprom
-11019  0002               _ee_DEVICE:
-11020  0002 0000          	ds.b	2
-11021                     	xdef	_ee_DEVICE
-11022  0004               _ee_AVT_MODE:
-11023  0004 0000          	ds.b	2
-11024                     	xdef	_ee_AVT_MODE
-11025                     	switch	.ubsct
-11026  0006               _i_main_bps_cnt:
-11027  0006 000000000000  	ds.b	6
-11028                     	xdef	_i_main_bps_cnt
-11029  000c               _i_main_sigma:
-11030  000c 0000          	ds.b	2
-11031                     	xdef	_i_main_sigma
-11032  000e               _i_main_num_of_bps:
-11033  000e 00            	ds.b	1
-11034                     	xdef	_i_main_num_of_bps
-11035  000f               _i_main_avg:
-11036  000f 0000          	ds.b	2
-11037                     	xdef	_i_main_avg
-11038  0011               _i_main_flag:
-11039  0011 000000000000  	ds.b	6
-11040                     	xdef	_i_main_flag
-11041  0017               _i_main:
-11042  0017 000000000000  	ds.b	12
-11043                     	xdef	_i_main
-11044  0023               _x:
-11045  0023 000000000000  	ds.b	12
-11046                     	xdef	_x
-11047                     	xdef	_volum_u_main_
-11048                     	switch	.eeprom
-11049  0006               _UU_AVT:
-11050  0006 0000          	ds.b	2
-11051                     	xdef	_UU_AVT
-11052                     	switch	.ubsct
-11053  002f               _cnt_net_drv:
-11054  002f 00            	ds.b	1
-11055                     	xdef	_cnt_net_drv
-11056                     	switch	.bit
-11057  0001               _bMAIN:
-11058  0001 00            	ds.b	1
-11059                     	xdef	_bMAIN
-11060                     	switch	.ubsct
-11061  0030               _plazma_int:
-11062  0030 000000000000  	ds.b	6
-11063                     	xdef	_plazma_int
-11064                     	xdef	_rotor_int
-11065  0036               _led_green_buff:
-11066  0036 00000000      	ds.b	4
-11067                     	xdef	_led_green_buff
-11068  003a               _led_red_buff:
-11069  003a 00000000      	ds.b	4
-11070                     	xdef	_led_red_buff
-11071                     	xdef	_led_drv_cnt
-11072                     	xdef	_led_green
-11073                     	xdef	_led_red
-11074  003e               _res_fl_cnt:
-11075  003e 00            	ds.b	1
-11076                     	xdef	_res_fl_cnt
-11077                     	xdef	_bRES_
-11078                     	xdef	_bRES
-11079                     	switch	.eeprom
-11080  0008               _res_fl_:
-11081  0008 00            	ds.b	1
-11082                     	xdef	_res_fl_
-11083  0009               _res_fl:
-11084  0009 00            	ds.b	1
-11085                     	xdef	_res_fl
-11086                     	switch	.ubsct
-11087  003f               _cnt_apv_off:
-11088  003f 00            	ds.b	1
-11089                     	xdef	_cnt_apv_off
-11090                     	switch	.bit
-11091  0002               _bAPV:
-11092  0002 00            	ds.b	1
-11093                     	xdef	_bAPV
-11094                     	switch	.ubsct
-11095  0040               _apv_cnt_:
-11096  0040 0000          	ds.b	2
-11097                     	xdef	_apv_cnt_
-11098  0042               _apv_cnt:
-11099  0042 000000        	ds.b	3
-11100                     	xdef	_apv_cnt
-11101                     	xdef	_bBL_IPS
-11102                     	switch	.bit
-11103  0003               _bBL:
-11104  0003 00            	ds.b	1
-11105                     	xdef	_bBL
-11106                     	switch	.ubsct
-11107  0045               _cnt_JP1:
-11108  0045 00            	ds.b	1
-11109                     	xdef	_cnt_JP1
-11110  0046               _cnt_JP0:
-11111  0046 00            	ds.b	1
-11112                     	xdef	_cnt_JP0
-11113  0047               _jp_mode:
-11114  0047 00            	ds.b	1
-11115                     	xdef	_jp_mode
-11116                     	xdef	_pwm_i
-11117                     	xdef	_pwm_u
-11118  0048               _tmax_cnt:
-11119  0048 0000          	ds.b	2
-11120                     	xdef	_tmax_cnt
-11121  004a               _tsign_cnt:
-11122  004a 0000          	ds.b	2
-11123                     	xdef	_tsign_cnt
-11124                     	switch	.eeprom
-11125  000a               _ee_U_AVT:
-11126  000a 0000          	ds.b	2
-11127                     	xdef	_ee_U_AVT
-11128  000c               _ee_tsign:
-11129  000c 0000          	ds.b	2
-11130                     	xdef	_ee_tsign
-11131  000e               _ee_tmax:
-11132  000e 0000          	ds.b	2
-11133                     	xdef	_ee_tmax
-11134  0010               _ee_dU:
-11135  0010 0000          	ds.b	2
-11136                     	xdef	_ee_dU
-11137  0012               _ee_Umax:
-11138  0012 0000          	ds.b	2
-11139                     	xdef	_ee_Umax
-11140  0014               _ee_TZAS:
-11141  0014 0000          	ds.b	2
-11142                     	xdef	_ee_TZAS
-11143                     	switch	.ubsct
-11144  004c               _main_cnt1:
-11145  004c 0000          	ds.b	2
-11146                     	xdef	_main_cnt1
-11147  004e               _main_cnt:
-11148  004e 0000          	ds.b	2
-11149                     	xdef	_main_cnt
-11150  0050               _off_bp_cnt:
-11151  0050 00            	ds.b	1
-11152                     	xdef	_off_bp_cnt
-11153  0051               _flags_tu_cnt_off:
-11154  0051 00            	ds.b	1
-11155                     	xdef	_flags_tu_cnt_off
-11156  0052               _flags_tu_cnt_on:
-11157  0052 00            	ds.b	1
-11158                     	xdef	_flags_tu_cnt_on
-11159  0053               _vol_i_temp:
-11160  0053 0000          	ds.b	2
-11161                     	xdef	_vol_i_temp
-11162  0055               _vol_u_temp:
-11163  0055 0000          	ds.b	2
-11164                     	xdef	_vol_u_temp
-11165                     	switch	.eeprom
-11166  0016               __x_ee_:
-11167  0016 0000          	ds.b	2
-11168                     	xdef	__x_ee_
-11169                     	switch	.ubsct
-11170  0057               __x_cnt:
-11171  0057 0000          	ds.b	2
-11172                     	xdef	__x_cnt
-11173  0059               __x__:
-11174  0059 0000          	ds.b	2
-11175                     	xdef	__x__
-11176  005b               __x_:
-11177  005b 0000          	ds.b	2
-11178                     	xdef	__x_
-11179  005d               _flags_tu:
-11180  005d 00            	ds.b	1
-11181                     	xdef	_flags_tu
-11182                     	xdef	_flags
-11183  005e               _link_cnt:
-11184  005e 00            	ds.b	1
-11185                     	xdef	_link_cnt
-11186  005f               _link:
-11187  005f 00            	ds.b	1
-11188                     	xdef	_link
-11189  0060               _umin_cnt:
-11190  0060 0000          	ds.b	2
-11191                     	xdef	_umin_cnt
-11192  0062               _umax_cnt:
-11193  0062 0000          	ds.b	2
-11194                     	xdef	_umax_cnt
-11195                     	switch	.eeprom
-11196  0018               _ee_K:
-11197  0018 000000000000  	ds.b	16
-11198                     	xdef	_ee_K
-11199                     	switch	.ubsct
-11200  0064               _T:
-11201  0064 00            	ds.b	1
-11202                     	xdef	_T
-11203  0065               _Udb:
-11204  0065 0000          	ds.b	2
-11205                     	xdef	_Udb
-11206  0067               _Ui:
-11207  0067 0000          	ds.b	2
-11208                     	xdef	_Ui
-11209  0069               _Un:
-11210  0069 0000          	ds.b	2
-11211                     	xdef	_Un
-11212  006b               _I:
-11213  006b 0000          	ds.b	2
-11214                     	xdef	_I
-11215  006d               _can_error_cnt:
-11216  006d 00            	ds.b	1
-11217                     	xdef	_can_error_cnt
-11218                     	xdef	_bCAN_RX
-11219  006e               _tx_busy_cnt:
-11220  006e 00            	ds.b	1
-11221                     	xdef	_tx_busy_cnt
-11222                     	xdef	_bTX_FREE
-11223  006f               _can_buff_rd_ptr:
-11224  006f 00            	ds.b	1
-11225                     	xdef	_can_buff_rd_ptr
-11226  0070               _can_buff_wr_ptr:
-11227  0070 00            	ds.b	1
-11228                     	xdef	_can_buff_wr_ptr
-11229  0071               _can_out_buff:
-11230  0071 000000000000  	ds.b	64
-11231                     	xdef	_can_out_buff
-11232                     	switch	.bss
-11233  0000               _adress_error:
-11234  0000 00            	ds.b	1
-11235                     	xdef	_adress_error
-11236  0001               _adress:
-11237  0001 00            	ds.b	1
-11238                     	xdef	_adress
-11239  0002               _adr:
-11240  0002 000000        	ds.b	3
-11241                     	xdef	_adr
-11242                     	xdef	_adr_drv_stat
-11243                     	xdef	_led_ind
-11244                     	switch	.ubsct
-11245  00b1               _led_ind_cnt:
-11246  00b1 00            	ds.b	1
-11247                     	xdef	_led_ind_cnt
-11248  00b2               _adc_plazma:
-11249  00b2 000000000000  	ds.b	10
-11250                     	xdef	_adc_plazma
-11251  00bc               _adc_plazma_short:
-11252  00bc 0000          	ds.b	2
-11253                     	xdef	_adc_plazma_short
-11254  00be               _adc_cnt:
-11255  00be 00            	ds.b	1
-11256                     	xdef	_adc_cnt
-11257  00bf               _adc_ch:
-11258  00bf 00            	ds.b	1
-11259                     	xdef	_adc_ch
-11260                     	switch	.bss
-11261  0005               _adc_buff_:
-11262  0005 000000000000  	ds.b	20
-11263                     	xdef	_adc_buff_
-11264  0019               _adc_buff:
-11265  0019 000000000000  	ds.b	320
-11266                     	xdef	_adc_buff
-11267                     	switch	.ubsct
-11268  00c0               _mess:
-11269  00c0 000000000000  	ds.b	14
-11270                     	xdef	_mess
-11271                     	switch	.bit
-11272  0004               _b1Hz:
-11273  0004 00            	ds.b	1
-11274                     	xdef	_b1Hz
-11275  0005               _b2Hz:
-11276  0005 00            	ds.b	1
-11277                     	xdef	_b2Hz
-11278  0006               _b5Hz:
-11279  0006 00            	ds.b	1
-11280                     	xdef	_b5Hz
-11281  0007               _b10Hz:
-11282  0007 00            	ds.b	1
-11283                     	xdef	_b10Hz
-11284  0008               _b100Hz:
-11285  0008 00            	ds.b	1
-11286                     	xdef	_b100Hz
-11287                     	xdef	_t0_cnt4
-11288                     	xdef	_t0_cnt3
-11289                     	xdef	_t0_cnt2
-11290                     	xdef	_t0_cnt1
-11291                     	xdef	_t0_cnt0
-11292                     	xref.b	c_lreg
-11293                     	xref.b	c_x
-11294                     	xref.b	c_y
-11314                     	xref	c_lrsh
-11315                     	xref	c_lgadd
-11316                     	xref	c_ladd
-11317                     	xref	c_umul
-11318                     	xref	c_lgmul
-11319                     	xref	c_lgsub
-11320                     	xref	c_lsbc
-11321                     	xref	c_idiv
-11322                     	xref	c_ldiv
-11323                     	xref	c_itolx
-11324                     	xref	c_eewrc
-11325                     	xref	c_imul
-11326                     	xref	c_lcmp
-11327                     	xref	c_ltor
-11328                     	xref	c_lgadc
-11329                     	xref	c_rtol
-11330                     	xref	c_vmul
-11331                     	xref	c_eewrw
-11332                     	end
+8526  19d0 270c          	jreq	L7763
+8529  19d2 b6cd          	ld	a,_mess+13
+8530  19d4 5f            	clrw	x
+8531  19d5 97            	ld	xl,a
+8532  19d6 89            	pushw	x
+8533  19d7 ae0000        	ldw	x,#_ee_IMAXVENT
+8534  19da cd0000        	call	c_eewrw
+8536  19dd 85            	popw	x
+8537  19de               L7763:
+8538                     ; 1750 			if(ee_TZAS!=3) ee_TZAS=3;
+8540  19de ce0014        	ldw	x,_ee_TZAS
+8541  19e1 a30003        	cpw	x,#3
+8542  19e4 2603          	jrne	L632
+8543  19e6 cc1b9a        	jp	L1243
+8544  19e9               L632:
+8547  19e9 ae0003        	ldw	x,#3
+8548  19ec 89            	pushw	x
+8549  19ed ae0014        	ldw	x,#_ee_TZAS
+8550  19f0 cd0000        	call	c_eewrw
+8552  19f3 85            	popw	x
+8553  19f4 ac9a1b9a      	jpf	L1243
+8554  19f8               L5563:
+8555                     ; 1754 else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==CMND)&&(mess[9]==ALRM_RES))
+8557  19f8 b6c6          	ld	a,_mess+6
+8558  19fa c10001        	cp	a,_adress
+8559  19fd 262d          	jrne	L5073
+8561  19ff b6c7          	ld	a,_mess+7
+8562  1a01 c10001        	cp	a,_adress
+8563  1a04 2626          	jrne	L5073
+8565  1a06 b6c8          	ld	a,_mess+8
+8566  1a08 a116          	cp	a,#22
+8567  1a0a 2620          	jrne	L5073
+8569  1a0c b6c9          	ld	a,_mess+9
+8570  1a0e a163          	cp	a,#99
+8571  1a10 261a          	jrne	L5073
+8572                     ; 1756 	flags&=0b11100001;
+8574  1a12 b60a          	ld	a,_flags
+8575  1a14 a4e1          	and	a,#225
+8576  1a16 b70a          	ld	_flags,a
+8577                     ; 1757 	tsign_cnt=0;
+8579  1a18 5f            	clrw	x
+8580  1a19 bf4a          	ldw	_tsign_cnt,x
+8581                     ; 1758 	tmax_cnt=0;
+8583  1a1b 5f            	clrw	x
+8584  1a1c bf48          	ldw	_tmax_cnt,x
+8585                     ; 1759 	umax_cnt=0;
+8587  1a1e 5f            	clrw	x
+8588  1a1f bf62          	ldw	_umax_cnt,x
+8589                     ; 1760 	umin_cnt=0;
+8591  1a21 5f            	clrw	x
+8592  1a22 bf60          	ldw	_umin_cnt,x
+8593                     ; 1761 	led_drv_cnt=30;
+8595  1a24 351e0019      	mov	_led_drv_cnt,#30
+8597  1a28 ac9a1b9a      	jpf	L1243
+8598  1a2c               L5073:
+8599                     ; 1763 else if((mess[6]==0xff)&&(mess[7]==0xff)&&(mess[8]==CMND)&&(mess[9]==CMND))
+8601  1a2c b6c6          	ld	a,_mess+6
+8602  1a2e a1ff          	cp	a,#255
+8603  1a30 265f          	jrne	L1173
+8605  1a32 b6c7          	ld	a,_mess+7
+8606  1a34 a1ff          	cp	a,#255
+8607  1a36 2659          	jrne	L1173
+8609  1a38 b6c8          	ld	a,_mess+8
+8610  1a3a a116          	cp	a,#22
+8611  1a3c 2653          	jrne	L1173
+8613  1a3e b6c9          	ld	a,_mess+9
+8614  1a40 a116          	cp	a,#22
+8615  1a42 264d          	jrne	L1173
+8616                     ; 1765 	if((mess[10]==0x55)&&(mess[11]==0x55)) _x_++;
+8618  1a44 b6ca          	ld	a,_mess+10
+8619  1a46 a155          	cp	a,#85
+8620  1a48 260f          	jrne	L3173
+8622  1a4a b6cb          	ld	a,_mess+11
+8623  1a4c a155          	cp	a,#85
+8624  1a4e 2609          	jrne	L3173
+8627  1a50 be5b          	ldw	x,__x_
+8628  1a52 1c0001        	addw	x,#1
+8629  1a55 bf5b          	ldw	__x_,x
+8631  1a57 2024          	jra	L5173
+8632  1a59               L3173:
+8633                     ; 1766 	else if((mess[10]==0x66)&&(mess[11]==0x66)) _x_--; 
+8635  1a59 b6ca          	ld	a,_mess+10
+8636  1a5b a166          	cp	a,#102
+8637  1a5d 260f          	jrne	L7173
+8639  1a5f b6cb          	ld	a,_mess+11
+8640  1a61 a166          	cp	a,#102
+8641  1a63 2609          	jrne	L7173
+8644  1a65 be5b          	ldw	x,__x_
+8645  1a67 1d0001        	subw	x,#1
+8646  1a6a bf5b          	ldw	__x_,x
+8648  1a6c 200f          	jra	L5173
+8649  1a6e               L7173:
+8650                     ; 1767 	else if((mess[10]==0x77)&&(mess[11]==0x77)) _x_=0;
+8652  1a6e b6ca          	ld	a,_mess+10
+8653  1a70 a177          	cp	a,#119
+8654  1a72 2609          	jrne	L5173
+8656  1a74 b6cb          	ld	a,_mess+11
+8657  1a76 a177          	cp	a,#119
+8658  1a78 2603          	jrne	L5173
+8661  1a7a 5f            	clrw	x
+8662  1a7b bf5b          	ldw	__x_,x
+8663  1a7d               L5173:
+8664                     ; 1768      gran(&_x_,-XMAX,XMAX);
+8666  1a7d ae0019        	ldw	x,#25
+8667  1a80 89            	pushw	x
+8668  1a81 aeffe7        	ldw	x,#65511
+8669  1a84 89            	pushw	x
+8670  1a85 ae005b        	ldw	x,#__x_
+8671  1a88 cd0000        	call	_gran
+8673  1a8b 5b04          	addw	sp,#4
+8675  1a8d ac9a1b9a      	jpf	L1243
+8676  1a91               L1173:
+8677                     ; 1770 else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==CMND)&&(mess[9]==mess[10])&&(mess[9]==0xee))
+8679  1a91 b6c6          	ld	a,_mess+6
+8680  1a93 c10001        	cp	a,_adress
+8681  1a96 2665          	jrne	L7273
+8683  1a98 b6c7          	ld	a,_mess+7
+8684  1a9a c10001        	cp	a,_adress
+8685  1a9d 265e          	jrne	L7273
+8687  1a9f b6c8          	ld	a,_mess+8
+8688  1aa1 a116          	cp	a,#22
+8689  1aa3 2658          	jrne	L7273
+8691  1aa5 b6c9          	ld	a,_mess+9
+8692  1aa7 b1ca          	cp	a,_mess+10
+8693  1aa9 2652          	jrne	L7273
+8695  1aab b6c9          	ld	a,_mess+9
+8696  1aad a1ee          	cp	a,#238
+8697  1aaf 264c          	jrne	L7273
+8698                     ; 1772 	rotor_int++;
+8700  1ab1 be1a          	ldw	x,_rotor_int
+8701  1ab3 1c0001        	addw	x,#1
+8702  1ab6 bf1a          	ldw	_rotor_int,x
+8703                     ; 1773      tempI=pwm_u;
+8705  1ab8 be0b          	ldw	x,_pwm_u
+8706  1aba 1f04          	ldw	(OFST-1,sp),x
+8707                     ; 1774 	ee_U_AVT=tempI;
+8709  1abc 1e04          	ldw	x,(OFST-1,sp)
+8710  1abe 89            	pushw	x
+8711  1abf ae000a        	ldw	x,#_ee_U_AVT
+8712  1ac2 cd0000        	call	c_eewrw
+8714  1ac5 85            	popw	x
+8715                     ; 1775 	UU_AVT=Un;
+8717  1ac6 be69          	ldw	x,_Un
+8718  1ac8 89            	pushw	x
+8719  1ac9 ae0006        	ldw	x,#_UU_AVT
+8720  1acc cd0000        	call	c_eewrw
+8722  1acf 85            	popw	x
+8723                     ; 1776 	delay_ms(100);
+8725  1ad0 ae0064        	ldw	x,#100
+8726  1ad3 cd004c        	call	_delay_ms
+8728                     ; 1777 	if(ee_U_AVT==tempI)can_transmit(0x18e,adress,PUTID,0xdd,0xdd,0,0,0,0);
+8730  1ad6 ce000a        	ldw	x,_ee_U_AVT
+8731  1ad9 1304          	cpw	x,(OFST-1,sp)
+8732  1adb 2703          	jreq	L042
+8733  1add cc1b9a        	jp	L1243
+8734  1ae0               L042:
+8737  1ae0 4b00          	push	#0
+8738  1ae2 4b00          	push	#0
+8739  1ae4 4b00          	push	#0
+8740  1ae6 4b00          	push	#0
+8741  1ae8 4bdd          	push	#221
+8742  1aea 4bdd          	push	#221
+8743  1aec 4b91          	push	#145
+8744  1aee 3b0001        	push	_adress
+8745  1af1 ae018e        	ldw	x,#398
+8746  1af4 cd13c5        	call	_can_transmit
+8748  1af7 5b08          	addw	sp,#8
+8749  1af9 ac9a1b9a      	jpf	L1243
+8750  1afd               L7273:
+8751                     ; 1782 else if((mess[7]==PUTTM1)&&(mess[6]!=adress)&&(mess[6]>=0)&&(mess[6]<=5))
+8753  1afd b6c7          	ld	a,_mess+7
+8754  1aff a1da          	cp	a,#218
+8755  1b01 2652          	jrne	L5373
+8757  1b03 b6c6          	ld	a,_mess+6
+8758  1b05 c10001        	cp	a,_adress
+8759  1b08 274b          	jreq	L5373
+8761  1b0a b6c6          	ld	a,_mess+6
+8762  1b0c a106          	cp	a,#6
+8763  1b0e 2445          	jruge	L5373
+8764                     ; 1784 	i_main_bps_cnt[mess[6]]=0;
+8766  1b10 b6c6          	ld	a,_mess+6
+8767  1b12 5f            	clrw	x
+8768  1b13 97            	ld	xl,a
+8769  1b14 6f06          	clr	(_i_main_bps_cnt,x)
+8770                     ; 1785 	i_main_flag[mess[6]]=1;
+8772  1b16 b6c6          	ld	a,_mess+6
+8773  1b18 5f            	clrw	x
+8774  1b19 97            	ld	xl,a
+8775  1b1a a601          	ld	a,#1
+8776  1b1c e711          	ld	(_i_main_flag,x),a
+8777                     ; 1786 	if(bMAIN)
+8779                     	btst	_bMAIN
+8780  1b23 2475          	jruge	L1243
+8781                     ; 1788 		i_main[mess[6]]=(signed short)mess[8]+(((signed short)mess[9])*256);
+8783  1b25 b6c9          	ld	a,_mess+9
+8784  1b27 5f            	clrw	x
+8785  1b28 97            	ld	xl,a
+8786  1b29 4f            	clr	a
+8787  1b2a 02            	rlwa	x,a
+8788  1b2b 1f01          	ldw	(OFST-4,sp),x
+8789  1b2d b6c8          	ld	a,_mess+8
+8790  1b2f 5f            	clrw	x
+8791  1b30 97            	ld	xl,a
+8792  1b31 72fb01        	addw	x,(OFST-4,sp)
+8793  1b34 b6c6          	ld	a,_mess+6
+8794  1b36 905f          	clrw	y
+8795  1b38 9097          	ld	yl,a
+8796  1b3a 9058          	sllw	y
+8797  1b3c 90ef17        	ldw	(_i_main,y),x
+8798                     ; 1789 		i_main[adress]=I;
+8800  1b3f c60001        	ld	a,_adress
+8801  1b42 5f            	clrw	x
+8802  1b43 97            	ld	xl,a
+8803  1b44 58            	sllw	x
+8804  1b45 90be6b        	ldw	y,_I
+8805  1b48 ef17          	ldw	(_i_main,x),y
+8806                     ; 1790      	i_main_flag[adress]=1;
+8808  1b4a c60001        	ld	a,_adress
+8809  1b4d 5f            	clrw	x
+8810  1b4e 97            	ld	xl,a
+8811  1b4f a601          	ld	a,#1
+8812  1b51 e711          	ld	(_i_main_flag,x),a
+8813  1b53 2045          	jra	L1243
+8814  1b55               L5373:
+8815                     ; 1794 else if((mess[7]==PUTTM2)&&(mess[6]!=adress)&&(mess[6]>=0)&&(mess[6]<=5))
+8817  1b55 b6c7          	ld	a,_mess+7
+8818  1b57 a1db          	cp	a,#219
+8819  1b59 263f          	jrne	L1243
+8821  1b5b b6c6          	ld	a,_mess+6
+8822  1b5d c10001        	cp	a,_adress
+8823  1b60 2738          	jreq	L1243
+8825  1b62 b6c6          	ld	a,_mess+6
+8826  1b64 a106          	cp	a,#6
+8827  1b66 2432          	jruge	L1243
+8828                     ; 1796 	i_main_bps_cnt[mess[6]]=0;
+8830  1b68 b6c6          	ld	a,_mess+6
+8831  1b6a 5f            	clrw	x
+8832  1b6b 97            	ld	xl,a
+8833  1b6c 6f06          	clr	(_i_main_bps_cnt,x)
+8834                     ; 1797 	i_main_flag[mess[6]]=1;		
+8836  1b6e b6c6          	ld	a,_mess+6
+8837  1b70 5f            	clrw	x
+8838  1b71 97            	ld	xl,a
+8839  1b72 a601          	ld	a,#1
+8840  1b74 e711          	ld	(_i_main_flag,x),a
+8841                     ; 1798 	if(bMAIN)
+8843                     	btst	_bMAIN
+8844  1b7b 241d          	jruge	L1243
+8845                     ; 1800 		if(mess[9]==0)i_main_flag[i]=1;
+8847  1b7d 3dc9          	tnz	_mess+9
+8848  1b7f 260a          	jrne	L7473
+8851  1b81 7b03          	ld	a,(OFST-2,sp)
+8852  1b83 5f            	clrw	x
+8853  1b84 97            	ld	xl,a
+8854  1b85 a601          	ld	a,#1
+8855  1b87 e711          	ld	(_i_main_flag,x),a
+8857  1b89 2006          	jra	L1573
+8858  1b8b               L7473:
+8859                     ; 1801 		else i_main_flag[i]=0;
+8861  1b8b 7b03          	ld	a,(OFST-2,sp)
+8862  1b8d 5f            	clrw	x
+8863  1b8e 97            	ld	xl,a
+8864  1b8f 6f11          	clr	(_i_main_flag,x)
+8865  1b91               L1573:
+8866                     ; 1802 		i_main_flag[adress]=1;
+8868  1b91 c60001        	ld	a,_adress
+8869  1b94 5f            	clrw	x
+8870  1b95 97            	ld	xl,a
+8871  1b96 a601          	ld	a,#1
+8872  1b98 e711          	ld	(_i_main_flag,x),a
+8873  1b9a               L1243:
+8874                     ; 1808 can_in_an_end:
+8874                     ; 1809 bCAN_RX=0;
+8876  1b9a 3f09          	clr	_bCAN_RX
+8877                     ; 1810 }   
+8880  1b9c 5b05          	addw	sp,#5
+8881  1b9e 81            	ret
+8904                     ; 1813 void t4_init(void){
+8905                     	switch	.text
+8906  1b9f               _t4_init:
+8910                     ; 1814 	TIM4->PSCR = 4;
+8912  1b9f 35045345      	mov	21317,#4
+8913                     ; 1815 	TIM4->ARR= 77;
+8915  1ba3 354d5346      	mov	21318,#77
+8916                     ; 1816 	TIM4->IER|= TIM4_IER_UIE;					// enable break interrupt
+8918  1ba7 72105341      	bset	21313,#0
+8919                     ; 1818 	TIM4->CR1=(TIM4_CR1_URS | TIM4_CR1_CEN | TIM4_CR1_ARPE);	
+8921  1bab 35855340      	mov	21312,#133
+8922                     ; 1820 }
+8925  1baf 81            	ret
+8948                     ; 1823 void t1_init(void)
+8948                     ; 1824 {
+8949                     	switch	.text
+8950  1bb0               _t1_init:
+8954                     ; 1825 TIM1->ARRH= 0x03;
+8956  1bb0 35035262      	mov	21090,#3
+8957                     ; 1826 TIM1->ARRL= 0xff;
+8959  1bb4 35ff5263      	mov	21091,#255
+8960                     ; 1827 TIM1->CCR1H= 0x00;	
+8962  1bb8 725f5265      	clr	21093
+8963                     ; 1828 TIM1->CCR1L= 0xff;
+8965  1bbc 35ff5266      	mov	21094,#255
+8966                     ; 1829 TIM1->CCR2H= 0x00;	
+8968  1bc0 725f5267      	clr	21095
+8969                     ; 1830 TIM1->CCR2L= 0x00;
+8971  1bc4 725f5268      	clr	21096
+8972                     ; 1831 TIM1->CCR3H= 0x00;	
+8974  1bc8 725f5269      	clr	21097
+8975                     ; 1832 TIM1->CCR3L= 0x64;
+8977  1bcc 3564526a      	mov	21098,#100
+8978                     ; 1834 TIM1->CCMR1= ((6<<4) & TIM1_CCMR_OCM) | TIM1_CCMR_OCxPE; //OC2 toggle mode, prelouded
+8980  1bd0 35685258      	mov	21080,#104
+8981                     ; 1835 TIM1->CCMR2= ((6<<4) & TIM1_CCMR_OCM) | TIM1_CCMR_OCxPE; //OC2 toggle mode, prelouded
+8983  1bd4 35685259      	mov	21081,#104
+8984                     ; 1836 TIM1->CCMR3= ((6<<4) & TIM1_CCMR_OCM) | TIM1_CCMR_OCxPE; //OC2 toggle mode, prelouded
+8986  1bd8 3568525a      	mov	21082,#104
+8987                     ; 1837 TIM1->CCER1= TIM1_CCER1_CC1E | TIM1_CCER1_CC2E ; //OC1, OC2 output pins enabled
+8989  1bdc 3511525c      	mov	21084,#17
+8990                     ; 1838 TIM1->CCER2= TIM1_CCER2_CC3E; //OC1, OC2 output pins enabled
+8992  1be0 3501525d      	mov	21085,#1
+8993                     ; 1839 TIM1->CR1=(TIM1_CR1_CEN | TIM1_CR1_ARPE);
+8995  1be4 35815250      	mov	21072,#129
+8996                     ; 1840 TIM1->BKR|= TIM1_BKR_AOE;
+8998  1be8 721c526d      	bset	21101,#6
+8999                     ; 1841 }
+9002  1bec 81            	ret
+9027                     ; 1845 void adc2_init(void)
+9027                     ; 1846 {
+9028                     	switch	.text
+9029  1bed               _adc2_init:
+9033                     ; 1847 adc_plazma[0]++;
+9035  1bed beb2          	ldw	x,_adc_plazma
+9036  1bef 1c0001        	addw	x,#1
+9037  1bf2 bfb2          	ldw	_adc_plazma,x
+9038                     ; 1871 GPIOB->DDR&=~(1<<4);
+9040  1bf4 72195007      	bres	20487,#4
+9041                     ; 1872 GPIOB->CR1&=~(1<<4);
+9043  1bf8 72195008      	bres	20488,#4
+9044                     ; 1873 GPIOB->CR2&=~(1<<4);
+9046  1bfc 72195009      	bres	20489,#4
+9047                     ; 1875 GPIOB->DDR&=~(1<<5);
+9049  1c00 721b5007      	bres	20487,#5
+9050                     ; 1876 GPIOB->CR1&=~(1<<5);
+9052  1c04 721b5008      	bres	20488,#5
+9053                     ; 1877 GPIOB->CR2&=~(1<<5);
+9055  1c08 721b5009      	bres	20489,#5
+9056                     ; 1879 GPIOB->DDR&=~(1<<6);
+9058  1c0c 721d5007      	bres	20487,#6
+9059                     ; 1880 GPIOB->CR1&=~(1<<6);
+9061  1c10 721d5008      	bres	20488,#6
+9062                     ; 1881 GPIOB->CR2&=~(1<<6);
+9064  1c14 721d5009      	bres	20489,#6
+9065                     ; 1883 GPIOB->DDR&=~(1<<7);
+9067  1c18 721f5007      	bres	20487,#7
+9068                     ; 1884 GPIOB->CR1&=~(1<<7);
+9070  1c1c 721f5008      	bres	20488,#7
+9071                     ; 1885 GPIOB->CR2&=~(1<<7);
+9073  1c20 721f5009      	bres	20489,#7
+9074                     ; 1895 ADC2->TDRL=0xff;
+9076  1c24 35ff5407      	mov	21511,#255
+9077                     ; 1897 ADC2->CR2=0x08;
+9079  1c28 35085402      	mov	21506,#8
+9080                     ; 1898 ADC2->CR1=0x40;
+9082  1c2c 35405401      	mov	21505,#64
+9083                     ; 1901 	ADC2->CSR=0x20+adc_ch+3;
+9085  1c30 b6bf          	ld	a,_adc_ch
+9086  1c32 ab23          	add	a,#35
+9087  1c34 c75400        	ld	21504,a
+9088                     ; 1903 	ADC2->CR1|=1;
+9090  1c37 72105401      	bset	21505,#0
+9091                     ; 1904 	ADC2->CR1|=1;
+9093  1c3b 72105401      	bset	21505,#0
+9094                     ; 1907 adc_plazma[1]=adc_ch;
+9096  1c3f b6bf          	ld	a,_adc_ch
+9097  1c41 5f            	clrw	x
+9098  1c42 97            	ld	xl,a
+9099  1c43 bfb4          	ldw	_adc_plazma+2,x
+9100                     ; 1908 }
+9103  1c45 81            	ret
+9137                     ; 1917 @far @interrupt void TIM4_UPD_Interrupt (void) 
+9137                     ; 1918 {
+9139                     	switch	.text
+9140  1c46               f_TIM4_UPD_Interrupt:
+9144                     ; 1919 TIM4->SR1&=~TIM4_SR1_UIF;
+9146  1c46 72115342      	bres	21314,#0
+9147                     ; 1921 if(++pwm_vent_cnt>=10)pwm_vent_cnt=0;
+9149  1c4a 3c05          	inc	_pwm_vent_cnt
+9150  1c4c b605          	ld	a,_pwm_vent_cnt
+9151  1c4e a10a          	cp	a,#10
+9152  1c50 2502          	jrult	L3104
+9155  1c52 3f05          	clr	_pwm_vent_cnt
+9156  1c54               L3104:
+9157                     ; 1922 GPIOB->ODR|=(1<<3);
+9159  1c54 72165005      	bset	20485,#3
+9160                     ; 1923 if(pwm_vent_cnt>=5)GPIOB->ODR&=~(1<<3);
+9162  1c58 b605          	ld	a,_pwm_vent_cnt
+9163  1c5a a105          	cp	a,#5
+9164  1c5c 2504          	jrult	L5104
+9167  1c5e 72175005      	bres	20485,#3
+9168  1c62               L5104:
+9169                     ; 1928 if(++t0_cnt0>=100)
+9171  1c62 9c            	rvf
+9172  1c63 be00          	ldw	x,_t0_cnt0
+9173  1c65 1c0001        	addw	x,#1
+9174  1c68 bf00          	ldw	_t0_cnt0,x
+9175  1c6a a30064        	cpw	x,#100
+9176  1c6d 2f3f          	jrslt	L7104
+9177                     ; 1930 	t0_cnt0=0;
+9179  1c6f 5f            	clrw	x
+9180  1c70 bf00          	ldw	_t0_cnt0,x
+9181                     ; 1931 	b100Hz=1;
+9183  1c72 72100008      	bset	_b100Hz
+9184                     ; 1933 	if(++t0_cnt1>=10)
+9186  1c76 3c02          	inc	_t0_cnt1
+9187  1c78 b602          	ld	a,_t0_cnt1
+9188  1c7a a10a          	cp	a,#10
+9189  1c7c 2506          	jrult	L1204
+9190                     ; 1935 		t0_cnt1=0;
+9192  1c7e 3f02          	clr	_t0_cnt1
+9193                     ; 1936 		b10Hz=1;
+9195  1c80 72100007      	bset	_b10Hz
+9196  1c84               L1204:
+9197                     ; 1939 	if(++t0_cnt2>=20)
+9199  1c84 3c03          	inc	_t0_cnt2
+9200  1c86 b603          	ld	a,_t0_cnt2
+9201  1c88 a114          	cp	a,#20
+9202  1c8a 2506          	jrult	L3204
+9203                     ; 1941 		t0_cnt2=0;
+9205  1c8c 3f03          	clr	_t0_cnt2
+9206                     ; 1942 		b5Hz=1;
+9208  1c8e 72100006      	bset	_b5Hz
+9209  1c92               L3204:
+9210                     ; 1946 	if(++t0_cnt4>=50)
+9212  1c92 3c05          	inc	_t0_cnt4
+9213  1c94 b605          	ld	a,_t0_cnt4
+9214  1c96 a132          	cp	a,#50
+9215  1c98 2506          	jrult	L5204
+9216                     ; 1948 		t0_cnt4=0;
+9218  1c9a 3f05          	clr	_t0_cnt4
+9219                     ; 1949 		b2Hz=1;
+9221  1c9c 72100005      	bset	_b2Hz
+9222  1ca0               L5204:
+9223                     ; 1952 	if(++t0_cnt3>=100)
+9225  1ca0 3c04          	inc	_t0_cnt3
+9226  1ca2 b604          	ld	a,_t0_cnt3
+9227  1ca4 a164          	cp	a,#100
+9228  1ca6 2506          	jrult	L7104
+9229                     ; 1954 		t0_cnt3=0;
+9231  1ca8 3f04          	clr	_t0_cnt3
+9232                     ; 1955 		b1Hz=1;
+9234  1caa 72100004      	bset	_b1Hz
+9235  1cae               L7104:
+9236                     ; 1961 }
+9239  1cae 80            	iret
+9264                     ; 1964 @far @interrupt void CAN_RX_Interrupt (void) 
+9264                     ; 1965 {
+9265                     	switch	.text
+9266  1caf               f_CAN_RX_Interrupt:
+9270                     ; 1967 CAN->PSR= 7;									// page 7 - read messsage
+9272  1caf 35075427      	mov	21543,#7
+9273                     ; 1969 memcpy(&mess[0], &CAN->Page.RxFIFO.MFMI, 14); // compare the message content
+9275  1cb3 ae000e        	ldw	x,#14
+9276  1cb6               L452:
+9277  1cb6 d65427        	ld	a,(21543,x)
+9278  1cb9 e7bf          	ld	(_mess-1,x),a
+9279  1cbb 5a            	decw	x
+9280  1cbc 26f8          	jrne	L452
+9281                     ; 1980 bCAN_RX=1;
+9283  1cbe 35010009      	mov	_bCAN_RX,#1
+9284                     ; 1981 CAN->RFR|=(1<<5);
+9286  1cc2 721a5424      	bset	21540,#5
+9287                     ; 1983 }
+9290  1cc6 80            	iret
+9313                     ; 1986 @far @interrupt void CAN_TX_Interrupt (void) 
+9313                     ; 1987 {
+9314                     	switch	.text
+9315  1cc7               f_CAN_TX_Interrupt:
+9319                     ; 1988 if((CAN->TSR)&(1<<0))
+9321  1cc7 c65422        	ld	a,21538
+9322  1cca a501          	bcp	a,#1
+9323  1ccc 2708          	jreq	L1504
+9324                     ; 1990 	bTX_FREE=1;	
+9326  1cce 35010008      	mov	_bTX_FREE,#1
+9327                     ; 1992 	CAN->TSR|=(1<<0);
+9329  1cd2 72105422      	bset	21538,#0
+9330  1cd6               L1504:
+9331                     ; 1994 }
+9334  1cd6 80            	iret
+9392                     ; 1997 @far @interrupt void ADC2_EOC_Interrupt (void) {
+9393                     	switch	.text
+9394  1cd7               f_ADC2_EOC_Interrupt:
+9396       00000009      OFST:	set	9
+9397  1cd7 be00          	ldw	x,c_x
+9398  1cd9 89            	pushw	x
+9399  1cda be00          	ldw	x,c_y
+9400  1cdc 89            	pushw	x
+9401  1cdd be02          	ldw	x,c_lreg+2
+9402  1cdf 89            	pushw	x
+9403  1ce0 be00          	ldw	x,c_lreg
+9404  1ce2 89            	pushw	x
+9405  1ce3 5209          	subw	sp,#9
+9408                     ; 2002 adc_plazma[2]++;
+9410  1ce5 beb6          	ldw	x,_adc_plazma+4
+9411  1ce7 1c0001        	addw	x,#1
+9412  1cea bfb6          	ldw	_adc_plazma+4,x
+9413                     ; 2009 ADC2->CSR&=~(1<<7);
+9415  1cec 721f5400      	bres	21504,#7
+9416                     ; 2011 temp_adc=(((signed long)(ADC2->DRH))*256)+((signed long)(ADC2->DRL));
+9418  1cf0 c65405        	ld	a,21509
+9419  1cf3 b703          	ld	c_lreg+3,a
+9420  1cf5 3f02          	clr	c_lreg+2
+9421  1cf7 3f01          	clr	c_lreg+1
+9422  1cf9 3f00          	clr	c_lreg
+9423  1cfb 96            	ldw	x,sp
+9424  1cfc 1c0001        	addw	x,#OFST-8
+9425  1cff cd0000        	call	c_rtol
+9427  1d02 c65404        	ld	a,21508
+9428  1d05 5f            	clrw	x
+9429  1d06 97            	ld	xl,a
+9430  1d07 90ae0100      	ldw	y,#256
+9431  1d0b cd0000        	call	c_umul
+9433  1d0e 96            	ldw	x,sp
+9434  1d0f 1c0001        	addw	x,#OFST-8
+9435  1d12 cd0000        	call	c_ladd
+9437  1d15 96            	ldw	x,sp
+9438  1d16 1c0006        	addw	x,#OFST-3
+9439  1d19 cd0000        	call	c_rtol
+9441                     ; 2016 if(adr_drv_stat==1)
+9443  1d1c b607          	ld	a,_adr_drv_stat
+9444  1d1e a101          	cp	a,#1
+9445  1d20 260b          	jrne	L1014
+9446                     ; 2018 	adr_drv_stat=2;
+9448  1d22 35020007      	mov	_adr_drv_stat,#2
+9449                     ; 2019 	adc_buff_[0]=temp_adc;
+9451  1d26 1e08          	ldw	x,(OFST-1,sp)
+9452  1d28 cf0005        	ldw	_adc_buff_,x
+9454  1d2b 2020          	jra	L3014
+9455  1d2d               L1014:
+9456                     ; 2022 else if(adr_drv_stat==3)
+9458  1d2d b607          	ld	a,_adr_drv_stat
+9459  1d2f a103          	cp	a,#3
+9460  1d31 260b          	jrne	L5014
+9461                     ; 2024 	adr_drv_stat=4;
+9463  1d33 35040007      	mov	_adr_drv_stat,#4
+9464                     ; 2025 	adc_buff_[1]=temp_adc;
+9466  1d37 1e08          	ldw	x,(OFST-1,sp)
+9467  1d39 cf0007        	ldw	_adc_buff_+2,x
+9469  1d3c 200f          	jra	L3014
+9470  1d3e               L5014:
+9471                     ; 2028 else if(adr_drv_stat==5)
+9473  1d3e b607          	ld	a,_adr_drv_stat
+9474  1d40 a105          	cp	a,#5
+9475  1d42 2609          	jrne	L3014
+9476                     ; 2030 	adr_drv_stat=6;
+9478  1d44 35060007      	mov	_adr_drv_stat,#6
+9479                     ; 2031 	adc_buff_[9]=temp_adc;
+9481  1d48 1e08          	ldw	x,(OFST-1,sp)
+9482  1d4a cf0017        	ldw	_adc_buff_+18,x
+9483  1d4d               L3014:
+9484                     ; 2034 adc_buff[adc_ch][adc_cnt]=temp_adc;
+9486  1d4d b6be          	ld	a,_adc_cnt
+9487  1d4f 5f            	clrw	x
+9488  1d50 97            	ld	xl,a
+9489  1d51 58            	sllw	x
+9490  1d52 1f03          	ldw	(OFST-6,sp),x
+9491  1d54 b6bf          	ld	a,_adc_ch
+9492  1d56 97            	ld	xl,a
+9493  1d57 a620          	ld	a,#32
+9494  1d59 42            	mul	x,a
+9495  1d5a 72fb03        	addw	x,(OFST-6,sp)
+9496  1d5d 1608          	ldw	y,(OFST-1,sp)
+9497  1d5f df0019        	ldw	(_adc_buff,x),y
+9498                     ; 2040 adc_ch++;
+9500  1d62 3cbf          	inc	_adc_ch
+9501                     ; 2041 if(adc_ch>=5)
+9503  1d64 b6bf          	ld	a,_adc_ch
+9504  1d66 a105          	cp	a,#5
+9505  1d68 250c          	jrult	L3114
+9506                     ; 2044 	adc_ch=0;
+9508  1d6a 3fbf          	clr	_adc_ch
+9509                     ; 2045 	adc_cnt++;
+9511  1d6c 3cbe          	inc	_adc_cnt
+9512                     ; 2046 	if(adc_cnt>=16)
+9514  1d6e b6be          	ld	a,_adc_cnt
+9515  1d70 a110          	cp	a,#16
+9516  1d72 2502          	jrult	L3114
+9517                     ; 2048 		adc_cnt=0;
+9519  1d74 3fbe          	clr	_adc_cnt
+9520  1d76               L3114:
+9521                     ; 2052 if((adc_cnt&0x03)==0)
+9523  1d76 b6be          	ld	a,_adc_cnt
+9524  1d78 a503          	bcp	a,#3
+9525  1d7a 264b          	jrne	L7114
+9526                     ; 2056 	tempSS=0;
+9528  1d7c ae0000        	ldw	x,#0
+9529  1d7f 1f08          	ldw	(OFST-1,sp),x
+9530  1d81 ae0000        	ldw	x,#0
+9531  1d84 1f06          	ldw	(OFST-3,sp),x
+9532                     ; 2057 	for(i=0;i<16;i++)
+9534  1d86 0f05          	clr	(OFST-4,sp)
+9535  1d88               L1214:
+9536                     ; 2059 		tempSS+=(signed long)adc_buff[adc_ch][i];
+9538  1d88 7b05          	ld	a,(OFST-4,sp)
+9539  1d8a 5f            	clrw	x
+9540  1d8b 97            	ld	xl,a
+9541  1d8c 58            	sllw	x
+9542  1d8d 1f03          	ldw	(OFST-6,sp),x
+9543  1d8f b6bf          	ld	a,_adc_ch
+9544  1d91 97            	ld	xl,a
+9545  1d92 a620          	ld	a,#32
+9546  1d94 42            	mul	x,a
+9547  1d95 72fb03        	addw	x,(OFST-6,sp)
+9548  1d98 de0019        	ldw	x,(_adc_buff,x)
+9549  1d9b cd0000        	call	c_itolx
+9551  1d9e 96            	ldw	x,sp
+9552  1d9f 1c0006        	addw	x,#OFST-3
+9553  1da2 cd0000        	call	c_lgadd
+9555                     ; 2057 	for(i=0;i<16;i++)
+9557  1da5 0c05          	inc	(OFST-4,sp)
+9560  1da7 7b05          	ld	a,(OFST-4,sp)
+9561  1da9 a110          	cp	a,#16
+9562  1dab 25db          	jrult	L1214
+9563                     ; 2061 	adc_buff_[adc_ch]=(signed short)(tempSS>>4);
+9565  1dad 96            	ldw	x,sp
+9566  1dae 1c0006        	addw	x,#OFST-3
+9567  1db1 cd0000        	call	c_ltor
+9569  1db4 a604          	ld	a,#4
+9570  1db6 cd0000        	call	c_lrsh
+9572  1db9 be02          	ldw	x,c_lreg+2
+9573  1dbb b6bf          	ld	a,_adc_ch
+9574  1dbd 905f          	clrw	y
+9575  1dbf 9097          	ld	yl,a
+9576  1dc1 9058          	sllw	y
+9577  1dc3 90df0005      	ldw	(_adc_buff_,y),x
+9578  1dc7               L7114:
+9579                     ; 2072 adc_plazma_short++;
+9581  1dc7 bebc          	ldw	x,_adc_plazma_short
+9582  1dc9 1c0001        	addw	x,#1
+9583  1dcc bfbc          	ldw	_adc_plazma_short,x
+9584                     ; 2087 }
+9587  1dce 5b09          	addw	sp,#9
+9588  1dd0 85            	popw	x
+9589  1dd1 bf00          	ldw	c_lreg,x
+9590  1dd3 85            	popw	x
+9591  1dd4 bf02          	ldw	c_lreg+2,x
+9592  1dd6 85            	popw	x
+9593  1dd7 bf00          	ldw	c_y,x
+9594  1dd9 85            	popw	x
+9595  1dda bf00          	ldw	c_x,x
+9596  1ddc 80            	iret
+9659                     ; 2095 main()
+9659                     ; 2096 {
+9661                     	switch	.text
+9662  1ddd               _main:
+9666                     ; 2098 CLK->ECKR|=1;
+9668  1ddd 721050c1      	bset	20673,#0
+9670  1de1               L1414:
+9671                     ; 2099 while((CLK->ECKR & 2) == 0);
+9673  1de1 c650c1        	ld	a,20673
+9674  1de4 a502          	bcp	a,#2
+9675  1de6 27f9          	jreq	L1414
+9676                     ; 2100 CLK->SWCR|=2;
+9678  1de8 721250c5      	bset	20677,#1
+9679                     ; 2101 CLK->SWR=0xB4;
+9681  1dec 35b450c4      	mov	20676,#180
+9682                     ; 2103 delay_ms(200);
+9684  1df0 ae00c8        	ldw	x,#200
+9685  1df3 cd004c        	call	_delay_ms
+9687                     ; 2104 FLASH_DUKR=0xae;
+9689  1df6 35ae5064      	mov	_FLASH_DUKR,#174
+9690                     ; 2105 FLASH_DUKR=0x56;
+9692  1dfa 35565064      	mov	_FLASH_DUKR,#86
+9693                     ; 2106 enableInterrupts();
+9696  1dfe 9a            rim
+9698                     ; 2109 adr_drv_v3();
+9701  1dff cd1013        	call	_adr_drv_v3
+9703                     ; 2113 t4_init();
+9705  1e02 cd1b9f        	call	_t4_init
+9707                     ; 2115 		GPIOG->DDR|=(1<<0);
+9709  1e05 72105020      	bset	20512,#0
+9710                     ; 2116 		GPIOG->CR1|=(1<<0);
+9712  1e09 72105021      	bset	20513,#0
+9713                     ; 2117 		GPIOG->CR2&=~(1<<0);	
+9715  1e0d 72115022      	bres	20514,#0
+9716                     ; 2120 		GPIOG->DDR&=~(1<<1);
+9718  1e11 72135020      	bres	20512,#1
+9719                     ; 2121 		GPIOG->CR1|=(1<<1);
+9721  1e15 72125021      	bset	20513,#1
+9722                     ; 2122 		GPIOG->CR2&=~(1<<1);
+9724  1e19 72135022      	bres	20514,#1
+9725                     ; 2124 init_CAN();
+9727  1e1d cd1356        	call	_init_CAN
+9729                     ; 2129 GPIOC->DDR|=(1<<1);
+9731  1e20 7212500c      	bset	20492,#1
+9732                     ; 2130 GPIOC->CR1|=(1<<1);
+9734  1e24 7212500d      	bset	20493,#1
+9735                     ; 2131 GPIOC->CR2|=(1<<1);
+9737  1e28 7212500e      	bset	20494,#1
+9738                     ; 2133 GPIOC->DDR|=(1<<2);
+9740  1e2c 7214500c      	bset	20492,#2
+9741                     ; 2134 GPIOC->CR1|=(1<<2);
+9743  1e30 7214500d      	bset	20493,#2
+9744                     ; 2135 GPIOC->CR2|=(1<<2);
+9746  1e34 7214500e      	bset	20494,#2
+9747                     ; 2142 t1_init();
+9749  1e38 cd1bb0        	call	_t1_init
+9751                     ; 2144 GPIOA->DDR|=(1<<5);
+9753  1e3b 721a5002      	bset	20482,#5
+9754                     ; 2145 GPIOA->CR1|=(1<<5);
+9756  1e3f 721a5003      	bset	20483,#5
+9757                     ; 2146 GPIOA->CR2&=~(1<<5);
+9759  1e43 721b5004      	bres	20484,#5
+9760                     ; 2152 GPIOB->DDR|=(1<<3);
+9762  1e47 72165007      	bset	20487,#3
+9763                     ; 2153 GPIOB->CR1|=(1<<3);
+9765  1e4b 72165008      	bset	20488,#3
+9766                     ; 2154 GPIOB->CR2|=(1<<3);
+9768  1e4f 72165009      	bset	20489,#3
+9769                     ; 2156 GPIOC->DDR|=(1<<3);
+9771  1e53 7216500c      	bset	20492,#3
+9772                     ; 2157 GPIOC->CR1|=(1<<3);
+9774  1e57 7216500d      	bset	20493,#3
+9775                     ; 2158 GPIOC->CR2|=(1<<3);
+9777  1e5b 7216500e      	bset	20494,#3
+9778                     ; 2161 if(bps_class==bpsIPS) 
+9780  1e5f b601          	ld	a,_bps_class
+9781  1e61 a101          	cp	a,#1
+9782  1e63 260a          	jrne	L7414
+9783                     ; 2163 	pwm_u=ee_U_AVT;
+9785  1e65 ce000a        	ldw	x,_ee_U_AVT
+9786  1e68 bf0b          	ldw	_pwm_u,x
+9787                     ; 2164 	volum_u_main_=ee_U_AVT;
+9789  1e6a ce000a        	ldw	x,_ee_U_AVT
+9790  1e6d bf1c          	ldw	_volum_u_main_,x
+9791  1e6f               L7414:
+9792                     ; 2171 	if(bCAN_RX)
+9794  1e6f 3d09          	tnz	_bCAN_RX
+9795  1e71 2705          	jreq	L3514
+9796                     ; 2173 		bCAN_RX=0;
+9798  1e73 3f09          	clr	_bCAN_RX
+9799                     ; 2174 		can_in_an();	
+9801  1e75 cd1561        	call	_can_in_an
+9803  1e78               L3514:
+9804                     ; 2176 	if(b100Hz)
+9806                     	btst	_b100Hz
+9807  1e7d 240a          	jruge	L5514
+9808                     ; 2178 		b100Hz=0;
+9810  1e7f 72110008      	bres	_b100Hz
+9811                     ; 2187 		adc2_init();
+9813  1e83 cd1bed        	call	_adc2_init
+9815                     ; 2188 		can_tx_hndl();
+9817  1e86 cd1449        	call	_can_tx_hndl
+9819  1e89               L5514:
+9820                     ; 2191 	if(b10Hz)
+9822                     	btst	_b10Hz
+9823  1e8e 2419          	jruge	L7514
+9824                     ; 2193 		b10Hz=0;
+9826  1e90 72110007      	bres	_b10Hz
+9827                     ; 2195           matemat();
+9829  1e94 cd0bca        	call	_matemat
+9831                     ; 2196 	    	led_drv(); 
+9833  1e97 cd0711        	call	_led_drv
+9835                     ; 2197 	     link_drv();
+9837  1e9a cd07ff        	call	_link_drv
+9839                     ; 2198 	     pwr_hndl();		//вычисление воздействий на силу
+9841  1e9d cd0aae        	call	_pwr_hndl
+9843                     ; 2199 	     JP_drv();
+9845  1ea0 cd0774        	call	_JP_drv
+9847                     ; 2200 	     flags_drv();
+9849  1ea3 cd0fc8        	call	_flags_drv
+9851                     ; 2201 		net_drv();
+9853  1ea6 cd14b3        	call	_net_drv
+9855  1ea9               L7514:
+9856                     ; 2204 	if(b5Hz)
+9858                     	btst	_b5Hz
+9859  1eae 240d          	jruge	L1614
+9860                     ; 2206 		b5Hz=0;
+9862  1eb0 72110006      	bres	_b5Hz
+9863                     ; 2208 		pwr_drv();		//воздействие на силу
+9865  1eb4 cd09aa        	call	_pwr_drv
+9867                     ; 2209 		led_hndl();
+9869  1eb7 cd008e        	call	_led_hndl
+9871                     ; 2211 		vent_drv();
+9873  1eba cd084e        	call	_vent_drv
+9875  1ebd               L1614:
+9876                     ; 2214 	if(b2Hz)
+9878                     	btst	_b2Hz
+9879  1ec2 2404          	jruge	L3614
+9880                     ; 2216 		b2Hz=0;
+9882  1ec4 72110005      	bres	_b2Hz
+9883  1ec8               L3614:
+9884                     ; 2225 	if(b1Hz)
+9886                     	btst	_b1Hz
+9887  1ecd 24a0          	jruge	L7414
+9888                     ; 2227 		b1Hz=0;
+9890  1ecf 72110004      	bres	_b1Hz
+9891                     ; 2229 		temper_drv();			//вычисление аварий температуры
+9893  1ed3 cd0cf8        	call	_temper_drv
+9895                     ; 2230 		u_drv();
+9897  1ed6 cd0dcf        	call	_u_drv
+9899                     ; 2231           x_drv();
+9901  1ed9 cd0eaf        	call	_x_drv
+9903                     ; 2232           if(main_cnt<1000)main_cnt++;
+9905  1edc 9c            	rvf
+9906  1edd be4e          	ldw	x,_main_cnt
+9907  1edf a303e8        	cpw	x,#1000
+9908  1ee2 2e07          	jrsge	L7614
+9911  1ee4 be4e          	ldw	x,_main_cnt
+9912  1ee6 1c0001        	addw	x,#1
+9913  1ee9 bf4e          	ldw	_main_cnt,x
+9914  1eeb               L7614:
+9915                     ; 2233   		if((link==OFF)||(jp_mode==jp3))apv_hndl();
+9917  1eeb b65f          	ld	a,_link
+9918  1eed a1aa          	cp	a,#170
+9919  1eef 2706          	jreq	L3714
+9921  1ef1 b647          	ld	a,_jp_mode
+9922  1ef3 a103          	cp	a,#3
+9923  1ef5 2603          	jrne	L1714
+9924  1ef7               L3714:
+9927  1ef7 cd0f29        	call	_apv_hndl
+9929  1efa               L1714:
+9930                     ; 2236   		can_error_cnt++;
+9932  1efa 3c6d          	inc	_can_error_cnt
+9933                     ; 2237   		if(can_error_cnt>=10)
+9935  1efc b66d          	ld	a,_can_error_cnt
+9936  1efe a10a          	cp	a,#10
+9937  1f00 2505          	jrult	L5714
+9938                     ; 2239   			can_error_cnt=0;
+9940  1f02 3f6d          	clr	_can_error_cnt
+9941                     ; 2240 			init_CAN();
+9943  1f04 cd1356        	call	_init_CAN
+9945  1f07               L5714:
+9946                     ; 2244 		volum_u_main_drv();
+9948  1f07 cd1203        	call	_volum_u_main_drv
+9950                     ; 2246 		pwm_stat++;
+9952  1f0a 3c04          	inc	_pwm_stat
+9953                     ; 2247 		if(pwm_stat>=10)pwm_stat=0;
+9955  1f0c b604          	ld	a,_pwm_stat
+9956  1f0e a10a          	cp	a,#10
+9957  1f10 2502          	jrult	L7714
+9960  1f12 3f04          	clr	_pwm_stat
+9961  1f14               L7714:
+9962                     ; 2248 adc_plazma_short++;
+9964  1f14 bebc          	ldw	x,_adc_plazma_short
+9965  1f16 1c0001        	addw	x,#1
+9966  1f19 bfbc          	ldw	_adc_plazma_short,x
+9967  1f1b ac6f1e6f      	jpf	L7414
+10981                     	xdef	_main
+10982                     	xdef	f_ADC2_EOC_Interrupt
+10983                     	xdef	f_CAN_TX_Interrupt
+10984                     	xdef	f_CAN_RX_Interrupt
+10985                     	xdef	f_TIM4_UPD_Interrupt
+10986                     	xdef	_adc2_init
+10987                     	xdef	_t1_init
+10988                     	xdef	_t4_init
+10989                     	xdef	_can_in_an
+10990                     	xdef	_net_drv
+10991                     	xdef	_can_tx_hndl
+10992                     	xdef	_can_transmit
+10993                     	xdef	_init_CAN
+10994                     	xdef	_volum_u_main_drv
+10995                     	xdef	_adr_drv_v3
+10996                     	xdef	_adr_drv_v4
+10997                     	xdef	_flags_drv
+10998                     	xdef	_apv_hndl
+10999                     	xdef	_apv_stop
+11000                     	xdef	_apv_start
+11001                     	xdef	_x_drv
+11002                     	xdef	_u_drv
+11003                     	xdef	_temper_drv
+11004                     	xdef	_matemat
+11005                     	xdef	_pwr_hndl
+11006                     	xdef	_pwr_drv
+11007                     	xdef	_vent_drv
+11008                     	xdef	_link_drv
+11009                     	xdef	_JP_drv
+11010                     	xdef	_led_drv
+11011                     	xdef	_led_hndl
+11012                     	xdef	_delay_ms
+11013                     	xdef	_granee
+11014                     	xdef	_gran
+11015                     .eeprom:	section	.data
+11016  0000               _ee_IMAXVENT:
+11017  0000 0000          	ds.b	2
+11018                     	xdef	_ee_IMAXVENT
+11019                     	switch	.ubsct
+11020  0001               _bps_class:
+11021  0001 00            	ds.b	1
+11022                     	xdef	_bps_class
+11023  0002               _vent_pwm:
+11024  0002 0000          	ds.b	2
+11025                     	xdef	_vent_pwm
+11026  0004               _pwm_stat:
+11027  0004 00            	ds.b	1
+11028                     	xdef	_pwm_stat
+11029  0005               _pwm_vent_cnt:
+11030  0005 00            	ds.b	1
+11031                     	xdef	_pwm_vent_cnt
+11032                     	switch	.eeprom
+11033  0002               _ee_DEVICE:
+11034  0002 0000          	ds.b	2
+11035                     	xdef	_ee_DEVICE
+11036  0004               _ee_AVT_MODE:
+11037  0004 0000          	ds.b	2
+11038                     	xdef	_ee_AVT_MODE
+11039                     	switch	.ubsct
+11040  0006               _i_main_bps_cnt:
+11041  0006 000000000000  	ds.b	6
+11042                     	xdef	_i_main_bps_cnt
+11043  000c               _i_main_sigma:
+11044  000c 0000          	ds.b	2
+11045                     	xdef	_i_main_sigma
+11046  000e               _i_main_num_of_bps:
+11047  000e 00            	ds.b	1
+11048                     	xdef	_i_main_num_of_bps
+11049  000f               _i_main_avg:
+11050  000f 0000          	ds.b	2
+11051                     	xdef	_i_main_avg
+11052  0011               _i_main_flag:
+11053  0011 000000000000  	ds.b	6
+11054                     	xdef	_i_main_flag
+11055  0017               _i_main:
+11056  0017 000000000000  	ds.b	12
+11057                     	xdef	_i_main
+11058  0023               _x:
+11059  0023 000000000000  	ds.b	12
+11060                     	xdef	_x
+11061                     	xdef	_volum_u_main_
+11062                     	switch	.eeprom
+11063  0006               _UU_AVT:
+11064  0006 0000          	ds.b	2
+11065                     	xdef	_UU_AVT
+11066                     	switch	.ubsct
+11067  002f               _cnt_net_drv:
+11068  002f 00            	ds.b	1
+11069                     	xdef	_cnt_net_drv
+11070                     	switch	.bit
+11071  0001               _bMAIN:
+11072  0001 00            	ds.b	1
+11073                     	xdef	_bMAIN
+11074                     	switch	.ubsct
+11075  0030               _plazma_int:
+11076  0030 000000000000  	ds.b	6
+11077                     	xdef	_plazma_int
+11078                     	xdef	_rotor_int
+11079  0036               _led_green_buff:
+11080  0036 00000000      	ds.b	4
+11081                     	xdef	_led_green_buff
+11082  003a               _led_red_buff:
+11083  003a 00000000      	ds.b	4
+11084                     	xdef	_led_red_buff
+11085                     	xdef	_led_drv_cnt
+11086                     	xdef	_led_green
+11087                     	xdef	_led_red
+11088  003e               _res_fl_cnt:
+11089  003e 00            	ds.b	1
+11090                     	xdef	_res_fl_cnt
+11091                     	xdef	_bRES_
+11092                     	xdef	_bRES
+11093                     	switch	.eeprom
+11094  0008               _res_fl_:
+11095  0008 00            	ds.b	1
+11096                     	xdef	_res_fl_
+11097  0009               _res_fl:
+11098  0009 00            	ds.b	1
+11099                     	xdef	_res_fl
+11100                     	switch	.ubsct
+11101  003f               _cnt_apv_off:
+11102  003f 00            	ds.b	1
+11103                     	xdef	_cnt_apv_off
+11104                     	switch	.bit
+11105  0002               _bAPV:
+11106  0002 00            	ds.b	1
+11107                     	xdef	_bAPV
+11108                     	switch	.ubsct
+11109  0040               _apv_cnt_:
+11110  0040 0000          	ds.b	2
+11111                     	xdef	_apv_cnt_
+11112  0042               _apv_cnt:
+11113  0042 000000        	ds.b	3
+11114                     	xdef	_apv_cnt
+11115                     	xdef	_bBL_IPS
+11116                     	switch	.bit
+11117  0003               _bBL:
+11118  0003 00            	ds.b	1
+11119                     	xdef	_bBL
+11120                     	switch	.ubsct
+11121  0045               _cnt_JP1:
+11122  0045 00            	ds.b	1
+11123                     	xdef	_cnt_JP1
+11124  0046               _cnt_JP0:
+11125  0046 00            	ds.b	1
+11126                     	xdef	_cnt_JP0
+11127  0047               _jp_mode:
+11128  0047 00            	ds.b	1
+11129                     	xdef	_jp_mode
+11130                     	xdef	_pwm_i
+11131                     	xdef	_pwm_u
+11132  0048               _tmax_cnt:
+11133  0048 0000          	ds.b	2
+11134                     	xdef	_tmax_cnt
+11135  004a               _tsign_cnt:
+11136  004a 0000          	ds.b	2
+11137                     	xdef	_tsign_cnt
+11138                     	switch	.eeprom
+11139  000a               _ee_U_AVT:
+11140  000a 0000          	ds.b	2
+11141                     	xdef	_ee_U_AVT
+11142  000c               _ee_tsign:
+11143  000c 0000          	ds.b	2
+11144                     	xdef	_ee_tsign
+11145  000e               _ee_tmax:
+11146  000e 0000          	ds.b	2
+11147                     	xdef	_ee_tmax
+11148  0010               _ee_dU:
+11149  0010 0000          	ds.b	2
+11150                     	xdef	_ee_dU
+11151  0012               _ee_Umax:
+11152  0012 0000          	ds.b	2
+11153                     	xdef	_ee_Umax
+11154  0014               _ee_TZAS:
+11155  0014 0000          	ds.b	2
+11156                     	xdef	_ee_TZAS
+11157                     	switch	.ubsct
+11158  004c               _main_cnt1:
+11159  004c 0000          	ds.b	2
+11160                     	xdef	_main_cnt1
+11161  004e               _main_cnt:
+11162  004e 0000          	ds.b	2
+11163                     	xdef	_main_cnt
+11164  0050               _off_bp_cnt:
+11165  0050 00            	ds.b	1
+11166                     	xdef	_off_bp_cnt
+11167  0051               _flags_tu_cnt_off:
+11168  0051 00            	ds.b	1
+11169                     	xdef	_flags_tu_cnt_off
+11170  0052               _flags_tu_cnt_on:
+11171  0052 00            	ds.b	1
+11172                     	xdef	_flags_tu_cnt_on
+11173  0053               _vol_i_temp:
+11174  0053 0000          	ds.b	2
+11175                     	xdef	_vol_i_temp
+11176  0055               _vol_u_temp:
+11177  0055 0000          	ds.b	2
+11178                     	xdef	_vol_u_temp
+11179                     	switch	.eeprom
+11180  0016               __x_ee_:
+11181  0016 0000          	ds.b	2
+11182                     	xdef	__x_ee_
+11183                     	switch	.ubsct
+11184  0057               __x_cnt:
+11185  0057 0000          	ds.b	2
+11186                     	xdef	__x_cnt
+11187  0059               __x__:
+11188  0059 0000          	ds.b	2
+11189                     	xdef	__x__
+11190  005b               __x_:
+11191  005b 0000          	ds.b	2
+11192                     	xdef	__x_
+11193  005d               _flags_tu:
+11194  005d 00            	ds.b	1
+11195                     	xdef	_flags_tu
+11196                     	xdef	_flags
+11197  005e               _link_cnt:
+11198  005e 00            	ds.b	1
+11199                     	xdef	_link_cnt
+11200  005f               _link:
+11201  005f 00            	ds.b	1
+11202                     	xdef	_link
+11203  0060               _umin_cnt:
+11204  0060 0000          	ds.b	2
+11205                     	xdef	_umin_cnt
+11206  0062               _umax_cnt:
+11207  0062 0000          	ds.b	2
+11208                     	xdef	_umax_cnt
+11209                     	switch	.eeprom
+11210  0018               _ee_K:
+11211  0018 000000000000  	ds.b	16
+11212                     	xdef	_ee_K
+11213                     	switch	.ubsct
+11214  0064               _T:
+11215  0064 00            	ds.b	1
+11216                     	xdef	_T
+11217  0065               _Udb:
+11218  0065 0000          	ds.b	2
+11219                     	xdef	_Udb
+11220  0067               _Ui:
+11221  0067 0000          	ds.b	2
+11222                     	xdef	_Ui
+11223  0069               _Un:
+11224  0069 0000          	ds.b	2
+11225                     	xdef	_Un
+11226  006b               _I:
+11227  006b 0000          	ds.b	2
+11228                     	xdef	_I
+11229  006d               _can_error_cnt:
+11230  006d 00            	ds.b	1
+11231                     	xdef	_can_error_cnt
+11232                     	xdef	_bCAN_RX
+11233  006e               _tx_busy_cnt:
+11234  006e 00            	ds.b	1
+11235                     	xdef	_tx_busy_cnt
+11236                     	xdef	_bTX_FREE
+11237  006f               _can_buff_rd_ptr:
+11238  006f 00            	ds.b	1
+11239                     	xdef	_can_buff_rd_ptr
+11240  0070               _can_buff_wr_ptr:
+11241  0070 00            	ds.b	1
+11242                     	xdef	_can_buff_wr_ptr
+11243  0071               _can_out_buff:
+11244  0071 000000000000  	ds.b	64
+11245                     	xdef	_can_out_buff
+11246                     	switch	.bss
+11247  0000               _adress_error:
+11248  0000 00            	ds.b	1
+11249                     	xdef	_adress_error
+11250  0001               _adress:
+11251  0001 00            	ds.b	1
+11252                     	xdef	_adress
+11253  0002               _adr:
+11254  0002 000000        	ds.b	3
+11255                     	xdef	_adr
+11256                     	xdef	_adr_drv_stat
+11257                     	xdef	_led_ind
+11258                     	switch	.ubsct
+11259  00b1               _led_ind_cnt:
+11260  00b1 00            	ds.b	1
+11261                     	xdef	_led_ind_cnt
+11262  00b2               _adc_plazma:
+11263  00b2 000000000000  	ds.b	10
+11264                     	xdef	_adc_plazma
+11265  00bc               _adc_plazma_short:
+11266  00bc 0000          	ds.b	2
+11267                     	xdef	_adc_plazma_short
+11268  00be               _adc_cnt:
+11269  00be 00            	ds.b	1
+11270                     	xdef	_adc_cnt
+11271  00bf               _adc_ch:
+11272  00bf 00            	ds.b	1
+11273                     	xdef	_adc_ch
+11274                     	switch	.bss
+11275  0005               _adc_buff_:
+11276  0005 000000000000  	ds.b	20
+11277                     	xdef	_adc_buff_
+11278  0019               _adc_buff:
+11279  0019 000000000000  	ds.b	320
+11280                     	xdef	_adc_buff
+11281                     	switch	.ubsct
+11282  00c0               _mess:
+11283  00c0 000000000000  	ds.b	14
+11284                     	xdef	_mess
+11285                     	switch	.bit
+11286  0004               _b1Hz:
+11287  0004 00            	ds.b	1
+11288                     	xdef	_b1Hz
+11289  0005               _b2Hz:
+11290  0005 00            	ds.b	1
+11291                     	xdef	_b2Hz
+11292  0006               _b5Hz:
+11293  0006 00            	ds.b	1
+11294                     	xdef	_b5Hz
+11295  0007               _b10Hz:
+11296  0007 00            	ds.b	1
+11297                     	xdef	_b10Hz
+11298  0008               _b100Hz:
+11299  0008 00            	ds.b	1
+11300                     	xdef	_b100Hz
+11301                     	xdef	_t0_cnt4
+11302                     	xdef	_t0_cnt3
+11303                     	xdef	_t0_cnt2
+11304                     	xdef	_t0_cnt1
+11305                     	xdef	_t0_cnt0
+11306                     	xref.b	c_lreg
+11307                     	xref.b	c_x
+11308                     	xref.b	c_y
+11328                     	xref	c_lrsh
+11329                     	xref	c_lgadd
+11330                     	xref	c_ladd
+11331                     	xref	c_umul
+11332                     	xref	c_lgmul
+11333                     	xref	c_lgsub
+11334                     	xref	c_lsbc
+11335                     	xref	c_idiv
+11336                     	xref	c_ldiv
+11337                     	xref	c_itolx
+11338                     	xref	c_eewrc
+11339                     	xref	c_imul
+11340                     	xref	c_lcmp
+11341                     	xref	c_ltor
+11342                     	xref	c_lgadc
+11343                     	xref	c_rtol
+11344                     	xref	c_vmul
+11345                     	xref	c_eewrw
+11346                     	end

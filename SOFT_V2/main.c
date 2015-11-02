@@ -1747,6 +1747,7 @@ else if((mess[6]==0xff)&&(mess[7]==0xff)&&((mess[8]==MEM_KF1)||(mess[8]==MEM_KF4
 		{
 		if(ee_DEVICE!=1)ee_DEVICE=1;
 		if(ee_IMAXVENT!=(signed short)mess[13]) ee_IMAXVENT=(signed short)mess[13];
+			if(ee_TZAS!=3) ee_TZAS=3;
 		}
 	}
 
