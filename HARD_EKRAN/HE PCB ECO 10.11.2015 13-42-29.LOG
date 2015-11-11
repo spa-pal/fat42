@@ -1,0 +1,20 @@
+Added Component: Designator=C1(el3)
+Added Component: Designator=C2(el3)
+Added Component: Designator=U1(SIP-G3/C7)
+Added Component: Designator=X1(PIN1)
+Added Component: Designator=X2(PIN1)
+Added Component: Designator=X3(PIN1)
+Added Component: Designator=X4(PIN1)
+Added Pin To Net: NetName=NetC1_1 Pin=C1-1
+Added Pin To Net: NetName=NetC1_2 Pin=C1-2
+Added Pin To Net: NetName=NetC2_1 Pin=C2-1
+Added Pin To Net: NetName=NetC1_2 Pin=C2-2
+Added Pin To Net: NetName=NetC1_1 Pin=U1-1
+Added Pin To Net: NetName=NetC2_1 Pin=U1-3
+Added Pin To Net: NetName=NetC1_2 Pin=U1-4
+Added Pin To Net: NetName=NetC1_1 Pin=X1-1
+Added Pin To Net: NetName=NetC2_1 Pin=X2-1
+Added Pin To Net: NetName=NetC1_2 Pin=X3-1
+Added Pin To Net: NetName=NetC1_2 Pin=X4-1
+Added Class: Name=HE
+Added Room: Name=HE

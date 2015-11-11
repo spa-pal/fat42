@@ -1,0 +1,13 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [HE.PrjPCB]
+   Generated File[HE.TXT]
+   Generated File[HE.DRL]
+   Generated File[HE.LDP]
+   Generated File[HE.DRR]
+
+
+Files Generated   : 4
+Documents Printed : 0
+
+Finished Output Generation At 15:37:23 On 10.11.2015

@@ -1,0 +1,7 @@
+Added Component: Designator=X5(PIN1)
+Added Component: Designator=X6(PIN1)
+Added Pin To Net: NetName=NetC1_2 Pin=X5-1
+Added Pin To Net: NetName=NetC1_2 Pin=X6-1
+Added Member To Class: ClassName=HE Member=Component X5 
+Added Member To Class: ClassName=HE Member=Component X6 
+Added Room: Name=HE
