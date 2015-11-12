@@ -1,3 +1,5 @@
+//Ветка основная, для первой платочки FAT42.
+
 //#define _24_
 
 #define BLOCK_INIT  GPIOB->DDR|=(1<<2);GPIOB->CR1|=(1<<2);GPIOB->CR2&=~(1<<2);
