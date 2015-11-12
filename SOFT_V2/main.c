@@ -1,3 +1,6 @@
+//Ветка для новой платочки 1000.14
+
+
 //#define _24_
 
 #define BLOCK_INIT  GPIOB->DDR|=(1<<2);GPIOB->CR1|=(1<<2);GPIOB->CR2&=~(1<<2);
