@@ -1244,11 +1244,15 @@ else adress = adr[0] + (adr[1]*4) + (adr[2]*16);
 //adress=1;
 }*/
 
-/* -------------------------------------------------------------------------- */
-void adr_drv_v4(char in)
+
+
+//-----------------------------------------------
+char adr_gran(signed short in)
 {
-if(adress!=in)adress=in;
-}
+if(in>800)return 1;
+else if((in>60)&&(in<140))return 0;
+else return 100;
+} 
 
 /* -------------------------------------------------------------------------- */
 void adr_drv_v3(void)
@@ -1328,6 +1332,92 @@ else
 
 //adress=1;
 }
+
+
+/* -------------------------------------------------------------------------- */
+void adr_drv_v4(void)
+{
+signed short tempSI; 
+char aaa[3];
+char aaaa[3];
+
+#define ADR_CONST_0	574
+#define ADR_CONST_1	897
+#define ADR_CONST_2	695
+#define ADR_CONST_3	1015
+
+GPIOB->DDR&=~(1<<0);
+GPIOB->CR1&=~(1<<0);
+GPIOB->CR2&=~(1<<0);
+ADC2->CR2=0x08;
+ADC2->CR1=0x40;
+ADC2->CSR=0x20+0;
+ADC2->CR1|=1;
+ADC2->CR1|=1;
+adr_drv_stat=1;
+while(adr_drv_stat==1);
+
+GPIOB->DDR&=~(1<<1);
+GPIOB->CR1&=~(1<<1);
+GPIOB->CR2&=~(1<<1);
+ADC2->CR2=0x08;
+ADC2->CR1=0x40;
+ADC2->CSR=0x20+1;
+ADC2->CR1|=1;
+ADC2->CR1|=1;
+adr_drv_stat=3;
+while(adr_drv_stat==3);
+
+GPIOE->DDR&=~(1<<6);
+GPIOE->CR1&=~(1<<6);
+GPIOE->CR2&=~(1<<6);
+ADC2->CR2=0x08;
+ADC2->CR1=0x40;
+ADC2->CSR=0x20+9;
+ADC2->CR1|=1;
+ADC2->CR1|=1;
+adr_drv_stat=5;
+while(adr_drv_stat==5);
+
+aaa[0]=adr_gran(adc_buff_[0]);
+tempSI=adc_buff_[0]/260;
+gran(&tempSI,0,3);
+aaaa[0]=(char)tempSI;
+
+aaa[1]=adr_gran(adc_buff_[1]);
+tempSI=adc_buff_[1]/260;
+gran(&tempSI,0,3);
+aaaa[1]=(char)tempSI;
+
+aaa[2]=adr_gran(adc_buff_[9]);
+tempSI=adc_buff_[2]/260;
+gran(&tempSI,0,3);
+aaaa[2]=(char)tempSI;
+
+
+adress=100;
+//adr=0;//aaa[0]+ (aaa[1]*4)+ (aaa[2]*16);
+
+if((aaa[0]!=100)&&(aaa[1]!=100)&&(aaa[2]!=100))
+	{
+	if(aaa[0]==0)
+		{
+		if(aaa[1]==0)adress=3;
+		else adress=0;
+		}
+	else if(aaa[1]==0)adress=1;	
+	else if(aaa[2]==0)adress=2;
+     
+	//adr=1;
+	}
+else if((aaa[0]==100)&&(aaa[1]==100)&&(aaa[2]==100))adress=aaaa[0]+ (aaaa[1]*4)+ (aaaa[2]*16);
+   /*	{
+	adr=0;
+	} */
+else adress=100;
+
+}
+
 
 /* -------------------------------------------------------------------------- */
 void volum_u_main_drv(void)
@@ -2108,8 +2198,13 @@ FLASH_DUKR=0xae;
 FLASH_DUKR=0x56;
 enableInterrupts();
 
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
 
-adr_drv_v3();
+adr_drv_v4();
 //adr_drv_v4(1);
 
 

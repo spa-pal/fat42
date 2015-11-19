@@ -128,8 +128,8 @@ Int.1=0
 
 [Root.Config.0.Settings.7]
 String.2.0=Running Post-Build step
-String.3.0=chex -o $(OutputPath)$(TargetSName).s19 $(OutputPath)$(TargetSName).sm8
-String.6.0=2012,12,8,23,37,11
+String.3.0=chex -o $(OutputPath)fat42_1000.04.s19 $(OutputPath)$(TargetSName).sm8
+String.6.0=2015,11,19,11,13,18
 
 [Root.Config.0.Settings.8]
 String.2.0=Performing Custom Build on $(InputFile)
