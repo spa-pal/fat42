@@ -2198,7 +2198,11 @@ FLASH_DUKR=0xae;
 FLASH_DUKR=0x56;
 enableInterrupts();
 
-
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
 
 adr_drv_v4();
 //adr_drv_v4(1);
