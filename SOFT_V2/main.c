@@ -1250,7 +1250,7 @@ else adress = adr[0] + (adr[1]*4) + (adr[2]*16);
 char adr_gran(signed short in)
 {
 if(in>800)return 1;
-else if((in>60)&&(in<140))return 0;
+else if((in>60)&&(in<150))return 0;
 else return 100;
 } 
 
@@ -2192,17 +2192,34 @@ CLK->ECKR|=1;
 while((CLK->ECKR & 2) == 0);
 CLK->SWCR|=2;
 CLK->SWR=0xB4;
+BLOCK_INIT
+BLOCK_ON
 
 delay_ms(200);
 FLASH_DUKR=0xae;
 FLASH_DUKR=0x56;
 enableInterrupts();
-
+/*
 delay_ms(100);
 delay_ms(100);
 delay_ms(100);
 delay_ms(100);
 delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);*/
 
 adr_drv_v4();
 //adr_drv_v4(1);
