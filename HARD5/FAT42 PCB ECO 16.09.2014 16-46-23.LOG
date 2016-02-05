@@ -1,0 +1,48 @@
+Removed Pin From Net: NetName=NetR25_1 Pin=R25-1
+Removed Pin From Net: NetName=NetR25_2 Pin=R25-2
+Removed Pin From Net: NetName=NetR44_1 Pin=R44-1
+Removed Pin From Net: NetName=+5V Pin=R44-2
+Removed Pin From Net: NetName=PG1 Pin=R48-1
+Removed Pin From Net: NetName=+5V Pin=R48-2
+Removed Pin From Net: NetName=NetR25_2 Pin=R50-1
+Removed Pin From Net: NetName=NetR50_2 Pin=R50-2
+Removed Pin From Net: NetName=NetR25_2 Pin=U2-3
+Removed Pin From Net: NetName=NetR25_2 Pin=U5-5
+Removed Pin From Net: NetName=NetR25_2 Pin=U5-5
+Removed Pin From Net: NetName=NetR44_1 Pin=U10-1
+Removed Pin From Net: NetName=PG0 Pin=U10-3
+Removed Pin From Net: NetName=Net1_1 Pin=U10-4
+Removed Pin From Net: NetName=NetR25_1 Pin=U10-5
+Removed Pin From Net: NetName=NetR25_2 Pin=U10-6
+Removed Pin From Net: NetName=NetR50_2 Pin=U13-1
+Removed Pin From Net: NetName=NetU2_4 Pin=U13-3
+Removed Pin From Net: NetName=GND Pin=U13-4
+Removed Pin From Net: NetName=PG1 Pin=U13-5
+Removed Pin From Net: NetName=+5V Pin=U13-6
+Removed Member From Class: ClassName=FAT42 Member=R25
+Removed Member From Class: ClassName=FAT42 Member=R44
+Removed Member From Class: ClassName=FAT42 Member=R48
+Removed Member From Class: ClassName=FAT42 Member=R50
+Removed Member From Class: ClassName=FAT42 Member=U10
+Removed Member From Class: ClassName=FAT42 Member=U13
+Added Component: Designator=U3(SO-G16/D10.4)
+Change Net Name : Old Net Name=Net1_1 New Net Name=Net3_1
+Change Net Name : Old Net Name=Net3_1 New Net Name=Net1_1
+Change Net Name : Old Net Name=NetR25_1 New Net Name=NetU2_1
+Change Net Name : Old Net Name=NetR25_2 New Net Name=NetU3_7
+Change Net Name : Old Net Name=NetR44_1 New Net Name=NetU3_4
+Change Net Name : Old Net Name=NetR50_2 New Net Name=NetU3_6
+Added Pin To Net: NetName=NetU2_3 Pin=U2-3
+Added Pin To Net: NetName=NetU2_3 Pin=U3-16
+Added Pin To Net: NetName=NetU2_3 Pin=U5-5
+Added Pin To Net: NetName=NetU2_3 Pin=U5-5
+Added Net: Name=NetU2_3
+Added Pin To Net: NetName=+5V Pin=U3-1
+Added Pin To Net: NetName=GND Pin=U3-2
+Added Pin To Net: NetName=PG0 Pin=U3-3
+Added Pin To Net: NetName=PG1 Pin=U3-5
+Added Pin To Net: NetName=GND Pin=U3-8
+Added Pin To Net: NetName=Net1_1 Pin=U3-9
+Added Pin To Net: NetName=NetU2_4 Pin=U3-12
+Added Pin To Net: NetName=Net1_1 Pin=U3-15
+Added Member To Class: ClassName=FAT42 Member=Component U3 ISO7231

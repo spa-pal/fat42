@@ -1,0 +1,20 @@
+Added Component: Designator=C5(_1206)
+Added Component: Designator=C6(_1206)
+Added Component: Designator=C7(_1206)
+Added Component: Designator=U3(SIP-G3/Z11.05)
+Added Pin To Net: NetName=NetC5_2 Pin=C5-2
+Added Pin To Net: NetName=NetC5_2 Pin=JP1-2
+Added Pin To Net: NetName=NetC5_2 Pin=U3-1
+Added Net: Name=NetC5_2
+Added Pin To Net: NetName=GND Pin=C5-1
+Added Pin To Net: NetName=GND Pin=C6-1
+Added Pin To Net: NetName=+5V Pin=C6-2
+Added Pin To Net: NetName=GND Pin=C7-1
+Added Pin To Net: NetName=+5V Pin=C7-2
+Added Pin To Net: NetName=NetJP1_17 Pin=JP1-17
+Added Pin To Net: NetName=+5V Pin=U3-3
+Added Pin To Net: NetName=GND Pin=U3-4
+Added Member To Class: ClassName=FAT42 Member=Component C5 1.0
+Added Member To Class: ClassName=FAT42 Member=Component C6 1.0
+Added Member To Class: ClassName=FAT42 Member=Component C7 1.0
+Added Member To Class: ClassName=FAT42 Member=Component U3 MC78M05CDT

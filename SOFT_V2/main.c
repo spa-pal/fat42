@@ -1,4 +1,5 @@
 //Ветка для старой платочки насаженной на 360
+//Платочка переразведена для штатного использования.
 
 
 //#define _24_
@@ -492,11 +493,11 @@ else if(bps_class==bpsIPS)	//если блок ИПСный
 void led_drv(void)
 {
 //Красный светодиод
-GPIOA->DDR|=(1<<4);
-GPIOA->CR1|=(1<<4);
-GPIOA->CR2&=~(1<<4);
-if(led_red_buff&0b1L) GPIOA->ODR|=(1<<4); 	//Горит если в led_red_buff 1 и на ножке 1
-else GPIOA->ODR&=~(1<<4); 
+GPIOA->DDR|=(1<<6);
+GPIOA->CR1|=(1<<6);
+GPIOA->CR2&=~(1<<6);
+if(led_red_buff&0b1L) GPIOA->ODR|=(1<<6); 	//Горит если в led_red_buff 1 и на ножке 1
+else GPIOA->ODR&=~(1<<6); 
 
 //Зеленый светодиод
 GPIOA->DDR|=(1<<5);
