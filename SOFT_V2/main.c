@@ -644,6 +644,8 @@ void vent_drv(void)
 	if(vent_pwm<vent_pwm_max_necc)vent_pwm+=10;
 	if(vent_pwm>vent_pwm_max_necc)vent_pwm-=10;
 	gran(&vent_pwm,400,1000);
+	
+	vent_pwm=1000-vent_pwm;	// Для нового блока. Там похоже нужна инверсия
 	//vent_pwm=100;
 }
 
