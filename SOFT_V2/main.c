@@ -2302,6 +2302,11 @@ while (1)
 		
 		adc2_init();
 		can_tx_hndl();
+		
+		GPIOC->DDR|=(1<<7);
+		GPIOC->CR1|=(1<<7);
+		GPIOC->CR2|=(1<<7);
+		GPIOC->ODR^=(1<<7);
       	}  
       	
 	if(b10Hz)

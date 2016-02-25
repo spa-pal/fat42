@@ -5010,453 +5010,463 @@
 10185  2003               L7524:
 10186                     ; 2292 	if(b100Hz)
 10188                     	btst	_b100Hz
-10189  2008 240a          	jruge	L1624
+10189  2008 241e          	jruge	L1624
 10190                     ; 2294 		b100Hz=0;
 10192  200a 72110008      	bres	_b100Hz
 10193                     ; 2303 		adc2_init();
 10195  200e cd1d68        	call	_adc2_init
 10197                     ; 2304 		can_tx_hndl();
 10199  2011 cd15c4        	call	_can_tx_hndl
-10201  2014               L1624:
-10202                     ; 2307 	if(b10Hz)
-10204                     	btst	_b10Hz
-10205  2019 2419          	jruge	L3624
-10206                     ; 2309 		b10Hz=0;
-10208  201b 72110007      	bres	_b10Hz
-10209                     ; 2311           matemat();
-10211  201f cd0bca        	call	_matemat
-10213                     ; 2312 	    	led_drv(); 
-10215  2022 cd0711        	call	_led_drv
-10217                     ; 2313 	     link_drv();
-10219  2025 cd07ff        	call	_link_drv
-10221                     ; 2314 	     pwr_hndl();		//вычисление воздействий на силу
-10223  2028 cd0aae        	call	_pwr_hndl
-10225                     ; 2315 	     JP_drv();
-10227  202b cd0774        	call	_JP_drv
-10229                     ; 2316 	     flags_drv();
-10231  202e cd0fc8        	call	_flags_drv
-10233                     ; 2317 		net_drv();
-10235  2031 cd162e        	call	_net_drv
-10237  2034               L3624:
-10238                     ; 2320 	if(b5Hz)
-10240                     	btst	_b5Hz
-10241  2039 240d          	jruge	L5624
-10242                     ; 2322 		b5Hz=0;
-10244  203b 72110006      	bres	_b5Hz
-10245                     ; 2324 		pwr_drv();		//воздействие на силу
-10247  203f cd09aa        	call	_pwr_drv
-10249                     ; 2325 		led_hndl();
-10251  2042 cd008e        	call	_led_hndl
-10253                     ; 2327 		vent_drv();
-10255  2045 cd084e        	call	_vent_drv
-10257  2048               L5624:
-10258                     ; 2330 	if(b2Hz)
-10260                     	btst	_b2Hz
-10261  204d 2404          	jruge	L7624
-10262                     ; 2332 		b2Hz=0;
-10264  204f 72110005      	bres	_b2Hz
-10265  2053               L7624:
-10266                     ; 2341 	if(b1Hz)
-10268                     	btst	_b1Hz
-10269  2058 24a0          	jruge	L3524
-10270                     ; 2343 		b1Hz=0;
-10272  205a 72110004      	bres	_b1Hz
-10273                     ; 2345 		temper_drv();			//вычисление аварий температуры
-10275  205e cd0cf8        	call	_temper_drv
-10277                     ; 2346 		u_drv();
-10279  2061 cd0dcf        	call	_u_drv
-10281                     ; 2347           x_drv();
-10283  2064 cd0eaf        	call	_x_drv
-10285                     ; 2348           if(main_cnt<1000)main_cnt++;
-10287  2067 9c            	rvf
-10288  2068 be4e          	ldw	x,_main_cnt
-10289  206a a303e8        	cpw	x,#1000
-10290  206d 2e07          	jrsge	L3724
-10293  206f be4e          	ldw	x,_main_cnt
-10294  2071 1c0001        	addw	x,#1
-10295  2074 bf4e          	ldw	_main_cnt,x
-10296  2076               L3724:
-10297                     ; 2349   		if((link==OFF)||(jp_mode==jp3))apv_hndl();
-10299  2076 b65f          	ld	a,_link
-10300  2078 a1aa          	cp	a,#170
-10301  207a 2706          	jreq	L7724
-10303  207c b647          	ld	a,_jp_mode
-10304  207e a103          	cp	a,#3
-10305  2080 2603          	jrne	L5724
-10306  2082               L7724:
-10309  2082 cd0f29        	call	_apv_hndl
-10311  2085               L5724:
-10312                     ; 2352   		can_error_cnt++;
-10314  2085 3c6d          	inc	_can_error_cnt
-10315                     ; 2353   		if(can_error_cnt>=10)
-10317  2087 b66d          	ld	a,_can_error_cnt
-10318  2089 a10a          	cp	a,#10
-10319  208b 2505          	jrult	L1034
-10320                     ; 2355   			can_error_cnt=0;
-10322  208d 3f6d          	clr	_can_error_cnt
-10323                     ; 2356 			init_CAN();
-10325  208f cd14d1        	call	_init_CAN
-10327  2092               L1034:
-10328                     ; 2360 		volum_u_main_drv();
-10330  2092 cd137e        	call	_volum_u_main_drv
-10332                     ; 2362 		pwm_stat++;
-10334  2095 3c04          	inc	_pwm_stat
-10335                     ; 2363 		if(pwm_stat>=10)pwm_stat=0;
-10337  2097 b604          	ld	a,_pwm_stat
-10338  2099 a10a          	cp	a,#10
-10339  209b 2502          	jrult	L3034
-10342  209d 3f04          	clr	_pwm_stat
-10343  209f               L3034:
-10344                     ; 2364 adc_plazma_short++;
-10346  209f bebc          	ldw	x,_adc_plazma_short
-10347  20a1 1c0001        	addw	x,#1
-10348  20a4 bfbc          	ldw	_adc_plazma_short,x
-10349  20a6 acfa1ffa      	jpf	L3524
-11363                     	xdef	_main
-11364                     	xdef	f_ADC2_EOC_Interrupt
-11365                     	xdef	f_CAN_TX_Interrupt
-11366                     	xdef	f_CAN_RX_Interrupt
-11367                     	xdef	f_TIM4_UPD_Interrupt
-11368                     	xdef	_adc2_init
-11369                     	xdef	_t1_init
-11370                     	xdef	_t4_init
-11371                     	xdef	_can_in_an
-11372                     	xdef	_net_drv
-11373                     	xdef	_can_tx_hndl
-11374                     	xdef	_can_transmit
-11375                     	xdef	_init_CAN
-11376                     	xdef	_volum_u_main_drv
-11377                     	xdef	_adr_drv_v4
-11378                     	xdef	_adr_drv_v3
-11379                     	xdef	_adr_gran
-11380                     	xdef	_flags_drv
-11381                     	xdef	_apv_hndl
-11382                     	xdef	_apv_stop
-11383                     	xdef	_apv_start
-11384                     	xdef	_x_drv
-11385                     	xdef	_u_drv
-11386                     	xdef	_temper_drv
-11387                     	xdef	_matemat
-11388                     	xdef	_pwr_hndl
-11389                     	xdef	_pwr_drv
-11390                     	xdef	_vent_drv
-11391                     	xdef	_link_drv
-11392                     	xdef	_JP_drv
-11393                     	xdef	_led_drv
-11394                     	xdef	_led_hndl
-11395                     	xdef	_delay_ms
-11396                     	xdef	_granee
-11397                     	xdef	_gran
-11398                     .eeprom:	section	.data
-11399  0000               _ee_IMAXVENT:
-11400  0000 0000          	ds.b	2
-11401                     	xdef	_ee_IMAXVENT
-11402                     	switch	.ubsct
-11403  0001               _bps_class:
-11404  0001 00            	ds.b	1
-11405                     	xdef	_bps_class
-11406  0002               _vent_pwm:
-11407  0002 0000          	ds.b	2
-11408                     	xdef	_vent_pwm
-11409  0004               _pwm_stat:
-11410  0004 00            	ds.b	1
-11411                     	xdef	_pwm_stat
-11412  0005               _pwm_vent_cnt:
-11413  0005 00            	ds.b	1
-11414                     	xdef	_pwm_vent_cnt
-11415                     	switch	.eeprom
-11416  0002               _ee_DEVICE:
-11417  0002 0000          	ds.b	2
-11418                     	xdef	_ee_DEVICE
-11419  0004               _ee_AVT_MODE:
-11420  0004 0000          	ds.b	2
-11421                     	xdef	_ee_AVT_MODE
-11422                     	switch	.ubsct
-11423  0006               _i_main_bps_cnt:
-11424  0006 000000000000  	ds.b	6
-11425                     	xdef	_i_main_bps_cnt
-11426  000c               _i_main_sigma:
-11427  000c 0000          	ds.b	2
-11428                     	xdef	_i_main_sigma
-11429  000e               _i_main_num_of_bps:
-11430  000e 00            	ds.b	1
-11431                     	xdef	_i_main_num_of_bps
-11432  000f               _i_main_avg:
-11433  000f 0000          	ds.b	2
-11434                     	xdef	_i_main_avg
-11435  0011               _i_main_flag:
-11436  0011 000000000000  	ds.b	6
-11437                     	xdef	_i_main_flag
-11438  0017               _i_main:
-11439  0017 000000000000  	ds.b	12
-11440                     	xdef	_i_main
-11441  0023               _x:
-11442  0023 000000000000  	ds.b	12
-11443                     	xdef	_x
-11444                     	xdef	_volum_u_main_
-11445                     	switch	.eeprom
-11446  0006               _UU_AVT:
-11447  0006 0000          	ds.b	2
-11448                     	xdef	_UU_AVT
-11449                     	switch	.ubsct
-11450  002f               _cnt_net_drv:
-11451  002f 00            	ds.b	1
-11452                     	xdef	_cnt_net_drv
-11453                     	switch	.bit
-11454  0001               _bMAIN:
-11455  0001 00            	ds.b	1
-11456                     	xdef	_bMAIN
-11457                     	switch	.ubsct
-11458  0030               _plazma_int:
-11459  0030 000000000000  	ds.b	6
-11460                     	xdef	_plazma_int
-11461                     	xdef	_rotor_int
-11462  0036               _led_green_buff:
-11463  0036 00000000      	ds.b	4
-11464                     	xdef	_led_green_buff
-11465  003a               _led_red_buff:
-11466  003a 00000000      	ds.b	4
-11467                     	xdef	_led_red_buff
-11468                     	xdef	_led_drv_cnt
-11469                     	xdef	_led_green
-11470                     	xdef	_led_red
-11471  003e               _res_fl_cnt:
-11472  003e 00            	ds.b	1
-11473                     	xdef	_res_fl_cnt
-11474                     	xdef	_bRES_
-11475                     	xdef	_bRES
-11476                     	switch	.eeprom
-11477  0008               _res_fl_:
-11478  0008 00            	ds.b	1
-11479                     	xdef	_res_fl_
-11480  0009               _res_fl:
-11481  0009 00            	ds.b	1
-11482                     	xdef	_res_fl
-11483                     	switch	.ubsct
-11484  003f               _cnt_apv_off:
-11485  003f 00            	ds.b	1
-11486                     	xdef	_cnt_apv_off
-11487                     	switch	.bit
-11488  0002               _bAPV:
-11489  0002 00            	ds.b	1
-11490                     	xdef	_bAPV
-11491                     	switch	.ubsct
-11492  0040               _apv_cnt_:
-11493  0040 0000          	ds.b	2
-11494                     	xdef	_apv_cnt_
-11495  0042               _apv_cnt:
-11496  0042 000000        	ds.b	3
-11497                     	xdef	_apv_cnt
-11498                     	xdef	_bBL_IPS
-11499                     	switch	.bit
-11500  0003               _bBL:
-11501  0003 00            	ds.b	1
-11502                     	xdef	_bBL
-11503                     	switch	.ubsct
-11504  0045               _cnt_JP1:
-11505  0045 00            	ds.b	1
-11506                     	xdef	_cnt_JP1
-11507  0046               _cnt_JP0:
-11508  0046 00            	ds.b	1
-11509                     	xdef	_cnt_JP0
-11510  0047               _jp_mode:
-11511  0047 00            	ds.b	1
-11512                     	xdef	_jp_mode
-11513                     	xdef	_pwm_i
-11514                     	xdef	_pwm_u
-11515  0048               _tmax_cnt:
-11516  0048 0000          	ds.b	2
-11517                     	xdef	_tmax_cnt
-11518  004a               _tsign_cnt:
-11519  004a 0000          	ds.b	2
-11520                     	xdef	_tsign_cnt
-11521                     	switch	.eeprom
-11522  000a               _ee_U_AVT:
-11523  000a 0000          	ds.b	2
-11524                     	xdef	_ee_U_AVT
-11525  000c               _ee_tsign:
-11526  000c 0000          	ds.b	2
-11527                     	xdef	_ee_tsign
-11528  000e               _ee_tmax:
-11529  000e 0000          	ds.b	2
-11530                     	xdef	_ee_tmax
-11531  0010               _ee_dU:
-11532  0010 0000          	ds.b	2
-11533                     	xdef	_ee_dU
-11534  0012               _ee_Umax:
-11535  0012 0000          	ds.b	2
-11536                     	xdef	_ee_Umax
-11537  0014               _ee_TZAS:
-11538  0014 0000          	ds.b	2
-11539                     	xdef	_ee_TZAS
-11540                     	switch	.ubsct
-11541  004c               _main_cnt1:
-11542  004c 0000          	ds.b	2
-11543                     	xdef	_main_cnt1
-11544  004e               _main_cnt:
-11545  004e 0000          	ds.b	2
-11546                     	xdef	_main_cnt
-11547  0050               _off_bp_cnt:
-11548  0050 00            	ds.b	1
-11549                     	xdef	_off_bp_cnt
-11550  0051               _flags_tu_cnt_off:
-11551  0051 00            	ds.b	1
-11552                     	xdef	_flags_tu_cnt_off
-11553  0052               _flags_tu_cnt_on:
-11554  0052 00            	ds.b	1
-11555                     	xdef	_flags_tu_cnt_on
-11556  0053               _vol_i_temp:
-11557  0053 0000          	ds.b	2
-11558                     	xdef	_vol_i_temp
-11559  0055               _vol_u_temp:
-11560  0055 0000          	ds.b	2
-11561                     	xdef	_vol_u_temp
-11562                     	switch	.eeprom
-11563  0016               __x_ee_:
-11564  0016 0000          	ds.b	2
-11565                     	xdef	__x_ee_
-11566                     	switch	.ubsct
-11567  0057               __x_cnt:
-11568  0057 0000          	ds.b	2
-11569                     	xdef	__x_cnt
-11570  0059               __x__:
-11571  0059 0000          	ds.b	2
-11572                     	xdef	__x__
-11573  005b               __x_:
-11574  005b 0000          	ds.b	2
-11575                     	xdef	__x_
-11576  005d               _flags_tu:
-11577  005d 00            	ds.b	1
-11578                     	xdef	_flags_tu
-11579                     	xdef	_flags
-11580  005e               _link_cnt:
-11581  005e 00            	ds.b	1
-11582                     	xdef	_link_cnt
-11583  005f               _link:
-11584  005f 00            	ds.b	1
-11585                     	xdef	_link
-11586  0060               _umin_cnt:
-11587  0060 0000          	ds.b	2
-11588                     	xdef	_umin_cnt
-11589  0062               _umax_cnt:
-11590  0062 0000          	ds.b	2
-11591                     	xdef	_umax_cnt
-11592                     	switch	.eeprom
-11593  0018               _ee_K:
-11594  0018 000000000000  	ds.b	16
-11595                     	xdef	_ee_K
-11596                     	switch	.ubsct
-11597  0064               _T:
-11598  0064 00            	ds.b	1
-11599                     	xdef	_T
-11600  0065               _Udb:
-11601  0065 0000          	ds.b	2
-11602                     	xdef	_Udb
-11603  0067               _Ui:
-11604  0067 0000          	ds.b	2
-11605                     	xdef	_Ui
-11606  0069               _Un:
-11607  0069 0000          	ds.b	2
-11608                     	xdef	_Un
-11609  006b               _I:
-11610  006b 0000          	ds.b	2
-11611                     	xdef	_I
-11612  006d               _can_error_cnt:
-11613  006d 00            	ds.b	1
-11614                     	xdef	_can_error_cnt
-11615                     	xdef	_bCAN_RX
-11616  006e               _tx_busy_cnt:
-11617  006e 00            	ds.b	1
-11618                     	xdef	_tx_busy_cnt
-11619                     	xdef	_bTX_FREE
-11620  006f               _can_buff_rd_ptr:
-11621  006f 00            	ds.b	1
-11622                     	xdef	_can_buff_rd_ptr
-11623  0070               _can_buff_wr_ptr:
-11624  0070 00            	ds.b	1
-11625                     	xdef	_can_buff_wr_ptr
-11626  0071               _can_out_buff:
-11627  0071 000000000000  	ds.b	64
-11628                     	xdef	_can_out_buff
-11629                     	switch	.bss
-11630  0000               _adress_error:
-11631  0000 00            	ds.b	1
-11632                     	xdef	_adress_error
-11633  0001               _adress:
-11634  0001 00            	ds.b	1
-11635                     	xdef	_adress
-11636  0002               _adr:
-11637  0002 000000        	ds.b	3
-11638                     	xdef	_adr
-11639                     	xdef	_adr_drv_stat
-11640                     	xdef	_led_ind
-11641                     	switch	.ubsct
-11642  00b1               _led_ind_cnt:
-11643  00b1 00            	ds.b	1
-11644                     	xdef	_led_ind_cnt
-11645  00b2               _adc_plazma:
-11646  00b2 000000000000  	ds.b	10
-11647                     	xdef	_adc_plazma
-11648  00bc               _adc_plazma_short:
-11649  00bc 0000          	ds.b	2
-11650                     	xdef	_adc_plazma_short
-11651  00be               _adc_cnt:
-11652  00be 00            	ds.b	1
-11653                     	xdef	_adc_cnt
-11654  00bf               _adc_ch:
-11655  00bf 00            	ds.b	1
-11656                     	xdef	_adc_ch
-11657                     	switch	.bss
-11658  0005               _adc_buff_:
-11659  0005 000000000000  	ds.b	20
-11660                     	xdef	_adc_buff_
-11661  0019               _adc_buff:
-11662  0019 000000000000  	ds.b	320
-11663                     	xdef	_adc_buff
-11664                     	switch	.ubsct
-11665  00c0               _mess:
-11666  00c0 000000000000  	ds.b	14
-11667                     	xdef	_mess
-11668                     	switch	.bit
-11669  0004               _b1Hz:
-11670  0004 00            	ds.b	1
-11671                     	xdef	_b1Hz
-11672  0005               _b2Hz:
-11673  0005 00            	ds.b	1
-11674                     	xdef	_b2Hz
-11675  0006               _b5Hz:
-11676  0006 00            	ds.b	1
-11677                     	xdef	_b5Hz
-11678  0007               _b10Hz:
-11679  0007 00            	ds.b	1
-11680                     	xdef	_b10Hz
-11681  0008               _b100Hz:
-11682  0008 00            	ds.b	1
-11683                     	xdef	_b100Hz
-11684                     	xdef	_t0_cnt4
-11685                     	xdef	_t0_cnt3
-11686                     	xdef	_t0_cnt2
-11687                     	xdef	_t0_cnt1
-11688                     	xdef	_t0_cnt0
-11689                     	xref.b	c_lreg
-11690                     	xref.b	c_x
-11691                     	xref.b	c_y
-11711                     	xref	c_lrsh
-11712                     	xref	c_lgadd
-11713                     	xref	c_ladd
-11714                     	xref	c_umul
-11715                     	xref	c_lgmul
-11716                     	xref	c_lgsub
-11717                     	xref	c_lsbc
-11718                     	xref	c_idiv
-11719                     	xref	c_ldiv
-11720                     	xref	c_itolx
-11721                     	xref	c_eewrc
-11722                     	xref	c_imul
-11723                     	xref	c_lcmp
-11724                     	xref	c_ltor
-11725                     	xref	c_lgadc
-11726                     	xref	c_rtol
-11727                     	xref	c_vmul
-11728                     	xref	c_eewrw
-11729                     	end
+10201                     ; 2306 		GPIOC->DDR|=(1<<7);
+10203  2014 721e500c      	bset	20492,#7
+10204                     ; 2307 		GPIOC->CR1|=(1<<7);
+10206  2018 721e500d      	bset	20493,#7
+10207                     ; 2308 		GPIOC->CR2|=(1<<7);
+10209  201c 721e500e      	bset	20494,#7
+10210                     ; 2309 		GPIOC->ODR^=(1<<7);
+10212  2020 c6500a        	ld	a,20490
+10213  2023 a880          	xor	a,	#128
+10214  2025 c7500a        	ld	20490,a
+10215  2028               L1624:
+10216                     ; 2312 	if(b10Hz)
+10218                     	btst	_b10Hz
+10219  202d 2419          	jruge	L3624
+10220                     ; 2314 		b10Hz=0;
+10222  202f 72110007      	bres	_b10Hz
+10223                     ; 2316           matemat();
+10225  2033 cd0bca        	call	_matemat
+10227                     ; 2317 	    	led_drv(); 
+10229  2036 cd0711        	call	_led_drv
+10231                     ; 2318 	     link_drv();
+10233  2039 cd07ff        	call	_link_drv
+10235                     ; 2319 	     pwr_hndl();		//вычисление воздействий на силу
+10237  203c cd0aae        	call	_pwr_hndl
+10239                     ; 2320 	     JP_drv();
+10241  203f cd0774        	call	_JP_drv
+10243                     ; 2321 	     flags_drv();
+10245  2042 cd0fc8        	call	_flags_drv
+10247                     ; 2322 		net_drv();
+10249  2045 cd162e        	call	_net_drv
+10251  2048               L3624:
+10252                     ; 2325 	if(b5Hz)
+10254                     	btst	_b5Hz
+10255  204d 240d          	jruge	L5624
+10256                     ; 2327 		b5Hz=0;
+10258  204f 72110006      	bres	_b5Hz
+10259                     ; 2329 		pwr_drv();		//воздействие на силу
+10261  2053 cd09aa        	call	_pwr_drv
+10263                     ; 2330 		led_hndl();
+10265  2056 cd008e        	call	_led_hndl
+10267                     ; 2332 		vent_drv();
+10269  2059 cd084e        	call	_vent_drv
+10271  205c               L5624:
+10272                     ; 2335 	if(b2Hz)
+10274                     	btst	_b2Hz
+10275  2061 2404          	jruge	L7624
+10276                     ; 2337 		b2Hz=0;
+10278  2063 72110005      	bres	_b2Hz
+10279  2067               L7624:
+10280                     ; 2346 	if(b1Hz)
+10282                     	btst	_b1Hz
+10283  206c 248c          	jruge	L3524
+10284                     ; 2348 		b1Hz=0;
+10286  206e 72110004      	bres	_b1Hz
+10287                     ; 2350 		temper_drv();			//вычисление аварий температуры
+10289  2072 cd0cf8        	call	_temper_drv
+10291                     ; 2351 		u_drv();
+10293  2075 cd0dcf        	call	_u_drv
+10295                     ; 2352           x_drv();
+10297  2078 cd0eaf        	call	_x_drv
+10299                     ; 2353           if(main_cnt<1000)main_cnt++;
+10301  207b 9c            	rvf
+10302  207c be4e          	ldw	x,_main_cnt
+10303  207e a303e8        	cpw	x,#1000
+10304  2081 2e07          	jrsge	L3724
+10307  2083 be4e          	ldw	x,_main_cnt
+10308  2085 1c0001        	addw	x,#1
+10309  2088 bf4e          	ldw	_main_cnt,x
+10310  208a               L3724:
+10311                     ; 2354   		if((link==OFF)||(jp_mode==jp3))apv_hndl();
+10313  208a b65f          	ld	a,_link
+10314  208c a1aa          	cp	a,#170
+10315  208e 2706          	jreq	L7724
+10317  2090 b647          	ld	a,_jp_mode
+10318  2092 a103          	cp	a,#3
+10319  2094 2603          	jrne	L5724
+10320  2096               L7724:
+10323  2096 cd0f29        	call	_apv_hndl
+10325  2099               L5724:
+10326                     ; 2357   		can_error_cnt++;
+10328  2099 3c6d          	inc	_can_error_cnt
+10329                     ; 2358   		if(can_error_cnt>=10)
+10331  209b b66d          	ld	a,_can_error_cnt
+10332  209d a10a          	cp	a,#10
+10333  209f 2505          	jrult	L1034
+10334                     ; 2360   			can_error_cnt=0;
+10336  20a1 3f6d          	clr	_can_error_cnt
+10337                     ; 2361 			init_CAN();
+10339  20a3 cd14d1        	call	_init_CAN
+10341  20a6               L1034:
+10342                     ; 2365 		volum_u_main_drv();
+10344  20a6 cd137e        	call	_volum_u_main_drv
+10346                     ; 2367 		pwm_stat++;
+10348  20a9 3c04          	inc	_pwm_stat
+10349                     ; 2368 		if(pwm_stat>=10)pwm_stat=0;
+10351  20ab b604          	ld	a,_pwm_stat
+10352  20ad a10a          	cp	a,#10
+10353  20af 2502          	jrult	L3034
+10356  20b1 3f04          	clr	_pwm_stat
+10357  20b3               L3034:
+10358                     ; 2369 adc_plazma_short++;
+10360  20b3 bebc          	ldw	x,_adc_plazma_short
+10361  20b5 1c0001        	addw	x,#1
+10362  20b8 bfbc          	ldw	_adc_plazma_short,x
+10363  20ba acfa1ffa      	jpf	L3524
+11377                     	xdef	_main
+11378                     	xdef	f_ADC2_EOC_Interrupt
+11379                     	xdef	f_CAN_TX_Interrupt
+11380                     	xdef	f_CAN_RX_Interrupt
+11381                     	xdef	f_TIM4_UPD_Interrupt
+11382                     	xdef	_adc2_init
+11383                     	xdef	_t1_init
+11384                     	xdef	_t4_init
+11385                     	xdef	_can_in_an
+11386                     	xdef	_net_drv
+11387                     	xdef	_can_tx_hndl
+11388                     	xdef	_can_transmit
+11389                     	xdef	_init_CAN
+11390                     	xdef	_volum_u_main_drv
+11391                     	xdef	_adr_drv_v4
+11392                     	xdef	_adr_drv_v3
+11393                     	xdef	_adr_gran
+11394                     	xdef	_flags_drv
+11395                     	xdef	_apv_hndl
+11396                     	xdef	_apv_stop
+11397                     	xdef	_apv_start
+11398                     	xdef	_x_drv
+11399                     	xdef	_u_drv
+11400                     	xdef	_temper_drv
+11401                     	xdef	_matemat
+11402                     	xdef	_pwr_hndl
+11403                     	xdef	_pwr_drv
+11404                     	xdef	_vent_drv
+11405                     	xdef	_link_drv
+11406                     	xdef	_JP_drv
+11407                     	xdef	_led_drv
+11408                     	xdef	_led_hndl
+11409                     	xdef	_delay_ms
+11410                     	xdef	_granee
+11411                     	xdef	_gran
+11412                     .eeprom:	section	.data
+11413  0000               _ee_IMAXVENT:
+11414  0000 0000          	ds.b	2
+11415                     	xdef	_ee_IMAXVENT
+11416                     	switch	.ubsct
+11417  0001               _bps_class:
+11418  0001 00            	ds.b	1
+11419                     	xdef	_bps_class
+11420  0002               _vent_pwm:
+11421  0002 0000          	ds.b	2
+11422                     	xdef	_vent_pwm
+11423  0004               _pwm_stat:
+11424  0004 00            	ds.b	1
+11425                     	xdef	_pwm_stat
+11426  0005               _pwm_vent_cnt:
+11427  0005 00            	ds.b	1
+11428                     	xdef	_pwm_vent_cnt
+11429                     	switch	.eeprom
+11430  0002               _ee_DEVICE:
+11431  0002 0000          	ds.b	2
+11432                     	xdef	_ee_DEVICE
+11433  0004               _ee_AVT_MODE:
+11434  0004 0000          	ds.b	2
+11435                     	xdef	_ee_AVT_MODE
+11436                     	switch	.ubsct
+11437  0006               _i_main_bps_cnt:
+11438  0006 000000000000  	ds.b	6
+11439                     	xdef	_i_main_bps_cnt
+11440  000c               _i_main_sigma:
+11441  000c 0000          	ds.b	2
+11442                     	xdef	_i_main_sigma
+11443  000e               _i_main_num_of_bps:
+11444  000e 00            	ds.b	1
+11445                     	xdef	_i_main_num_of_bps
+11446  000f               _i_main_avg:
+11447  000f 0000          	ds.b	2
+11448                     	xdef	_i_main_avg
+11449  0011               _i_main_flag:
+11450  0011 000000000000  	ds.b	6
+11451                     	xdef	_i_main_flag
+11452  0017               _i_main:
+11453  0017 000000000000  	ds.b	12
+11454                     	xdef	_i_main
+11455  0023               _x:
+11456  0023 000000000000  	ds.b	12
+11457                     	xdef	_x
+11458                     	xdef	_volum_u_main_
+11459                     	switch	.eeprom
+11460  0006               _UU_AVT:
+11461  0006 0000          	ds.b	2
+11462                     	xdef	_UU_AVT
+11463                     	switch	.ubsct
+11464  002f               _cnt_net_drv:
+11465  002f 00            	ds.b	1
+11466                     	xdef	_cnt_net_drv
+11467                     	switch	.bit
+11468  0001               _bMAIN:
+11469  0001 00            	ds.b	1
+11470                     	xdef	_bMAIN
+11471                     	switch	.ubsct
+11472  0030               _plazma_int:
+11473  0030 000000000000  	ds.b	6
+11474                     	xdef	_plazma_int
+11475                     	xdef	_rotor_int
+11476  0036               _led_green_buff:
+11477  0036 00000000      	ds.b	4
+11478                     	xdef	_led_green_buff
+11479  003a               _led_red_buff:
+11480  003a 00000000      	ds.b	4
+11481                     	xdef	_led_red_buff
+11482                     	xdef	_led_drv_cnt
+11483                     	xdef	_led_green
+11484                     	xdef	_led_red
+11485  003e               _res_fl_cnt:
+11486  003e 00            	ds.b	1
+11487                     	xdef	_res_fl_cnt
+11488                     	xdef	_bRES_
+11489                     	xdef	_bRES
+11490                     	switch	.eeprom
+11491  0008               _res_fl_:
+11492  0008 00            	ds.b	1
+11493                     	xdef	_res_fl_
+11494  0009               _res_fl:
+11495  0009 00            	ds.b	1
+11496                     	xdef	_res_fl
+11497                     	switch	.ubsct
+11498  003f               _cnt_apv_off:
+11499  003f 00            	ds.b	1
+11500                     	xdef	_cnt_apv_off
+11501                     	switch	.bit
+11502  0002               _bAPV:
+11503  0002 00            	ds.b	1
+11504                     	xdef	_bAPV
+11505                     	switch	.ubsct
+11506  0040               _apv_cnt_:
+11507  0040 0000          	ds.b	2
+11508                     	xdef	_apv_cnt_
+11509  0042               _apv_cnt:
+11510  0042 000000        	ds.b	3
+11511                     	xdef	_apv_cnt
+11512                     	xdef	_bBL_IPS
+11513                     	switch	.bit
+11514  0003               _bBL:
+11515  0003 00            	ds.b	1
+11516                     	xdef	_bBL
+11517                     	switch	.ubsct
+11518  0045               _cnt_JP1:
+11519  0045 00            	ds.b	1
+11520                     	xdef	_cnt_JP1
+11521  0046               _cnt_JP0:
+11522  0046 00            	ds.b	1
+11523                     	xdef	_cnt_JP0
+11524  0047               _jp_mode:
+11525  0047 00            	ds.b	1
+11526                     	xdef	_jp_mode
+11527                     	xdef	_pwm_i
+11528                     	xdef	_pwm_u
+11529  0048               _tmax_cnt:
+11530  0048 0000          	ds.b	2
+11531                     	xdef	_tmax_cnt
+11532  004a               _tsign_cnt:
+11533  004a 0000          	ds.b	2
+11534                     	xdef	_tsign_cnt
+11535                     	switch	.eeprom
+11536  000a               _ee_U_AVT:
+11537  000a 0000          	ds.b	2
+11538                     	xdef	_ee_U_AVT
+11539  000c               _ee_tsign:
+11540  000c 0000          	ds.b	2
+11541                     	xdef	_ee_tsign
+11542  000e               _ee_tmax:
+11543  000e 0000          	ds.b	2
+11544                     	xdef	_ee_tmax
+11545  0010               _ee_dU:
+11546  0010 0000          	ds.b	2
+11547                     	xdef	_ee_dU
+11548  0012               _ee_Umax:
+11549  0012 0000          	ds.b	2
+11550                     	xdef	_ee_Umax
+11551  0014               _ee_TZAS:
+11552  0014 0000          	ds.b	2
+11553                     	xdef	_ee_TZAS
+11554                     	switch	.ubsct
+11555  004c               _main_cnt1:
+11556  004c 0000          	ds.b	2
+11557                     	xdef	_main_cnt1
+11558  004e               _main_cnt:
+11559  004e 0000          	ds.b	2
+11560                     	xdef	_main_cnt
+11561  0050               _off_bp_cnt:
+11562  0050 00            	ds.b	1
+11563                     	xdef	_off_bp_cnt
+11564  0051               _flags_tu_cnt_off:
+11565  0051 00            	ds.b	1
+11566                     	xdef	_flags_tu_cnt_off
+11567  0052               _flags_tu_cnt_on:
+11568  0052 00            	ds.b	1
+11569                     	xdef	_flags_tu_cnt_on
+11570  0053               _vol_i_temp:
+11571  0053 0000          	ds.b	2
+11572                     	xdef	_vol_i_temp
+11573  0055               _vol_u_temp:
+11574  0055 0000          	ds.b	2
+11575                     	xdef	_vol_u_temp
+11576                     	switch	.eeprom
+11577  0016               __x_ee_:
+11578  0016 0000          	ds.b	2
+11579                     	xdef	__x_ee_
+11580                     	switch	.ubsct
+11581  0057               __x_cnt:
+11582  0057 0000          	ds.b	2
+11583                     	xdef	__x_cnt
+11584  0059               __x__:
+11585  0059 0000          	ds.b	2
+11586                     	xdef	__x__
+11587  005b               __x_:
+11588  005b 0000          	ds.b	2
+11589                     	xdef	__x_
+11590  005d               _flags_tu:
+11591  005d 00            	ds.b	1
+11592                     	xdef	_flags_tu
+11593                     	xdef	_flags
+11594  005e               _link_cnt:
+11595  005e 00            	ds.b	1
+11596                     	xdef	_link_cnt
+11597  005f               _link:
+11598  005f 00            	ds.b	1
+11599                     	xdef	_link
+11600  0060               _umin_cnt:
+11601  0060 0000          	ds.b	2
+11602                     	xdef	_umin_cnt
+11603  0062               _umax_cnt:
+11604  0062 0000          	ds.b	2
+11605                     	xdef	_umax_cnt
+11606                     	switch	.eeprom
+11607  0018               _ee_K:
+11608  0018 000000000000  	ds.b	16
+11609                     	xdef	_ee_K
+11610                     	switch	.ubsct
+11611  0064               _T:
+11612  0064 00            	ds.b	1
+11613                     	xdef	_T
+11614  0065               _Udb:
+11615  0065 0000          	ds.b	2
+11616                     	xdef	_Udb
+11617  0067               _Ui:
+11618  0067 0000          	ds.b	2
+11619                     	xdef	_Ui
+11620  0069               _Un:
+11621  0069 0000          	ds.b	2
+11622                     	xdef	_Un
+11623  006b               _I:
+11624  006b 0000          	ds.b	2
+11625                     	xdef	_I
+11626  006d               _can_error_cnt:
+11627  006d 00            	ds.b	1
+11628                     	xdef	_can_error_cnt
+11629                     	xdef	_bCAN_RX
+11630  006e               _tx_busy_cnt:
+11631  006e 00            	ds.b	1
+11632                     	xdef	_tx_busy_cnt
+11633                     	xdef	_bTX_FREE
+11634  006f               _can_buff_rd_ptr:
+11635  006f 00            	ds.b	1
+11636                     	xdef	_can_buff_rd_ptr
+11637  0070               _can_buff_wr_ptr:
+11638  0070 00            	ds.b	1
+11639                     	xdef	_can_buff_wr_ptr
+11640  0071               _can_out_buff:
+11641  0071 000000000000  	ds.b	64
+11642                     	xdef	_can_out_buff
+11643                     	switch	.bss
+11644  0000               _adress_error:
+11645  0000 00            	ds.b	1
+11646                     	xdef	_adress_error
+11647  0001               _adress:
+11648  0001 00            	ds.b	1
+11649                     	xdef	_adress
+11650  0002               _adr:
+11651  0002 000000        	ds.b	3
+11652                     	xdef	_adr
+11653                     	xdef	_adr_drv_stat
+11654                     	xdef	_led_ind
+11655                     	switch	.ubsct
+11656  00b1               _led_ind_cnt:
+11657  00b1 00            	ds.b	1
+11658                     	xdef	_led_ind_cnt
+11659  00b2               _adc_plazma:
+11660  00b2 000000000000  	ds.b	10
+11661                     	xdef	_adc_plazma
+11662  00bc               _adc_plazma_short:
+11663  00bc 0000          	ds.b	2
+11664                     	xdef	_adc_plazma_short
+11665  00be               _adc_cnt:
+11666  00be 00            	ds.b	1
+11667                     	xdef	_adc_cnt
+11668  00bf               _adc_ch:
+11669  00bf 00            	ds.b	1
+11670                     	xdef	_adc_ch
+11671                     	switch	.bss
+11672  0005               _adc_buff_:
+11673  0005 000000000000  	ds.b	20
+11674                     	xdef	_adc_buff_
+11675  0019               _adc_buff:
+11676  0019 000000000000  	ds.b	320
+11677                     	xdef	_adc_buff
+11678                     	switch	.ubsct
+11679  00c0               _mess:
+11680  00c0 000000000000  	ds.b	14
+11681                     	xdef	_mess
+11682                     	switch	.bit
+11683  0004               _b1Hz:
+11684  0004 00            	ds.b	1
+11685                     	xdef	_b1Hz
+11686  0005               _b2Hz:
+11687  0005 00            	ds.b	1
+11688                     	xdef	_b2Hz
+11689  0006               _b5Hz:
+11690  0006 00            	ds.b	1
+11691                     	xdef	_b5Hz
+11692  0007               _b10Hz:
+11693  0007 00            	ds.b	1
+11694                     	xdef	_b10Hz
+11695  0008               _b100Hz:
+11696  0008 00            	ds.b	1
+11697                     	xdef	_b100Hz
+11698                     	xdef	_t0_cnt4
+11699                     	xdef	_t0_cnt3
+11700                     	xdef	_t0_cnt2
+11701                     	xdef	_t0_cnt1
+11702                     	xdef	_t0_cnt0
+11703                     	xref.b	c_lreg
+11704                     	xref.b	c_x
+11705                     	xref.b	c_y
+11725                     	xref	c_lrsh
+11726                     	xref	c_lgadd
+11727                     	xref	c_ladd
+11728                     	xref	c_umul
+11729                     	xref	c_lgmul
+11730                     	xref	c_lgsub
+11731                     	xref	c_lsbc
+11732                     	xref	c_idiv
+11733                     	xref	c_ldiv
+11734                     	xref	c_itolx
+11735                     	xref	c_eewrc
+11736                     	xref	c_imul
+11737                     	xref	c_lcmp
+11738                     	xref	c_ltor
+11739                     	xref	c_lgadc
+11740                     	xref	c_rtol
+11741                     	xref	c_vmul
+11742                     	xref	c_eewrw
+11743                     	end
