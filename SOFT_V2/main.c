@@ -31,7 +31,7 @@ char adr_drv_stat=0;
 
 
 #define BPS_MESS_STID	0x018e
-#define BPS_MESS_STID_MASK	0x03ff
+#define BPS_MESS_STID_MASK	0x03ff 
 #define UKU_MESS_STID	0x009e
 #define UKU_MESS_STID_MASK	0x03ff
 
