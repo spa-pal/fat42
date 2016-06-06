@@ -523,7 +523,7 @@ if(++led_drv_cnt>32)
 GPIOB->DDR|=(1<<3);
 GPIOB->CR1|=(1<<3);
 GPIOB->CR2&=~(1<<3);
-if((flags&0b00011010)==0) GPIOB->ODR|=(1<<3); 	//Если нет аварий то реле под ток
+if((flags&0b00011110)==0) GPIOB->ODR|=(1<<3); 	//Если нет аварий то реле под ток
 else GPIOB->ODR&=~(1<<3);					//Если есть то обесточиваем 
 
 } 
@@ -799,7 +799,7 @@ else if(link==OFF)
 		}
 	else 
 		{
-		if((flags&0b00011010)==0)
+		if((flags&0b00001010)==0)
 			{
 			pwm_u=ee_U_AVT;
 			gran(&pwm_u,0,1020);
@@ -807,7 +807,7 @@ else if(link==OFF)
 			bBL=0;
 			bBL_IPS=0;
 			}
-		else if(flags&0b00011010)
+		else if(flags&0b00001010)
 			{
 			pwm_u=0;
 			pwm_i=0;
@@ -893,7 +893,7 @@ Ui=(unsigned short)temp_SL;
 //Ui=1000;
 //Ui=adc_plazma_short;
 //Ui=ee_K[2][1];;
-
+//Ui=adc_buff_[1]/2;
 
 temp_SL=adc_buff_[3];
 //temp_SL-=ee_K[2][0];
@@ -901,7 +901,7 @@ if(temp_SL<0) temp_SL=0;
 temp_SL*=ee_K[1][1];
 temp_SL/=1800;
 Un=(unsigned short)temp_SL;
-//Un=adc_buff_[4];
+//Un=444;
 
 temp_SL=adc_buff_[2];
 temp_SL*=ee_K[3][1];
@@ -961,7 +961,7 @@ if(jp_mode!=jp3)
 	if(umax_cnt>=10)flags|=0b00001000; 	//Поднять аварию по превышению напряжения
 
 	
-	if((Ui<Un)&&((Un-Ui)>ee_dU)&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
+	if((Ui<(ee_Umax-ee_dU))&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
 	else umin_cnt=0;
 	gran(&umin_cnt,0,10);	
 	if(umin_cnt>=10)flags|=0b00010000;	  
@@ -1909,6 +1909,7 @@ ADC2->TDRL=0xff;
 	
 ADC2->CR2=0x08;
 ADC2->CR1=0x40;
+//if(adc_ch==0)adc_ch=1;
 //if(adc_ch)
 	{
 	ADC2->CSR=0x20+adc_ch+3;
@@ -1930,10 +1931,10 @@ adc_plazma[1]=adc_ch;
 @far @interrupt void TIM4_UPD_Interrupt (void) 
 {
 TIM4->SR1&=~TIM4_SR1_UIF;
-
+/*
 if(++pwm_vent_cnt>=10)pwm_vent_cnt=0;
 GPIOB->ODR|=(1<<3);
-if(pwm_vent_cnt>=5)GPIOB->ODR&=~(1<<3);
+if(pwm_vent_cnt>=5)GPIOB->ODR&=~(1<<3);*/
 
 //GPIOB->ODR|=(1<<3);
 
@@ -2054,7 +2055,7 @@ adc_ch++;
 if(adc_ch>=5)
 	{
 //	adc_plazma++;
-	adc_ch=0;
+	adc_ch=1;
 	adc_cnt++;
 	if(adc_cnt>=16)
 		{
@@ -2119,9 +2120,10 @@ FLASH_DUKR=0x56;
 enableInterrupts();
 
 
-adr_drv_v3();
-//adr_drv_v4(1);
+//adr_drv_v3();
+
 adress=0;
+bps_class=bpsIPS;
 
 t4_init();
 
