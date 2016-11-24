@@ -1,10 +1,11 @@
 //Ветка основная, для первой платочки FAT42.
 
 //#define _24_
+char bVENT_BLOCK=0;
 
 #define BLOCK_INIT  GPIOB->DDR|=(1<<2);GPIOB->CR1|=(1<<2);GPIOB->CR2&=~(1<<2);
-#define BLOCK_ON 	GPIOB->ODR|=(1<<2);
-#define BLOCK_OFF 	GPIOB->ODR&=~(1<<2);
+#define BLOCK_ON 	{GPIOB->ODR|=(1<<2);bVENT_BLOCK=1;}
+#define BLOCK_OFF 	{GPIOB->ODR&=~(1<<2);bVENT_BLOCK=0;}
 #define BLOCK_IS_ON (GPIOB->ODR&(1<<2))
 
 #include "string.h"
@@ -645,8 +646,9 @@ void vent_drv(void)
 	if(vent_pwm>vent_pwm_max_necc)vent_pwm-=10;
 	gran(&vent_pwm,400,1000);
 	
-	vent_pwm=1000-vent_pwm;	// Для нового блока. Там похоже нужна инверсия
-	//vent_pwm=100;
+	//vent_pwm=1000-vent_pwm;	// Для нового блока. Там похоже нужна инверсия
+	//vent_pwm=300;
+	if(bVENT_BLOCK)vent_pwm=0;
 }
 
 //-----------------------------------------------
@@ -878,7 +880,7 @@ temp_SL=(signed long)adc_buff_[1];
 //temp_SL-=ee_K[1,0];
 if(temp_SL<0) temp_SL=0;
 temp_SL*=(signed long)ee_K[2][1];
-temp_SL/=1800L;
+temp_SL/=1000L;
 Ui=(unsigned short)temp_SL;
 //Ui=adc_buff_[1];
 //Ui=1000;
@@ -2153,9 +2155,9 @@ GPIOB->DDR|=(1<<2);
 GPIOB->CR1|=(1<<2);
 GPIOB->CR2&=~(1<<2);
 */
-GPIOB->DDR|=(1<<3);
-GPIOB->CR1|=(1<<3);
-GPIOB->CR2|=(1<<3);
+GPIOB->DDR&=~(1<<3);
+GPIOB->CR1&=~(1<<3);
+GPIOB->CR2&=~(1<<3);
 
 GPIOC->DDR|=(1<<3);
 GPIOC->CR1|=(1<<3);
