@@ -43,9 +43,10 @@ char adr_drv_stat=0;
 #define MEM_KF4 	0x29
 #define MEM_KF2 	0x27
 #define ALRM_RES 	0x63
+#define VENT_RES 	0x64
 #define GETID 		0x90
 #define PUTID 		0x91
-#define PUTTM1 	0xDA
+#define PUTTM1 		0xDA
 #define PUTTM2 	0xDB
 #define PUTTM 		0xDE
 #define GETTM 		0xED 
@@ -159,6 +160,51 @@ char pwm_stat;
 short vent_pwm;
 enum {bpsIBEP,bpsIPS} bps_class;
 @eeprom short ee_IMAXVENT;
+
+
+//Наработка вентилятора
+@eeprom unsigned short vent_resurs;
+unsigned short vent_resurs_sec_cnt;
+#define VENT_RESURS_SEC_IN_HOUR	3600
+@near unsigned char vent_resurs_buff[4];
+unsigned char vent_resurs_tx_cnt;
+
+
+
+//-----------------------------------------------
+void vent_resurs_hndl(void)
+{
+unsigned char temp;
+if(!bVENT_BLOCK)vent_resurs_sec_cnt++;
+if(vent_resurs_sec_cnt>VENT_RESURS_SEC_IN_HOUR)
+	{
+	vent_resurs++;
+	vent_resurs_sec_cnt=0;
+	}
+
+//vent_resurs=12345;
+
+vent_resurs_buff[0]=0x00|((unsigned char)(vent_resurs&0x000f));
+vent_resurs_buff[1]=0x40|((unsigned char)((vent_resurs&0x00f0)>>4));
+vent_resurs_buff[2]=0x80|((unsigned char)((vent_resurs&0x0f00)>>8));
+vent_resurs_buff[3]=0xc0|((unsigned char)((vent_resurs&0xf000)>>12));
+
+temp=vent_resurs_buff[0]&0x0f;
+temp^=vent_resurs_buff[1]&0x0f;
+temp^=vent_resurs_buff[2]&0x0f;
+temp^=vent_resurs_buff[3]&0x0f;
+
+vent_resurs_buff[0]|=(temp&0x03)<<4;
+vent_resurs_buff[1]|=(temp&0x0c)<<2;
+vent_resurs_buff[2]|=(temp&0x30);
+vent_resurs_buff[3]|=(temp&0xc0)>>2;
+
+
+vent_resurs_tx_cnt++;
+if(vent_resurs_tx_cnt>3)vent_resurs_tx_cnt=0;
+
+
+}
 
 //-----------------------------------------------
 void gran(signed short *adr, signed short min, signed short max)
@@ -1576,7 +1622,7 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
 	plazma_int[2]=T;
  	rotor_int=flags_tu+(((short)flags)<<8);
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
-	can_transmit(0x18e,adress,PUTTM2,T,0,flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
+	can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
      link_cnt=0;
      link=ON;
      
@@ -1766,6 +1812,13 @@ else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==CMND)&&(mess[9]==ALRM_RE
 	umin_cnt=0;
 	led_drv_cnt=30;
 	}		
+	
+else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==CMND)&&(mess[9]==VENT_RES))
+	{
+	vent_resurs=0;
+	}		
+
+
 else if((mess[6]==0xff)&&(mess[7]==0xff)&&(mess[8]==CMND)&&(mess[9]==CMND))
 	{
 	if((mess[10]==0x55)&&(mess[11]==0x55)) _x_++;
@@ -2253,7 +2306,7 @@ while (1)
 		if(pwm_stat>=10)pwm_stat=0;
 adc_plazma_short++;
 
-		
+		vent_resurs_hndl();
 		}
 
 	}
