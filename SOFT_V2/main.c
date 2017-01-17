@@ -160,6 +160,8 @@ short vent_pwm;
 enum {bpsIBEP,bpsIPS} bps_class;
 @eeprom short ee_IMAXVENT;
 
+signed short plazma_adress[2];
+
 //-----------------------------------------------
 void gran(signed short *adr, signed short min, signed short max)
 {
@@ -902,9 +904,11 @@ if(T>120)T=120;
 //T=-3;
 Udb=flags;
 
-//Ui=adc_plazma[0];
-//I=adc_plazma[1];
-//T=adc_plazma[2];
+/*
+Ui=plazma_adress[0];
+Un=plazma_adress[1];
+I=plazma_adress[2];
+*/
 
 }
 
@@ -1249,7 +1253,7 @@ else adress = adr[0] + (adr[1]*4) + (adr[2]*16);
 //-----------------------------------------------
 char adr_gran(signed short in)
 {
-if(in>800)return 1;
+if(in>1000)return 1;
 else if((in>60)&&(in<140))return 0;
 else return 100;
 } 
@@ -1341,10 +1345,6 @@ signed short tempSI;
 char aaa[3];
 char aaaa[3];
 
-#define ADR_CONST_0	574
-#define ADR_CONST_1	897
-#define ADR_CONST_2	695
-#define ADR_CONST_3	1015
 
 GPIOB->DDR&=~(1<<0);
 GPIOB->CR1&=~(1<<0);
@@ -1415,6 +1415,12 @@ else if((aaa[0]==100)&&(aaa[1]==100)&&(aaa[2]==100))adress=aaaa[0]+ (aaaa[1]*4)+
 	adr=0;
 	} */
 else adress=100;
+
+plazma_adress[0]=aaa[0];
+plazma_adress[1]=aaa[1];
+plazma_adress[2]=aaa[2];
+
+//adress=3;
 
 }
 
