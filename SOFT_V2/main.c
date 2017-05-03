@@ -19,6 +19,7 @@ _Bool b100Hz, b10Hz, b5Hz, b2Hz, b1Hz;
 
 u8 mess[14];
 
+
 @near signed short adc_buff[10][16],adc_buff_[10];
 char adc_ch,adc_cnt;
 signed short adc_plazma_short,adc_plazma[5];
@@ -165,6 +166,7 @@ enum {bpsIBEP,bpsIPS} bps_class;
 //Наработка вентилятора
 @eeprom unsigned short vent_resurs;
 unsigned short vent_resurs_sec_cnt;
+//#define VENT_RESURS_SEC_IN_HOUR	3600
 #define VENT_RESURS_SEC_IN_HOUR	3600
 @near unsigned char vent_resurs_buff[4];
 unsigned char vent_resurs_tx_cnt;
@@ -178,7 +180,7 @@ unsigned char temp;
 if(!bVENT_BLOCK)vent_resurs_sec_cnt++;
 if(vent_resurs_sec_cnt>VENT_RESURS_SEC_IN_HOUR)
 	{
-	vent_resurs++;
+	if(vent_resurs<60000)vent_resurs++;
 	vent_resurs_sec_cnt=0;
 	}
 
@@ -1619,7 +1621,8 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
  	//flags=0x55;
  	//_x_=33;
  	//rotor_int=1000;
-	plazma_int[2]=T;
+	if(vent_resurs_tx_cnt>1) plazma_int[2]=vent_resurs;
+	else plazma_int[2]=vent_resurs_sec_cnt;
  	rotor_int=flags_tu+(((short)flags)<<8);
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
 	can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
@@ -1871,7 +1874,7 @@ bCAN_RX=0;
 //-----------------------------------------------
 void t4_init(void){
 	TIM4->PSCR = 4;
-	TIM4->ARR= 77;
+	TIM4->ARR= 61;
 	TIM4->IER|= TIM4_IER_UIE;					// enable break interrupt
 	
 	TIM4->CR1=(TIM4_CR1_URS | TIM4_CR1_CEN | TIM4_CR1_ARPE);	
