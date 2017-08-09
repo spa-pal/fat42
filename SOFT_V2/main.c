@@ -71,7 +71,8 @@ signed char T;
 
 
 signed short umax_cnt,umin_cnt;
-char link,link_cnt;
+char link;
+short link_cnt;
 
 char flags=0; // байт аварийных и др. флагов
 // 0 -  anee iaao a?aiia? oi 0, anee iao oi 1
@@ -92,7 +93,7 @@ int _x_cnt;
 unsigned short vol_u_temp;
 unsigned short vol_i_temp;
 char flags_tu_cnt_on,flags_tu_cnt_off;
-
+unsigned short vol_i_temp_avar=0;
 //Работа источника
 
 char off_bp_cnt;
@@ -635,9 +636,9 @@ void link_drv(void)		//10Hz
 {
 if(jp_mode!=jp3)
 	{
-	if(link_cnt<52)link_cnt++;
-	if(link_cnt==49)flags&=0xc1;		//если оборвалась связь первым делом сбрасываем все аварии и внешнюю блокировку
-	if(link_cnt==50)
+	if(link_cnt<602)link_cnt++;
+	if(link_cnt==590)flags&=0xc1;		//если оборвалась связь первым делом сбрасываем все аварии и внешнюю блокировку
+	if(link_cnt==600)
 		{
 		link=OFF;
 		
@@ -862,10 +863,17 @@ else if(link==OFF)
 	
 		
 
-else	if(link==ON)				//если есть связь
+else	if(link==ON)				//если есть связьvol_i_temp_avar
 	{
 	if((flags&0b00100000)==0)	//если нет блокировки извне
 		{
+		if(((flags&0b00011110)==0b00000100)) 	//если нет аварий или если они заблокированы
+			{
+			pwm_u=vol_u_temp+_x_;					//управление от укушки + выравнивание токов
+			pwm_i=vol_i_temp_avar;
+			
+			bBL=0;
+			}	
 		if(((flags&0b00011010)==0)||(flags&0b01000000)) 	//если нет аварий или если они заблокированы
 			{
 			pwm_u=vol_u_temp+_x_;					//управление от укушки + выравнивание токов
@@ -956,6 +964,12 @@ Udb=flags;
 //Ui=adc_plazma[0];
 //I=adc_plazma[1];
 //T=adc_plazma[2];
+
+temp_SL=(signed long)(T-ee_tsign);
+temp_SL*=1000L;
+temp_SL/=(signed long)(ee_tmax-ee_tsign);
+
+vol_i_temp_avar=(unsigned short)temp_SL; 
 
 }
 
@@ -2254,12 +2268,12 @@ while (1)
 		{
 		b10Hz=0;
 		
-          matemat();
-	    	led_drv(); 
-	     link_drv();
-	     pwr_hndl();		//вычисление воздействий на силу
-	     JP_drv();
-	     flags_drv();
+		matemat();
+		led_drv(); 
+	  link_drv();
+	  pwr_hndl();		//вычисление воздействий на силу
+	  JP_drv();
+	  flags_drv();
 		net_drv();
       	}
 
