@@ -11,16 +11,18 @@ char bVENT_BLOCK=0;
 #include "string.h"
 //#include <iostm8s208.h>
 #include <iostm8s103.h>
+#include <stdlib.h>
 #include "stm8s.h"
 //#include "main.h"
-short t0_cnt0=0;
-char t0_cnt1=0,t0_cnt2=0,t0_cnt3=0,t0_cnt4=0;
-_Bool b100Hz, b10Hz, b5Hz, b2Hz, b1Hz;
+@near short t0_cnt00=0;
+@near short t0_cnt0=0;
+@near char t0_cnt1=0,t0_cnt2=0,t0_cnt3=0,t0_cnt4=0;
+_Bool b100Hz, b10Hz, b5Hz, b2Hz, b1Hz, b1000Hz;
 
 u8 mess[14];
+@near short main_cnt;
 
-
-@near signed short adc_buff[10][16],adc_buff_[10];
+@near signed short adc_buff[10][16],adc_buff_[10],adc_buff_5,adc_buff_1;
 char adc_ch,adc_cnt;
 signed short adc_plazma_short,adc_plazma[5];
 char led_ind_cnt;
@@ -28,8 +30,11 @@ char led_ind=5;
 char adr_drv_stat=0;
 @near char adr[3],adress;
 @near char adress_error;
-
-
+@near signed short adc_buff_buff[10][8];
+char adc_cnt_cnt;
+@near signed short pwm_u_buff[32],pwm_u_buff_;
+@near char pwm_u_buff_ptr;
+@near char pwm_u_buff_cnt;
 
 #define BPS_MESS_STID	0x018e
 #define BPS_MESS_STID_MASK	0x03ff
@@ -49,6 +54,7 @@ char adr_drv_stat=0;
 #define PUTID 		0x91
 #define PUTTM1 		0xDA
 #define PUTTM2 	0xDB
+#define PUTTM3 	0xDC
 #define PUTTM 		0xDE
 #define GETTM 		0xED 
 #define KLBR 		0xEE
@@ -65,9 +71,9 @@ char tx_busy_cnt;
 char bCAN_RX=0;
 char can_error_cnt;
 
-signed short I,Un,Ui,Udb;
+@near signed short I,Un,Ui,Udb,Unecc,U_out_const,Usum,Uin;
 signed char T;
-@eeprom signed short ee_K[4][2];
+@eeprom signed short ee_K[5][2];
 
 
 signed short umax_cnt,umin_cnt;
@@ -91,7 +97,7 @@ signed short _x_,_x__;
 int _x_cnt;
 @eeprom signed _x_ee_;
 unsigned short vol_u_temp;
-unsigned short vol_i_temp;
+signed short vol_i_temp;
 char flags_tu_cnt_on,flags_tu_cnt_off;
 unsigned short vol_i_temp_avar=0;
 //–абота источника
@@ -104,11 +110,11 @@ signed short main_cnt, main_cnt1;
 @eeprom signed short ee_dU;
 @eeprom signed short ee_tmax;
 @eeprom signed short ee_tsign;
-@eeprom signed short ee_U_AVT;
+@eeprom signed short ee_UAVT;
 
 signed short tsign_cnt,tmax_cnt; 
 
-signed short pwm_u=200,pwm_i=50;
+signed short pwm_u=200,pwm_i=50,pwm_u_;
 enum {jp0,jp1,jp2,jp3} jp_mode;
 char cnt_JP0,cnt_JP1;
 _Bool bBL;
@@ -266,7 +272,7 @@ else if(bps_class==bpsIBEP)	//если блок »ЅЁѕный
 		if(main_cnt1<(5*ee_TZAS))
 			{
 			led_red=0x00000000L;
-			led_green=0x03030303L;
+			led_green=0x0303030fL;
 			}
 
 		else if((link==ON)&&(flags_tu&0b10000000))
@@ -330,6 +336,8 @@ else if(bps_class==bpsIBEP)	//если блок »ЅЁѕный
 			led_red=0xccccccccL;
 			led_green=0x00000000L;
 			}
+	led_red=0x00000000L;
+	led_green=0xffffffffL;			
 		}		
 	else if(jp_mode==jp3)
 		{
@@ -380,7 +388,7 @@ else if(bps_class==bpsIPS)	//если блок »ѕ—ный
 		if(main_cnt1<(5*ee_TZAS))
 			{
 			led_red=0x00000000L;
-			led_green=0x03030303L;
+			led_green=0x0303033fL; 
 			}
 
 		else if((link==ON)&&(flags_tu&0b10000000))
@@ -534,6 +542,8 @@ else if(bps_class==bpsIPS)	//если блок »ѕ—ный
 			led_green=0xffffffffL;	
 			}  
 		}
+	led_red=0xffffffffL;
+	led_green=0x00000000L;		
 	}
 }
 
@@ -708,6 +718,8 @@ void pwr_drv(void)
 /*GPIOB->DDR|=(1<<2);
 GPIOB->CR1|=(1<<2);
 GPIOB->CR2&=~(1<<2);*/
+
+/*
 BLOCK_INIT
 
 if(main_cnt1<1500)main_cnt1++;
@@ -762,7 +774,7 @@ else if(!bBL)
 	BLOCK_OFF
 	//GPIOB->ODR&=~(1<<2);
 	}
-
+*/
 gran(&pwm_u,2,1020);
 
 //pwm_u=1000;
@@ -790,120 +802,97 @@ void pwr_hndl(void)
 {
 if(jp_mode==jp3)
 	{
-	if((flags&0b00001010)==0)
-		{
-		pwm_u=500;
-		//pwm_i=0x3ff;
-		bBL=0;
-		}
-	else if(flags&0b00001010)
-		{
-		pwm_u=0;
-		//pwm_i=0;
-		bBL=1;
-		}	
-	
+	pwm_u_=0;
+	pwm_i=0;
 	}  
 else if(jp_mode==jp2)
 	{
-	pwm_u=0;
+	pwm_u_=0;
 	pwm_i=0x3ff;
-	bBL=0;
 	}     
 else if(jp_mode==jp1)
 	{
-	pwm_u=0x3ff;
+	pwm_u_=0x3ff;
 	pwm_i=0x3ff;
-	bBL=0;
+	//bBL=0;
 	} 
-
-else if((bMAIN)&&(link==ON)/*&&(ee_AVT_MODE!=0x55)*/)
+/*
+else if((bMAIN)&&(link==ON))
 	{
 	pwm_u=volum_u_main_;
 	pwm_i=0x3ff;
 	bBL_IPS=0;
-	}
+	}*/
 
 else if(link==OFF)
 	{
-/*	if(ee_Device==0x55)
-		{
-		pwm_u=0x3ff;
-		pwm_i=0x3ff;
-		bBL=0;
-		}
-	else*/
- 	if(ee_DEVICE)
-		{
-		pwm_u=0x00;
-		pwm_i=0x00;
-		bBL=1;
-		}
-	else 
-		{
-		if((flags&0b00011010)==0)
-			{
-			pwm_u=ee_U_AVT;
-			gran(&pwm_u,0,1020);
-		    	pwm_i=0x3ff;
-			bBL=0;
-			bBL_IPS=0;
-			}
-		else if(flags&0b00011010)
-			{
-			pwm_u=0;
-			pwm_i=0;
-			bBL=1;
-			bBL_IPS=1;
-			}
-		}
-//pwm_u=950;
-//		pwm_i=950;
+	pwm_i=0x3ff;
+	pwm_u_=(short)((1000L*((long)Unecc))/650L);
 	}
 	
-		
-
 else	if(link==ON)				//если есть св€зьvol_i_temp_avar
 	{
 	if((flags&0b00100000)==0)	//если нет блокировки извне
 		{
-		if(((flags&0b00011110)==0b00000100)) 	//если нет аварий или если они заблокированы
+		if(((flags&0b00011010)==0b00000000)) 	//если нет аварий или если они заблокированы
 			{
-			pwm_u=vol_u_temp+_x_;					//управление от укушки + выравнивание токов
-			pwm_i=vol_i_temp_avar;
-			
-			bBL=0;
+			pwm_i=1000;
+			//if()
+			pwm_u_=(short)(((1000L*((long)Unecc))/650L)+_x_);
 			}	
-		if(((flags&0b00011010)==0)||(flags&0b01000000)) 	//если нет аварий или если они заблокированы
-			{
-			pwm_u=vol_u_temp+_x_;					//управление от укушки + выравнивание токов
-		    	pwm_i=vol_i_temp;
-			bBL=0;
-			}
 		else if(flags&0b00011010)					//если есть аварии
 			{
-			pwm_u=0;								//то полный стоп
+			pwm_u_=0;								//то полный стоп
 			pwm_i=0;
-			bBL=1;
+			}
+		//pwm_u=(short)((1000L*((long)Unecc))/650L);
+		if(vol_i_temp==1000)
+			{
+			pwm_u_=1000;
+			pwm_i=1000;
 			}
 		}
 	else if(flags&0b00100000)	//если заблокирован извне то полное выключение
 		{
-		pwm_u=0;
-	    	pwm_i=0;
-		bBL=1;
+		pwm_u_=0;
+		pwm_i=0;
 		}
-/*pwm_u=950;
-		pwm_i=950;*/ 		
+		
 	}	   
-//pwm_u=vol_u_temp;		
+
+pwm_u_buff[pwm_u_buff_ptr]=pwm_u_;
+pwm_u_buff_ptr++;
+if(pwm_u_buff_ptr>=16)pwm_u_buff_ptr=0;
+{
+char i;
+signed long tempSL;
+tempSL=0;
+for(i=0;i<16;i++)
+	{
+	tempSL+=(signed long)pwm_u_buff[i];
+	}
+tempSL>>=4;
+pwm_u_buff_=(signed short)tempSL;
+}
+pwm_u=pwm_u_;
+if((abs((int)(Ui-Unecc)))<20)pwm_u_buff_cnt++;
+else pwm_u_buff_cnt=0;
+
+if(pwm_u_buff_cnt>=20)pwm_u_buff_cnt=20;
+if(pwm_u_buff_cnt>=15)pwm_u=pwm_u_buff_;
+//pwm_i=950;
+//pwm_u=(short)((1000L*((long)Unecc))/650L);
+if(pwm_u>main_cnt*10)pwm_u=main_cnt*10;
+if(pwm_u>1000)pwm_u=1000;
+if(pwm_i>1000)pwm_i=1000;
+//pwm_u=400+vol_i_temp;
 }
 
 //-----------------------------------------------
 void matemat(void)
 {
 signed long temp_SL;
-
+/*
 #ifdef _220_
 temp_SL=adc_buff_[0];
 temp_SL-=ee_K[0][0];
@@ -922,27 +911,34 @@ temp_SL/=600;
 I=(signed short)temp_SL;
 //I=ee_K[0][0];
 #else
+
+#endif 
+#endif*/
+I=adc_buff_[4];
 temp_SL=adc_buff_[4];
 temp_SL-=ee_K[0][0];
 if(temp_SL<0) temp_SL=0;
 temp_SL*=ee_K[0][1];
 temp_SL/=600;
 I=(signed short)temp_SL;
-#endif 
-#endif
 //I=adc_buff_[4];
 
-temp_SL=(signed long)adc_buff_[1];
+temp_SL=(signed long)adc_buff_[1];//1;
+temp_SL=(signed long)adc_buff_[3];//1;
 //temp_SL-=ee_K[1,0];
 if(temp_SL<0) temp_SL=0;
 temp_SL*=(signed long)ee_K[2][1];
 temp_SL/=1000L;
 Ui=(unsigned short)temp_SL;
-//Ui=adc_buff_[1];
-//Ui=1000;
-//Ui=adc_plazma_short;
-//Ui=ee_K[2][1];;
 
+temp_SL=(signed long)adc_buff_5;
+//temp_SL-=ee_K[1,0];
+if(temp_SL<0) temp_SL=0;
+temp_SL*=(signed long)ee_K[4][1];
+temp_SL/=1000L;
+Usum=(unsigned short)temp_SL;
+//Uin=adc_buff_[5];
+//U_out_const=2300;
 
 temp_SL=adc_buff_[3];
 //temp_SL-=ee_K[2][0];
@@ -951,6 +947,8 @@ temp_SL*=ee_K[1][1];
 temp_SL/=1800;
 Un=(unsigned short)temp_SL;
 //Un=adc_buff_[4];
+//Un=ee_UAVT;
+Un=pwm_u;//vol_i_temp;//2345;
 
 temp_SL=adc_buff_[2];
 temp_SL*=ee_K[3][1];
@@ -958,8 +956,24 @@ temp_SL/=1000;
 T=(signed short)(temp_SL-273L);
 if(T<-30)T=-30;
 if(T>120)T=120;
-//T=-3;
+//T=adc_buff_[2];
 Udb=flags;
+
+Uin=Usum-Ui;
+if(link==ON)
+	{
+	Unecc=U_out_const-Uin;
+	if(vol_i_temp!=1000)
+		{
+		gran(&vol_i_temp,-50,50);
+		Unecc+=vol_i_temp;
+		}
+	else Unecc=ee_UAVT-Uin;
+	if(Unecc<0)Unecc=0;
+	}
+Un=Unecc;
+//Un=pwm_u;
+//Un=_x_;
 
 //Ui=adc_plazma[0];
 //I=adc_plazma[1];
@@ -1625,9 +1639,10 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
  	if(flags_tu&0b00000010) flags|=0b01000000;
  	else flags&=0b10111111; 
  		
- 	vol_u_temp=mess[10]+mess[11]*256;
+ 	U_out_const=mess[10]+mess[11]*256;
  	vol_i_temp=mess[12]+mess[13]*256;  
  	
+	//if(ee_UAVT!=vol_i_temp)ee_UAVT=vol_i_temp;
  	//I=1234;
     //	Un=6543;
  	//Ui=6789;
@@ -1639,7 +1654,8 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
 	else plazma_int[2]=vent_resurs_sec_cnt;
  	rotor_int=flags_tu+(((short)flags)<<8);
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
-	can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
+	can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&Usum)+1),*((char*)&Usum));
+	can_transmit(0x18e,adress,PUTTM3,*(((char*)&pwm_u)+1),*((char*)&pwm_u),*(((char*)&pwm_u_buff_)+1),*((char*)&pwm_u_buff_),flags,_x_);
      link_cnt=0;
      link=ON;
      
@@ -1773,7 +1789,28 @@ else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==KLBR)&&(mess[9]==mess[10
 			}
 		granee(&ee_K[3][1],300,517);									
 		}     
-		
+
+	else if((mess[9]&0xf0)==0x50)
+		{
+		if((mess[9]&0x0f)==0x02)
+			{
+			ee_K[4][1]++;
+			} 
+		else if((mess[9]&0x0f)==0x03)
+			{
+			ee_K[4][1]+=10;
+			}	 
+		else if((mess[9]&0x0f)==0x04)
+			{
+			ee_K[4][1]--;
+			} 
+		else if((mess[9]&0x0f)==0x05)
+			{
+			ee_K[4][1]-=10;
+			}
+		granee(&ee_K[4][1],10,30000);									
+		}     
+
 	link_cnt=0;
      link=ON;
      if(res_fl_)
@@ -1802,8 +1839,11 @@ else if((mess[6]==0xff)&&(mess[7]==0xff)&&((mess[8]==MEM_KF1)||(mess[8]==MEM_KF4
 	{
 	signed short tempSS;
 	tempSS=mess[9]+(mess[10]*256);
+	//tempSS=3456;
+	if(ee_UAVT!=tempSS) ee_UAVT=tempSS;
+	tempSS=(signed short)mess[11];
 	if(ee_tmax!=tempSS) ee_tmax=tempSS;
-	tempSS=mess[11]+(mess[12]*256);
+	tempSS=(signed short)mess[12];
 	if(ee_tsign!=tempSS) ee_tsign=tempSS;
 	
 	
@@ -1847,10 +1887,10 @@ else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==CMND)&&(mess[9]==mess[10
 	{
 	rotor_int++;
      tempI=pwm_u;
-	ee_U_AVT=tempI;
+	//ee_U_AVT=tempI;
 	UU_AVT=Un;
 	delay_ms(100);
-	if(ee_U_AVT==tempI)can_transmit(0x18e,adress,PUTID,0xdd,0xdd,0,0,0,0);
+//	if(ee_U_AVT==tempI)can_transmit(0x18e,adress,PUTID,0xdd,0xdd,0,0,0,0);
       
 	}	
 
@@ -1960,6 +2000,9 @@ GPIOB->DDR&=~(1<<7);
 GPIOB->CR1&=~(1<<7);
 GPIOB->CR2&=~(1<<7);
 
+GPIOB->DDR&=~(1<<2);
+GPIOB->CR1&=~(1<<2);
+GPIOB->CR2&=~(1<<2);
 /*
 ADC2->CR2=0x08;
 ADC2->CR1=0x40;
@@ -1974,7 +2017,8 @@ ADC2->CR2=0x08;
 ADC2->CR1=0x40;
 //if(adc_ch)
 	{
-	ADC2->CSR=0x20+adc_ch+3;
+	if(adc_ch==5)ADC2->CSR=0x22;
+	else ADC2->CSR=0x20+adc_ch+3;
 	
 	ADC2->CR1|=1;
 	ADC2->CR1|=1;
@@ -1982,7 +2026,6 @@ ADC2->CR1=0x40;
 
 adc_plazma[1]=adc_ch;
 }
-
 
 
 
@@ -2000,6 +2043,11 @@ if(pwm_vent_cnt>=5)GPIOB->ODR&=~(1<<3);
 
 //GPIOB->ODR|=(1<<3);
 
+if(++t0_cnt00>=10)
+	{
+	t0_cnt00=0;
+	b1000Hz=1;
+	}
 
 if(++t0_cnt0>=100)
 	{
@@ -2107,24 +2155,36 @@ else if(adr_drv_stat==5)
 	adc_buff_[9]=temp_adc;
 	}
 
-adc_buff[adc_ch][adc_cnt]=temp_adc;
-
-//adc_plazma=ADC1->DR;
-//if(adc_ch==0)adc_plazma_short=temp_adc;
-
+adc_buff_buff[adc_ch][adc_cnt_cnt]=temp_adc;
 
 adc_ch++;
-if(adc_ch>=5)
+if(adc_ch>=6)
 	{
-//	adc_plazma++;
 	adc_ch=0;
-	adc_cnt++;
-	if(adc_cnt>=16)
+	adc_cnt_cnt++;
+	if(adc_cnt_cnt>=8)
 		{
-		adc_cnt=0;
+		adc_cnt_cnt=0;
+		adc_cnt++;
+		if(adc_cnt>=16)
+			{
+			adc_cnt=0;
+			}
 		}
 	}
-
+if(adc_cnt_cnt==0)
+	{
+	signed long tempSS;
+	char i;
+	tempSS=0;
+	for(i=0;i<8;i++)
+		{
+		tempSS+=(signed long)adc_buff_buff[adc_ch][i];
+		}
+	adc_buff[adc_ch][adc_cnt]=(signed short)(tempSS>>3);
+		
+	//adc_buff_[adc_ch]=adc_buff[adc_ch][adc_cnt];
+	}
 if((adc_cnt&0x03)==0)
 	{
 	signed long tempSS;
@@ -2135,32 +2195,19 @@ if((adc_cnt&0x03)==0)
 		tempSS+=(signed long)adc_buff[adc_ch][i];
 		}
 	adc_buff_[adc_ch]=(signed short)(tempSS>>4);
-	//else adc_buff_[adc_ch]=(signed short)(tempSS>>4);
 	}
 
-//adc_buff_[adc_ch]=adc_ch*10;
 
-//GPIOD->ODR&=~(1<<0);
 
-//ADC1->CR1&=~(1<<0);
+//adc_buff_[adc_ch]=adc_ch*100;
 
-//adc_plazma_short=adc_buff_[1];
+if(adc_ch==0)adc_buff_5=temp_adc;
+if(adc_ch==2)adc_buff_1=temp_adc;
+
 adc_plazma_short++;
 
-/*
-adcw[0]=(ADC1->DB0RL)+((ADC1->DB0RH)*256);
-adcw[1]=(ADC1->DB1RL)+((ADC1->DB1RH)*256);
-adcw[2]=(ADC1->DB2RL)+((ADC1->DB2RH)*256);*/
-
-
-
-
-//GPIOD->ODR|=(1<<0);
-
-
-	
-		//GPIOA->ODR&=~(1<<1);
 }
+
 
 
 //===============================================
@@ -2236,14 +2283,19 @@ GPIOC->CR2|=(1<<3);
 //if(bps_class==bpsIPS) volum_u_main_=ee_U_AVT;
 if(bps_class==bpsIPS) 
 	{
-	pwm_u=ee_U_AVT;
-	volum_u_main_=ee_U_AVT;
+//	pwm_u=ee_U_AVT;
+//	volum_u_main_=ee_U_AVT;
 	}
 while (1)
 	{
 
-	
-	
+	if(b1000Hz)
+		{
+		b1000Hz=0;
+
+		adc2_init();
+		
+		}
 	if(bCAN_RX)
 		{
 		bCAN_RX=0;
@@ -2260,7 +2312,7 @@ while (1)
 
 		//GPIOC->ODR^=(1<<1);
 		
-		adc2_init();
+		//adc2_init();
 		can_tx_hndl();
       	}  
       	
@@ -2271,10 +2323,11 @@ while (1)
 		matemat();
 		led_drv(); 
 	  link_drv();
-	  pwr_hndl();		//вычисление воздействий на силу
+
 	  JP_drv();
 	  flags_drv();
 		net_drv();
+		if(main_cnt<100)main_cnt++;
       	}
 
 	if(b5Hz)
@@ -2302,8 +2355,9 @@ while (1)
 		{
 		b1Hz=0;
 
+	  pwr_hndl();		//вычисление воздействий на силу
 		temper_drv();			//вычисление аварий температуры
-		u_drv();
+		//u_drv();
           x_drv();
           if(main_cnt<1000)main_cnt++;
   		if((link==OFF)||(jp_mode==jp3))apv_hndl();
