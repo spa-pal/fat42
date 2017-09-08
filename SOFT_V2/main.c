@@ -828,6 +828,27 @@ else if(link==OFF)
 	{
 	pwm_i=0x3ff;
 	pwm_u_=(short)((1000L*((long)Unecc))/650L);
+	
+	pwm_u_buff[pwm_u_buff_ptr]=pwm_u_;
+	pwm_u_buff_ptr++;
+	if(pwm_u_buff_ptr>=16)pwm_u_buff_ptr=0;
+		{
+		char i;
+		signed long tempSL;
+		tempSL=0;
+		for(i=0;i<16;i++)
+			{
+			tempSL+=(signed long)pwm_u_buff[i];
+			}
+		tempSL>>=4;
+		pwm_u_buff_=(signed short)tempSL;
+		}
+	pwm_u=pwm_u_;
+	if((abs((int)(Ui-Unecc)))<20)pwm_u_buff_cnt++;
+	else pwm_u_buff_cnt=0;
+
+	if(pwm_u_buff_cnt>=20)pwm_u_buff_cnt=20;
+	if(pwm_u_buff_cnt>=15)pwm_u=pwm_u_buff_;
 	}
 	
 else	if(link==ON)				//если есть связьvol_i_temp_avar
@@ -859,7 +880,7 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 		}
 		
 	}	   
-
+/*
 pwm_u_buff[pwm_u_buff_ptr]=pwm_u_;
 pwm_u_buff_ptr++;
 if(pwm_u_buff_ptr>=16)pwm_u_buff_ptr=0;
@@ -879,7 +900,7 @@ if((abs((int)(Ui-Unecc)))<20)pwm_u_buff_cnt++;
 else pwm_u_buff_cnt=0;
 
 if(pwm_u_buff_cnt>=20)pwm_u_buff_cnt=20;
-if(pwm_u_buff_cnt>=15)pwm_u=pwm_u_buff_;
+if(pwm_u_buff_cnt>=15)pwm_u=pwm_u_buff_;*/
 //pwm_i=950;
 //pwm_u=(short)((1000L*((long)Unecc))/650L);
 if(pwm_u>main_cnt*10)pwm_u=main_cnt*10;
