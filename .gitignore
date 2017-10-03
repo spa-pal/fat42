@@ -3,3 +3,13 @@
 *.map
 *.sm8
 *.o
+*.ls
+*.elf
+*.lkf
+/RE_rele_expander/TAGS.txt
+TAGS_Filelist.txt
+/RE_rele_expander/re.pdb
+/RE_rele_expander/re_plot_ws.xml
+*.tmp
+/SOFT_V2/1234.c
+/SOFT_V2/fat42_v2_plot_ws.xml
