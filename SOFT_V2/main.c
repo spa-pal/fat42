@@ -20,7 +20,7 @@ char bVENT_BLOCK=0;
 _Bool b100Hz, b10Hz, b5Hz, b2Hz, b1Hz, b1000Hz;
 
 u8 mess[14];
-@near short main_cnt;
+@near short main_cnt, main_cnt10;
 
 @near signed short adc_buff[10][16],adc_buff_[10],adc_buff_5,adc_buff_1;
 char adc_ch,adc_cnt;
@@ -71,7 +71,7 @@ char tx_busy_cnt;
 char bCAN_RX=0;
 char can_error_cnt;
 
-@near signed short I,Un,Ui,Udb,Unecc,U_out_const,Usum,Uin;
+@near signed short I,Un,Ui,/*Udb,*/Unecc,U_out_const,Usum,Uin;
 signed char T;
 @eeprom signed short ee_K[5][2];
 
@@ -106,6 +106,7 @@ char off_bp_cnt;
 signed short main_cnt, main_cnt1;
 
 @eeprom signed short ee_TZAS;
+#define EE_TZAS	3
 @eeprom signed short ee_Umax;
 @eeprom signed short ee_dU;
 @eeprom signed short ee_tmax;
@@ -162,7 +163,7 @@ char i_main_bps_cnt[6];
 
 
 char pwm_vent_cnt;
-char pwm_stat;
+//char pwm_stat;
 
 //short vent_pos;
 short vent_pwm;
@@ -177,14 +178,16 @@ unsigned short vent_resurs_sec_cnt;
 #define VENT_RESURS_SEC_IN_HOUR	3600
 @near unsigned char vent_resurs_buff[4];
 unsigned char vent_resurs_tx_cnt;
+char pwm_u_cnt;
 
 
+short debug_info_to_uku[3];
 
 //-----------------------------------------------
 void vent_resurs_hndl(void)
 {
 unsigned char temp;
-if(!bVENT_BLOCK)vent_resurs_sec_cnt++;
+if(vent_pwm>100)vent_resurs_sec_cnt++;
 if(vent_resurs_sec_cnt>VENT_RESURS_SEC_IN_HOUR)
 	{
 	if(vent_resurs<60000)vent_resurs++;
@@ -265,11 +268,11 @@ if(adress_error)
 	led_green=0x00000000L;	
 	}*/
 
-else if(bps_class==bpsIBEP)	//если блок »ЅЁѕный
-	{
+//else if(bps_class==bpsIBEP)	//если блок »ЅЁѕный
+	//{
 	if(jp_mode!=jp3)
 		{
-		if(main_cnt1<(5*ee_TZAS))
+		if(main_cnt1<(5*EE_TZAS))
 			{
 			led_red=0x00000000L;
 			led_green=0x0303030fL;
@@ -281,7 +284,7 @@ else if(bps_class==bpsIBEP)	//если блок »ЅЁѕный
 			led_green=0xffffffffL;
 			} 
 
-		else if(((main_cnt1>(5*ee_TZAS))&&(main_cnt1<(100+(5*ee_TZAS)))) && (ee_AVT_MODE!=0x55)&& (!ee_DEVICE))
+		else if(((main_cnt1>(5*EE_TZAS))&&(main_cnt1<(100+(5*EE_TZAS)))) && (ee_AVT_MODE!=0x55)&& (!ee_DEVICE))
 			{
 			led_red=0x00000000L;
 			led_green=0xffffffffL;	
@@ -336,17 +339,17 @@ else if(bps_class==bpsIBEP)	//если блок »ЅЁѕный
 			led_red=0xccccccccL;
 			led_green=0x00000000L;
 			}
-	led_red=0x00000000L;
-	led_green=0xffffffffL;			
+	//led_red=0x00000000L;
+	//led_green=0xffffffffL;			
 		}		
 	else if(jp_mode==jp3)
 		{
-		if(main_cnt1<(5*ee_TZAS))
+		if(main_cnt1<(5*EE_TZAS))
 			{
 			led_red=0x00000000L;
 			led_green=0x03030303L;
 			}
-		else if((main_cnt1>(5*ee_TZAS))&&(main_cnt1<(70+(5*ee_TZAS))))
+		else if((main_cnt1>(5*EE_TZAS))&&(main_cnt1<(70+(5*EE_TZAS))))
 			{
 			led_red=0x00000000L;
 			led_green=0xffffffffL;	
@@ -380,7 +383,8 @@ else if(bps_class==bpsIBEP)	//если блок »ЅЁѕный
 			led_green=0xffffffffL;	
 			}  
 		}
-	}
+	//}
+	/*
 else if(bps_class==bpsIPS)	//если блок »ѕ—ный
 	{
 	if(jp_mode!=jp3)
@@ -443,16 +447,7 @@ else if(bps_class==bpsIPS)	//если блок »ѕ—ный
 				}
 
 
-/*			if(bMAIN)
-				{
-				led_red=0x0L;
-				led_green=0xfffffff5L;
-				}
-			else
-				{
-				led_red=0x55555555L;
-				led_green=0xffffffffL;
-				}*/
+
 			}
 				    
 		else if((link==ON)&&((flags&0b00111110)==0))
@@ -542,9 +537,9 @@ else if(bps_class==bpsIPS)	//если блок »ѕ—ный
 			led_green=0xffffffffL;	
 			}  
 		}
-	led_red=0xffffffffL;
-	led_green=0x00000000L;		
-	}
+		
+	}*/
+
 }
 
 //-----------------------------------------------
@@ -647,8 +642,8 @@ void link_drv(void)		//10Hz
 if(jp_mode!=jp3)
 	{
 	if(link_cnt<602)link_cnt++;
-	if(link_cnt==590)flags&=0xc1;		//если оборвалась св€зь первым делом сбрасываем все аварии и внешнюю блокировку
-	if(link_cnt==600)
+	if(link_cnt==90)flags&=0xc1;		//если оборвалась св€зь первым делом сбрасываем все аварии и внешнюю блокировку
+	if(link_cnt==100)
 		{
 		link=OFF;
 		
@@ -685,29 +680,32 @@ void vent_drv(void)
 	tempSL=36000L/(signed long)ee_Umax;
 	tempSL=(signed long)I/tempSL;
 	
+	///**/debug_info_to_uku[0]=ee_Umax;
+	///**/debug_info_to_uku[1]=I;
+	
 	if(ee_DEVICE==1) tempSL=(signed long)(I/ee_IMAXVENT);
 	
 	if(tempSL>10)vent_pwm_i_necc=1000;
-	else if(tempSL<1)vent_pwm_i_necc=400;
+	else if(tempSL<1)vent_pwm_i_necc=0;
 	else vent_pwm_i_necc=(short)(400L + (tempSL*60L));
-	gran(&vent_pwm_i_necc,400,1000);
+	gran(&vent_pwm_i_necc,0,1000);
 	//vent_pwm_i_necc=400;
 	tempSL=(signed long)T;
-	if(tempSL<=(ee_tsign-30L))vent_pwm_t_necc=400;
+	if(tempSL<=(ee_tsign-30L))vent_pwm_t_necc=0;
 	else if(tempSL>=ee_tsign)vent_pwm_t_necc=1000;
 	else vent_pwm_t_necc=(short)(400L+(20L*(tempSL-(((signed long)ee_tsign)-30L))));
-	gran(&vent_pwm_t_necc,400,1000);
+	gran(&vent_pwm_t_necc,0,1000);
 	
 	vent_pwm_max_necc=vent_pwm_i_necc;
 	if(vent_pwm_t_necc>vent_pwm_i_necc)vent_pwm_max_necc=vent_pwm_t_necc;
 	
 	if(vent_pwm<vent_pwm_max_necc)vent_pwm+=10;
 	if(vent_pwm>vent_pwm_max_necc)vent_pwm-=10;
-	gran(&vent_pwm,400,1000);
+	gran(&vent_pwm,0,1000);
 	
 	//vent_pwm=1000-vent_pwm;	// ƒл€ нового блока. “ам похоже нужна инверси€
 	//vent_pwm=300;
-	if(bVENT_BLOCK)vent_pwm=0;
+	//if(bVENT_BLOCK)vent_pwm=0;
 }
 
 //-----------------------------------------------
@@ -775,7 +773,7 @@ else if(!bBL)
 	//GPIOB->ODR&=~(1<<2);
 	}
 */
-gran(&pwm_u,2,1020);
+gran(&pwm_u,0,1020);
 
 //pwm_u=1000;
 //pwm_i=1000;
@@ -802,17 +800,17 @@ void pwr_hndl(void)
 {
 if(jp_mode==jp3)
 	{
-	pwm_u_=0;
+	pwm_u=0;
 	pwm_i=0;
 	}  
 else if(jp_mode==jp2)
 	{
-	pwm_u_=0;
+	pwm_u=0;
 	pwm_i=0x3ff;
 	}     
 else if(jp_mode==jp1)
 	{
-	pwm_u_=0x3ff;
+	pwm_u=0x3ff;
 	pwm_i=0x3ff;
 	//bBL=0;
 	} 
@@ -857,25 +855,34 @@ else	if(link==ON)				//если есть св€зьvol_i_temp_avar
 		{
 		if(((flags&0b00011010)==0b00000000)) 	//если нет аварий или если они заблокированы
 			{
+			pwm_u=vol_i_temp;					//управление от укушки + выравнивание токов
 			pwm_i=1000;
-			//if()
-			pwm_u_=(short)(((1000L*((long)Unecc))/650L)+_x_);
 			}	
 		else if(flags&0b00011010)					//если есть аварии
 			{
-			pwm_u_=0;								//то полный стоп
+			pwm_u=0;								//то полный стоп
 			pwm_i=0;
 			}
 		//pwm_u=(short)((1000L*((long)Unecc))/650L);
 		if(vol_i_temp==1000)
 			{
-			pwm_u_=1000;
+			pwm_u=1000;
 			pwm_i=1000;
+			}
+		else
+			{
+			if((abs((int)(Ui-Unecc)))>50)	pwm_u_cnt=19;
+			}
+		
+		if(pwm_u_cnt)
+			{
+			pwm_u_cnt--;
+			pwm_u=(short)((1000L*((long)Unecc))/650L);
 			}
 		}
 	else if(flags&0b00100000)	//если заблокирован извне то полное выключение
 		{
-		pwm_u_=0;
+		pwm_u=0;
 		pwm_i=0;
 		}
 		
@@ -903,10 +910,11 @@ if(pwm_u_buff_cnt>=20)pwm_u_buff_cnt=20;
 if(pwm_u_buff_cnt>=15)pwm_u=pwm_u_buff_;*/
 //pwm_i=950;
 //pwm_u=(short)((1000L*((long)Unecc))/650L);
-if(pwm_u>main_cnt*10)pwm_u=main_cnt*10;
+//if(pwm_u>main_cnt10*10)pwm_u=main_cnt10*10;
 if(pwm_u>1000)pwm_u=1000;
 if(pwm_i>1000)pwm_i=1000;
 //pwm_u=400+vol_i_temp;
+//pwm_u=vol_i_temp;
 }
 
 //-----------------------------------------------
@@ -969,7 +977,7 @@ temp_SL/=1800;
 Un=(unsigned short)temp_SL;
 //Un=adc_buff_[4];
 //Un=ee_UAVT;
-Un=pwm_u;//vol_i_temp;//2345;
+//Un=pwm_u;//vol_i_temp;//2345;
 
 temp_SL=adc_buff_[2];
 temp_SL*=ee_K[3][1];
@@ -978,21 +986,22 @@ T=(signed short)(temp_SL-273L);
 if(T<-30)T=-30;
 if(T>120)T=120;
 //T=adc_buff_[2];
-Udb=flags;
+//Udb=flags;
 
 Uin=Usum-Ui;
 if(link==ON)
 	{
 	Unecc=U_out_const-Uin;
-	if(vol_i_temp!=1000)
+/*	if(vol_i_temp!=1000)
 		{
 		gran(&vol_i_temp,-50,50);
 		Unecc+=vol_i_temp;
 		}
-	else Unecc=ee_UAVT-Uin;
-	if(Unecc<0)Unecc=0;
-	}
-Un=Unecc;
+
+	if(Unecc<0)Unecc=0;*/
+	}	
+else Unecc=ee_UAVT-Uin;
+//Un=Unecc;
 //Un=pwm_u;
 //Un=_x_;
 
@@ -1006,6 +1015,9 @@ temp_SL/=(signed long)(ee_tmax-ee_tsign);
 
 vol_i_temp_avar=(unsigned short)temp_SL; 
 
+debug_info_to_uku[0]=pwm_u;
+debug_info_to_uku[1]=vol_i_temp;
+//debug_info_to_uku[2]=5678;
 }
 
 //-----------------------------------------------
@@ -1070,7 +1082,7 @@ else if(jp_mode==jp3)
 	if(umin_cnt>=10)flags|=0b00010000;	  
 	}
 }
-
+/*
 //-----------------------------------------------
 void x_drv(void)
 {
@@ -1091,7 +1103,7 @@ else _x_cnt=0;
 if(_x_cnt>60) _x_cnt=0;	
 
 _x__=_x_;
-}
+}*/
 
 //-----------------------------------------------
 void apv_start(void)
@@ -1430,7 +1442,7 @@ else
 }
 
 /* -------------------------------------------------------------------------- */
-void volum_u_main_drv(void)
+/*void volum_u_main_drv(void)
 {
 char i;
 
@@ -1474,7 +1486,7 @@ if(bMAIN)
 		}
 	//plazma_int[2]=x[1];
 	}
-}
+}*/
 
 /* -------------------------------------------------------------------------- */
 void init_CAN(void) {
@@ -1591,7 +1603,7 @@ else
 		}
 	}
 }
-
+/*
 //-----------------------------------------------
 void net_drv(void)
 { 
@@ -1613,7 +1625,7 @@ if(bMAIN)
 		can_transmit(0x18e,adress,PUTTM2,T,0,flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
 		}
 	}
-}
+}*/
 
 //-----------------------------------------------
 void can_in_an(void)
@@ -1651,7 +1663,7 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
  			//if(flags_tu_cnt_off<=0)
  				{
  				flags&=0b11011111; 
- 				off_bp_cnt=5*ee_TZAS;
+ 				off_bp_cnt=5*EE_TZAS;
  				}
  			//}
  		//else flags_tu_cnt_off=0;
@@ -1676,7 +1688,7 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
  	rotor_int=flags_tu+(((short)flags)<<8);
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
 	can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&Usum)+1),*((char*)&Usum));
-	can_transmit(0x18e,adress,PUTTM3,*(((char*)&pwm_u)+1),*((char*)&pwm_u),*(((char*)&pwm_u_buff_)+1),*((char*)&pwm_u_buff_),flags,_x_);
+	can_transmit(0x18e,adress,PUTTM3,*(((char*)&debug_info_to_uku[0])+1),*((char*)&debug_info_to_uku[0]),*(((char*)&debug_info_to_uku[1])+1),*((char*)&debug_info_to_uku[1]),*(((char*)&debug_info_to_uku[2])+1),*((char*)&debug_info_to_uku[2]));
      link_cnt=0;
      link=ON;
      
@@ -1871,13 +1883,13 @@ else if((mess[6]==0xff)&&(mess[7]==0xff)&&((mess[8]==MEM_KF1)||(mess[8]==MEM_KF4
 	if(mess[8]==MEM_KF1)
 		{
 		if(ee_DEVICE!=0)ee_DEVICE=0;
-		if(ee_TZAS!=(signed short)mess[13]) ee_TZAS=(signed short)mess[13];
+//		if(ee_TZAS!=(signed short)mess[13]) ee_TZAS=(signed short)mess[13];
 		}
 	if(mess[8]==MEM_KF4)	//MEM_KF4 передают ” ”шки там, где нужно полное управление Ѕѕ—ами с ” ”, включить-выключить, короче не дл€ »ЅЁѕ
 		{
 		if(ee_DEVICE!=1)ee_DEVICE=1;
 		if(ee_IMAXVENT!=(signed short)mess[13]) ee_IMAXVENT=(signed short)mess[13];
-			if(ee_TZAS!=3) ee_TZAS=3;
+			//if(ee_TZAS!=3) ee_TZAS=3;
 		}
 	}
 
@@ -2302,11 +2314,6 @@ GPIOC->CR1|=(1<<3);
 GPIOC->CR2|=(1<<3);
 
 //if(bps_class==bpsIPS) volum_u_main_=ee_U_AVT;
-if(bps_class==bpsIPS) 
-	{
-//	pwm_u=ee_U_AVT;
-//	volum_u_main_=ee_U_AVT;
-	}
 while (1)
 	{
 
@@ -2347,8 +2354,8 @@ while (1)
 
 	  JP_drv();
 	  flags_drv();
-		net_drv();
-		if(main_cnt<100)main_cnt++;
+		//net_drv();
+		if(main_cnt10<100)main_cnt10++;
       	}
 
 	if(b5Hz)
@@ -2359,7 +2366,9 @@ while (1)
 		led_hndl();
 		
 		vent_drv();
-      	}
+		
+		if(main_cnt1<1000)main_cnt1++;
+		}
       	
 	if(b2Hz)
 		{
@@ -2378,9 +2387,9 @@ while (1)
 
 	  pwr_hndl();		//вычисление воздействий на силу
 		temper_drv();			//вычисление аварий температуры
-		//u_drv();
-          x_drv();
-          if(main_cnt<1000)main_cnt++;
+		u_drv();
+          //x_drv();
+		if(main_cnt<1000)main_cnt++;
   		if((link==OFF)||(jp_mode==jp3))apv_hndl();
   		
 		//ѕересброс  јЌа в случае зависани€
@@ -2388,15 +2397,15 @@ while (1)
   		if(can_error_cnt>=10)
   			{
   			can_error_cnt=0;
-			init_CAN();
+				init_CAN();
   			}
 		//
 
-		volum_u_main_drv();
+		//volum_u_main_drv();
 		
-		pwm_stat++;
-		if(pwm_stat>=10)pwm_stat=0;
-adc_plazma_short++;
+/*		pwm_stat++;
+		if(pwm_stat>=10)pwm_stat=0;*/
+//adc_plazma_short++;
 
 		vent_resurs_hndl();
 		}
