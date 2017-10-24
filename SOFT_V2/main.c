@@ -167,6 +167,9 @@ char pwm_vent_cnt;
 
 //short vent_pos;
 short vent_pwm;
+short vent_pwm_integr;
+short vent_pwm_integr_cnt;
+short vent_pwm;
 enum {bpsIBEP,bpsIPS} bps_class;
 @eeprom short ee_IMAXVENT;
 
@@ -677,17 +680,20 @@ void vent_drv(void)
 
 	//I=1200;
 
-	tempSL=36000L/(signed long)ee_Umax;
-	tempSL=(signed long)I/tempSL;
+	//tempSL=36000L/(signed long)ee_Umax;
+	tempSL=(signed long)I;
+	tempSL*=(signed long)Ui;
+	tempSL/=100L;
 	
+	//tempSL=1500L;
 	///**/debug_info_to_uku[0]=ee_Umax;
 	///**/debug_info_to_uku[1]=I;
 	
-	if(ee_DEVICE==1) tempSL=(signed long)(I/ee_IMAXVENT);
+	//if(ee_DEVICE==1) tempSL=(signed long)(I/ee_IMAXVENT);
 	
-	if(tempSL>10)vent_pwm_i_necc=1000;
-	else if(tempSL<1)vent_pwm_i_necc=0;
-	else vent_pwm_i_necc=(short)(400L + (tempSL*60L));
+	if(tempSL>3000L)vent_pwm_i_necc=1000;
+	else if(tempSL<300L)vent_pwm_i_necc=0;
+	else vent_pwm_i_necc=(short)(300L + ((tempSL-300L)/4L));
 	gran(&vent_pwm_i_necc,0,1000);
 	//vent_pwm_i_necc=400;
 	tempSL=(signed long)T;
@@ -706,6 +712,19 @@ void vent_drv(void)
 	//vent_pwm=1000-vent_pwm;	// Для нового блока. Там похоже нужна инверсия
 	//vent_pwm=300;
 	//if(bVENT_BLOCK)vent_pwm=0;
+	if(vent_pwm_integr_cnt<10)
+		{
+		vent_pwm_integr_cnt++;
+		if(vent_pwm_integr_cnt>=10)
+			{
+			vent_pwm_integr_cnt=0;
+			vent_pwm_integr=((vent_pwm_integr*9)+vent_pwm)/10;
+			}
+		}
+	gran(&vent_pwm_integr,0,1000);
+	
+	//vent_pwm_integr=vent_pwm_i_necc;
+	
 }
 
 //-----------------------------------------------
@@ -789,8 +808,8 @@ TIM1->CCR2L= (char)pwm_u;
 TIM1->CCR1H= (char)(pwm_i/256);	
 TIM1->CCR1L= (char)pwm_i;
 
-TIM1->CCR3H= (char)(vent_pwm/256);	
-TIM1->CCR3L= (char)vent_pwm;
+TIM1->CCR3H= (char)(vent_pwm_integr/256);	
+TIM1->CCR3L= (char)vent_pwm_integr;
 }
 
 //-----------------------------------------------
