@@ -772,6 +772,9 @@ gran(&pwm_u,2,1020);
 
 //pwm_u=300;
 //vent_pwm=600;
+pwm_u=0;
+pwm_i=0;
+vent_pwm=0;
 
 TIM1->CCR2H= (char)(pwm_u/256);	
 TIM1->CCR2L= (char)pwm_u;
@@ -1784,7 +1787,7 @@ else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==KLBR)&&(mess[9]==mess[10
 	
 	} 
 
-else if((mess[6]==0xff)&&(mess[7]==0xff)&&(mess[8]==MEM_KF))
+else if((mess[6]==0xff)&&(mess[7]==0xff)&&(mess[8]==0x95))
 	{
 	signed short tempSS;
 	tempSS=mess[9]+(mess[10]*256);
