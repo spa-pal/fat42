@@ -1,11 +1,11 @@
 //Ветка для DCDC
 
+
 //#define _24_
-char bVENT_BLOCK=0;
 
 #define BLOCK_INIT  GPIOB->DDR|=(1<<2);GPIOB->CR1|=(1<<2);GPIOB->CR2&=~(1<<2);
-#define BLOCK_ON 	{GPIOB->ODR|=(1<<2);bVENT_BLOCK=1;}
-#define BLOCK_OFF 	{GPIOB->ODR&=~(1<<2);bVENT_BLOCK=0;}
+#define BLOCK_ON 	GPIOB->ODR|=(1<<2);
+#define BLOCK_OFF 	GPIOB->ODR&=~(1<<2);
 #define BLOCK_IS_ON (GPIOB->ODR&(1<<2))
 
 #include "string.h"
@@ -18,7 +18,6 @@ char t0_cnt1=0,t0_cnt2=0,t0_cnt3=0,t0_cnt4=0;
 _Bool b100Hz, b10Hz, b5Hz, b2Hz, b1Hz;
 
 u8 mess[14];
-
 
 @near signed short adc_buff[10][16],adc_buff_[10];
 char adc_ch,adc_cnt;
@@ -44,10 +43,9 @@ char adr_drv_stat=0;
 #define MEM_KF4 	0x29
 #define MEM_KF2 	0x27
 #define ALRM_RES 	0x63
-#define VENT_RES 	0x64
 #define GETID 		0x90
 #define PUTID 		0x91
-#define PUTTM1 		0xDA
+#define PUTTM1 	0xDA
 #define PUTTM2 	0xDB
 #define PUTTM 		0xDE
 #define GETTM 		0xED 
@@ -71,8 +69,7 @@ signed char T;
 
 
 signed short umax_cnt,umin_cnt;
-char link;
-short link_cnt;
+char link,link_cnt;
 
 char flags=0; // байт аварийных и др. флагов
 // 0 -  anee iaao a?aiia? oi 0, anee iao oi 1
@@ -93,7 +90,7 @@ int _x_cnt;
 unsigned short vol_u_temp;
 unsigned short vol_i_temp;
 char flags_tu_cnt_on,flags_tu_cnt_off;
-unsigned short vol_i_temp_avar=0;
+
 //Работа источника
 
 char off_bp_cnt;
@@ -162,52 +159,6 @@ char pwm_stat;
 short vent_pwm;
 enum {bpsIBEP,bpsIPS} bps_class;
 @eeprom short ee_IMAXVENT;
-
-
-//Наработка вентилятора
-@eeprom unsigned short vent_resurs;
-unsigned short vent_resurs_sec_cnt;
-//#define VENT_RESURS_SEC_IN_HOUR	3600
-#define VENT_RESURS_SEC_IN_HOUR	3600
-@near unsigned char vent_resurs_buff[4];
-unsigned char vent_resurs_tx_cnt;
-
-
-
-//-----------------------------------------------
-void vent_resurs_hndl(void)
-{
-unsigned char temp;
-if(!bVENT_BLOCK)vent_resurs_sec_cnt++;
-if(vent_resurs_sec_cnt>VENT_RESURS_SEC_IN_HOUR)
-	{
-	if(vent_resurs<60000)vent_resurs++;
-	vent_resurs_sec_cnt=0;
-	}
-
-//vent_resurs=12345;
-
-vent_resurs_buff[0]=0x00|((unsigned char)(vent_resurs&0x000f));
-vent_resurs_buff[1]=0x40|((unsigned char)((vent_resurs&0x00f0)>>4));
-vent_resurs_buff[2]=0x80|((unsigned char)((vent_resurs&0x0f00)>>8));
-vent_resurs_buff[3]=0xc0|((unsigned char)((vent_resurs&0xf000)>>12));
-
-temp=vent_resurs_buff[0]&0x0f;
-temp^=vent_resurs_buff[1]&0x0f;
-temp^=vent_resurs_buff[2]&0x0f;
-temp^=vent_resurs_buff[3]&0x0f;
-
-vent_resurs_buff[0]|=(temp&0x03)<<4;
-vent_resurs_buff[1]|=(temp&0x0c)<<2;
-vent_resurs_buff[2]|=(temp&0x30);
-vent_resurs_buff[3]|=(temp&0xc0)>>2;
-
-
-vent_resurs_tx_cnt++;
-if(vent_resurs_tx_cnt>3)vent_resurs_tx_cnt=0;
-
-
-}
 
 //-----------------------------------------------
 void gran(signed short *adr, signed short min, signed short max)
@@ -541,11 +492,11 @@ else if(bps_class==bpsIPS)	//если блок ИПСный
 void led_drv(void)
 {
 //Красный светодиод
-GPIOA->DDR|=(1<<4);
-GPIOA->CR1|=(1<<4);
-GPIOA->CR2&=~(1<<4);
-if(led_red_buff&0b1L) GPIOA->ODR|=(1<<4); 	//Горит если в led_red_buff 1 и на ножке 1
-else GPIOA->ODR&=~(1<<4); 
+GPIOA->DDR|=(1<<6);
+GPIOA->CR1|=(1<<6);
+GPIOA->CR2&=~(1<<6);
+if(led_red_buff&0b1L) GPIOA->ODR|=(1<<6); 	//Горит если в led_red_buff 1 и на ножке 1
+else GPIOA->ODR&=~(1<<6); 
 
 //Зеленый светодиод
 GPIOA->DDR|=(1<<5);
@@ -636,9 +587,9 @@ void link_drv(void)		//10Hz
 {
 if(jp_mode!=jp3)
 	{
-	if(link_cnt<602)link_cnt++;
-	if(link_cnt==590)flags&=0xc1;		//если оборвалась связь первым делом сбрасываем все аварии и внешнюю блокировку
-	if(link_cnt==600)
+	if(link_cnt<52)link_cnt++;
+	if(link_cnt==49)flags&=0xc1;		//если оборвалась связь первым делом сбрасываем все аварии и внешнюю блокировку
+	if(link_cnt==50)
 		{
 		link=OFF;
 		
@@ -694,10 +645,7 @@ void vent_drv(void)
 	if(vent_pwm<vent_pwm_max_necc)vent_pwm+=10;
 	if(vent_pwm>vent_pwm_max_necc)vent_pwm-=10;
 	gran(&vent_pwm,400,1000);
-	
-	//vent_pwm=1000-vent_pwm;	// Для нового блока. Там похоже нужна инверсия
-	//vent_pwm=300;
-	if(bVENT_BLOCK)vent_pwm=0;
+	//vent_pwm=100;
 }
 
 //-----------------------------------------------
@@ -772,9 +720,6 @@ gran(&pwm_u,2,1020);
 
 //pwm_u=300;
 //vent_pwm=600;
-pwm_u=0;
-pwm_i=0;
-vent_pwm=0;
 
 TIM1->CCR2H= (char)(pwm_u/256);	
 TIM1->CCR2L= (char)pwm_u;
@@ -866,17 +811,10 @@ else if(link==OFF)
 	
 		
 
-else	if(link==ON)				//если есть связьvol_i_temp_avar
+else	if(link==ON)				//если есть связь
 	{
 	if((flags&0b00100000)==0)	//если нет блокировки извне
 		{
-		if(((flags&0b00011110)==0b00000100)) 	//если нет аварий или если они заблокированы
-			{
-			pwm_u=vol_u_temp+_x_;					//управление от укушки + выравнивание токов
-			pwm_i=vol_i_temp_avar;
-			
-			bBL=0;
-			}	
 		if(((flags&0b00011010)==0)||(flags&0b01000000)) 	//если нет аварий или если они заблокированы
 			{
 			pwm_u=vol_u_temp+_x_;					//управление от укушки + выравнивание токов
@@ -939,7 +877,7 @@ temp_SL=(signed long)adc_buff_[1];
 //temp_SL-=ee_K[1,0];
 if(temp_SL<0) temp_SL=0;
 temp_SL*=(signed long)ee_K[2][1];
-temp_SL/=1000L;
+temp_SL/=1800L;
 Ui=(unsigned short)temp_SL;
 //Ui=adc_buff_[1];
 //Ui=1000;
@@ -967,12 +905,6 @@ Udb=flags;
 //Ui=adc_plazma[0];
 //I=adc_plazma[1];
 //T=adc_plazma[2];
-
-temp_SL=(signed long)(T-ee_tsign);
-temp_SL*=1000L;
-temp_SL/=(signed long)(ee_tmax-ee_tsign);
-
-vol_i_temp_avar=(unsigned short)temp_SL; 
 
 }
 
@@ -1312,11 +1244,15 @@ else adress = adr[0] + (adr[1]*4) + (adr[2]*16);
 //adress=1;
 }*/
 
-/* -------------------------------------------------------------------------- */
-void adr_drv_v4(char in)
+
+
+//-----------------------------------------------
+char adr_gran(signed short in)
 {
-if(adress!=in)adress=in;
-}
+if(in>800)return 1;
+else if((in>60)&&(in<150))return 0;
+else return 100;
+} 
 
 /* -------------------------------------------------------------------------- */
 void adr_drv_v3(void)
@@ -1396,6 +1332,92 @@ else
 
 //adress=1;
 }
+
+
+/* -------------------------------------------------------------------------- */
+void adr_drv_v4(void)
+{
+signed short tempSI; 
+char aaa[3];
+char aaaa[3];
+
+#define ADR_CONST_0	574
+#define ADR_CONST_1	897
+#define ADR_CONST_2	695
+#define ADR_CONST_3	1015
+
+GPIOB->DDR&=~(1<<0);
+GPIOB->CR1&=~(1<<0);
+GPIOB->CR2&=~(1<<0);
+ADC2->CR2=0x08;
+ADC2->CR1=0x40;
+ADC2->CSR=0x20+0;
+ADC2->CR1|=1;
+ADC2->CR1|=1;
+adr_drv_stat=1;
+while(adr_drv_stat==1);
+
+GPIOB->DDR&=~(1<<1);
+GPIOB->CR1&=~(1<<1);
+GPIOB->CR2&=~(1<<1);
+ADC2->CR2=0x08;
+ADC2->CR1=0x40;
+ADC2->CSR=0x20+1;
+ADC2->CR1|=1;
+ADC2->CR1|=1;
+adr_drv_stat=3;
+while(adr_drv_stat==3);
+
+GPIOE->DDR&=~(1<<6);
+GPIOE->CR1&=~(1<<6);
+GPIOE->CR2&=~(1<<6);
+ADC2->CR2=0x08;
+ADC2->CR1=0x40;
+ADC2->CSR=0x20+9;
+ADC2->CR1|=1;
+ADC2->CR1|=1;
+adr_drv_stat=5;
+while(adr_drv_stat==5);
+
+aaa[0]=adr_gran(adc_buff_[0]);
+tempSI=adc_buff_[0]/260;
+gran(&tempSI,0,3);
+aaaa[0]=(char)tempSI;
+
+aaa[1]=adr_gran(adc_buff_[1]);
+tempSI=adc_buff_[1]/260;
+gran(&tempSI,0,3);
+aaaa[1]=(char)tempSI;
+
+aaa[2]=adr_gran(adc_buff_[9]);
+tempSI=adc_buff_[2]/260;
+gran(&tempSI,0,3);
+aaaa[2]=(char)tempSI;
+
+
+adress=100;
+//adr=0;//aaa[0]+ (aaa[1]*4)+ (aaa[2]*16);
+
+if((aaa[0]!=100)&&(aaa[1]!=100)&&(aaa[2]!=100))
+	{
+	if(aaa[0]==0)
+		{
+		if(aaa[1]==0)adress=3;
+		else adress=0;
+		}
+	else if(aaa[1]==0)adress=1;	
+	else if(aaa[2]==0)adress=2;
+     
+	//adr=1;
+	}
+else if((aaa[0]==100)&&(aaa[1]==100)&&(aaa[2]==100))adress=aaaa[0]+ (aaaa[1]*4)+ (aaaa[2]*16);
+   /*	{
+	adr=0;
+	} */
+else adress=100;
+
+}
+
 
 /* -------------------------------------------------------------------------- */
 void volum_u_main_drv(void)
@@ -1638,11 +1660,10 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
  	//flags=0x55;
  	//_x_=33;
  	//rotor_int=1000;
-	if(vent_resurs_tx_cnt>1) plazma_int[2]=vent_resurs;
-	else plazma_int[2]=vent_resurs_sec_cnt;
+	plazma_int[2]=T;
  	rotor_int=flags_tu+(((short)flags)<<8);
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
-	can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
+	can_transmit(0x18e,adress,PUTTM2,T,0,flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
      link_cnt=0;
      link=ON;
      
@@ -1832,13 +1853,6 @@ else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==CMND)&&(mess[9]==ALRM_RE
 	umin_cnt=0;
 	led_drv_cnt=30;
 	}		
-	
-else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==CMND)&&(mess[9]==VENT_RES))
-	{
-	vent_resurs=0;
-	}		
-
-
 else if((mess[6]==0xff)&&(mess[7]==0xff)&&(mess[8]==CMND)&&(mess[9]==CMND))
 	{
 	if((mess[10]==0x55)&&(mess[11]==0x55)) _x_++;
@@ -1891,7 +1905,7 @@ bCAN_RX=0;
 //-----------------------------------------------
 void t4_init(void){
 	TIM4->PSCR = 4;
-	TIM4->ARR= 61;
+	TIM4->ARR= 77;
 	TIM4->IER|= TIM4_IER_UIE;					// enable break interrupt
 	
 	TIM4->CR1=(TIM4_CR1_URS | TIM4_CR1_CEN | TIM4_CR1_ARPE);	
@@ -2178,14 +2192,36 @@ CLK->ECKR|=1;
 while((CLK->ECKR & 2) == 0);
 CLK->SWCR|=2;
 CLK->SWR=0xB4;
+BLOCK_INIT
+BLOCK_ON
 
 delay_ms(200);
 FLASH_DUKR=0xae;
 FLASH_DUKR=0x56;
 enableInterrupts();
+/*
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);*/
 
-
-adr_drv_v3();
+adr_drv_v4();
 //adr_drv_v4(1);
 
 
@@ -2228,9 +2264,9 @@ GPIOB->DDR|=(1<<2);
 GPIOB->CR1|=(1<<2);
 GPIOB->CR2&=~(1<<2);
 */
-GPIOB->DDR&=~(1<<3);
-GPIOB->CR1&=~(1<<3);
-GPIOB->CR2&=~(1<<3);
+GPIOB->DDR|=(1<<3);
+GPIOB->CR1|=(1<<3);
+GPIOB->CR2|=(1<<3);
 
 GPIOC->DDR|=(1<<3);
 GPIOC->CR1|=(1<<3);
@@ -2265,18 +2301,23 @@ while (1)
 		
 		adc2_init();
 		can_tx_hndl();
+		
+		GPIOC->DDR|=(1<<7);
+		GPIOC->CR1|=(1<<7);
+		GPIOC->CR2|=(1<<7);
+		GPIOC->ODR^=(1<<7);
       	}  
       	
 	if(b10Hz)
 		{
 		b10Hz=0;
 		
-		matemat();
-		led_drv(); 
-	  link_drv();
-	  pwr_hndl();		//вычисление воздействий на силу
-	  JP_drv();
-	  flags_drv();
+          matemat();
+	    	led_drv(); 
+	     link_drv();
+	     pwr_hndl();		//вычисление воздействий на силу
+	     JP_drv();
+	     flags_drv();
 		net_drv();
       	}
 
@@ -2326,7 +2367,7 @@ while (1)
 		if(pwm_stat>=10)pwm_stat=0;
 adc_plazma_short++;
 
-		vent_resurs_hndl();
+		
 		}
 
 	}
