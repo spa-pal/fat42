@@ -890,7 +890,7 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 			}
 		else
 			{
-			if((abs((int)(Ui-Unecc)))>50)	pwm_u_cnt=19;
+			//if((abs((int)(Ui-Unecc)))>50)	pwm_u_cnt=19;
 			}
 		
 		if(pwm_u_cnt)
