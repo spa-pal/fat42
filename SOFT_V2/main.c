@@ -699,7 +699,7 @@ void vent_drv(void)
 	tempSL=(signed long)T;
 	if(tempSL<=(ee_tsign-30L))vent_pwm_t_necc=0;
 	else if(tempSL>=ee_tsign)vent_pwm_t_necc=1000;
-	else vent_pwm_t_necc=(short)(400L+(20L*(tempSL-(((signed long)ee_tsign)-30L))));
+	else vent_pwm_t_necc=(short)(150L+(28L*(tempSL-(((signed long)ee_tsign)-30L))));
 	gran(&vent_pwm_t_necc,0,1000);
 	
 	vent_pwm_max_necc=vent_pwm_i_necc;
@@ -709,6 +709,7 @@ void vent_drv(void)
 	if(vent_pwm>vent_pwm_max_necc)vent_pwm-=10;
 	gran(&vent_pwm,0,1000);
 	
+	//vent_pwm=150;
 	//vent_pwm=1000-vent_pwm;	// Для нового блока. Там похоже нужна инверсия
 	//vent_pwm=300;
 	//if(bVENT_BLOCK)vent_pwm=0;
@@ -792,7 +793,7 @@ else if(!bBL)
 	//GPIOB->ODR&=~(1<<2);
 	}
 */
-gran(&pwm_u,0,1020);
+//gran(&pwm_u,0,2040);
 
 //pwm_u=1000;
 //pwm_i=1000;
@@ -808,8 +809,8 @@ TIM1->CCR2L= (char)pwm_u;
 TIM1->CCR1H= (char)(pwm_i/256);	
 TIM1->CCR1L= (char)pwm_i;
 
-TIM1->CCR3H= (char)(vent_pwm_integr/256);	
-TIM1->CCR3L= (char)vent_pwm_integr;
+TIM1->CCR3H= (char)(vent_pwm_integr/128);	
+TIM1->CCR3L= (char)(vent_pwm_integr*2);
 }
 
 //-----------------------------------------------
@@ -825,12 +826,12 @@ if(jp_mode==jp3)
 else if(jp_mode==jp2)
 	{
 	pwm_u=0;
-	pwm_i=0x3ff;
+	pwm_i=0x7ff;
 	}     
 else if(jp_mode==jp1)
 	{
-	pwm_u=0x3ff;
-	pwm_i=0x3ff;
+	pwm_u=0x7ff;
+	pwm_i=0x7ff;
 	//bBL=0;
 	} 
 /*
@@ -843,8 +844,10 @@ else if((bMAIN)&&(link==ON))
 
 else if(link==OFF)
 	{
-	pwm_i=0x3ff;
-	pwm_u_=(short)((1000L*((long)Unecc))/650L);
+	pwm_i=0x7ff;
+	pwm_u_=(short)((2000L*((long)Unecc))/650L);
+	
+	//pwm_u_=1900;
 	
 	pwm_u_buff[pwm_u_buff_ptr]=pwm_u_;
 	pwm_u_buff_ptr++;
@@ -866,6 +869,7 @@ else if(link==OFF)
 
 	if(pwm_u_buff_cnt>=20)pwm_u_buff_cnt=20;
 	if(pwm_u_buff_cnt>=15)pwm_u=pwm_u_buff_;
+	//pwm_u=1900;
 	}
 	
 else	if(link==ON)				//если есть связьvol_i_temp_avar
@@ -875,7 +879,7 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 		if(((flags&0b00011010)==0b00000000)) 	//если нет аварий или если они заблокированы
 			{
 			pwm_u=vol_i_temp;					//управление от укушки + выравнивание токов
-			pwm_i=1000;
+			pwm_i=2000;
 			}	
 		else if(flags&0b00011010)					//если есть аварии
 			{
@@ -883,20 +887,20 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 			pwm_i=0;
 			}
 		//pwm_u=(short)((1000L*((long)Unecc))/650L);
-		if(vol_i_temp==1000)
+		if(vol_i_temp==2000)
 			{
-			pwm_u=1000;
-			pwm_i=1000;
+			pwm_u=2000;
+			pwm_i=2000;
 			}
 		else
 			{
-			//if((abs((int)(Ui-Unecc)))>50)	pwm_u_cnt=19;
+			if((abs((int)(Ui-Unecc)))>50)	pwm_u_cnt=19;
 			}
 		
 		if(pwm_u_cnt)
 			{
 			pwm_u_cnt--;
-			pwm_u=(short)((1000L*((long)Unecc))/650L);
+			pwm_u=(short)((2000L*((long)Unecc))/650L);
 			}
 		}
 	else if(flags&0b00100000)	//если заблокирован извне то полное выключение
@@ -904,7 +908,7 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 		pwm_u=0;
 		pwm_i=0;
 		}
-		
+	//pwm_u=1800;	
 	}	   
 /*
 pwm_u_buff[pwm_u_buff_ptr]=pwm_u_;
@@ -930,8 +934,8 @@ if(pwm_u_buff_cnt>=15)pwm_u=pwm_u_buff_;*/
 //pwm_i=950;
 //pwm_u=(short)((1000L*((long)Unecc))/650L);
 //if(pwm_u>main_cnt10*10)pwm_u=main_cnt10*10;
-if(pwm_u>1000)pwm_u=1000;
-if(pwm_i>1000)pwm_i=1000;
+if(pwm_u>2000)pwm_u=2000;
+if(pwm_i>2000)pwm_i=2000;
 //pwm_u=400+vol_i_temp;
 //pwm_u=vol_i_temp;
 }
@@ -1990,7 +1994,7 @@ void t4_init(void){
 //-----------------------------------------------
 void t1_init(void)
 {
-TIM1->ARRH= 0x03;
+TIM1->ARRH= 0x07;
 TIM1->ARRL= 0xff;
 TIM1->CCR1H= 0x00;	
 TIM1->CCR1L= 0xff;
@@ -2380,7 +2384,11 @@ while (1)
 	if(b5Hz)
 		{
 		b5Hz=0;
+		//vent_pwm_integr=100;
+		//pwm_u=300;
+		//pwm_i=200;
 		
+		//pwm_u=1500;
 		pwr_drv();		//воздействие на силу
 		led_hndl();
 		
