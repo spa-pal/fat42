@@ -54,14 +54,14 @@ Settings.1.7=Root.Config.1.Settings.7
 Settings.1.8=Root.Config.1.Settings.8
 
 [Root.Config.0.Settings.0]
-String.6.0=2015,5,14,16,4,43
+String.6.0=2018,2,14,13,55,58
 String.100.0=ST Assembler Linker
 String.100.1=ST7 Cosmic
 String.100.2=STM8 Cosmic
 String.100.3=ST7 Metrowerks V1.1
 String.100.4=Raisonance
 String.101.0=STM8 Cosmic
-String.102.0=C:\Program Files\COSMIC\CXSTM8_32K
+String.102.0=C:\Program Files (x86)\COSMIC\CXSTM8_32K
 String.103.0=
 String.104.0=Hstm8
 String.105.0=Lib
@@ -106,7 +106,7 @@ String.3.0=clnk $(ToolsetLibOpts) -o $(OutputPath)$(TargetSName).sm8 -fakeIntege
 String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8
 String.4.0=$(OutputPath)$(TargetFName)
 String.5.0=$(OutputPath)$(ProjectSFile).elf $(OutputPath)$(TargetSName).map
-String.6.0=2012,12,9,0,7,4
+String.6.0=2018,2,14,13,55,58
 String.100.0=
 String.101.0=crtsi.st7
 String.102.0=+seg .const -b 0x8080 -m 0x7f80 -n .const -it
@@ -123,13 +123,14 @@ String.103.1=Eeprom[0x4000-0x45ff]=.eeprom
 String.103.2=Zero Page[0x0-0xff]=.bsct,.ubsct,.bit,.share
 String.103.3=Ram[0x100-0x13ff]=.data,.bss
 String.104.0=0x17ff
+String.105.0=libis0.sm8;libm0.sm8
 Int.0=0
 Int.1=0
 
 [Root.Config.0.Settings.7]
 String.2.0=Running Post-Build step
-String.3.0=chex -o $(OutputPath)fat42_v2.s19 $(OutputPath)$(TargetSName).sm8
-String.6.0=2017,2,2,11,11,8
+String.3.0=chex -o $(OutputPath)fat42_v2_master.s19 $(OutputPath)$(TargetSName).sm8
+String.6.0=2018,2,14,13,55,58
 
 [Root.Config.0.Settings.8]
 String.2.0=Performing Custom Build on $(InputFile)
@@ -143,7 +144,7 @@ String.100.2=STM8 Cosmic
 String.100.3=ST7 Metrowerks V1.1
 String.100.4=Raisonance
 String.101.0=STM8 Cosmic
-String.102.0=C:\Program Files\COSMIC\CXSTM8_32K
+String.102.0=
 String.103.0=
 String.104.0=Hstm8
 String.105.0=Lib
