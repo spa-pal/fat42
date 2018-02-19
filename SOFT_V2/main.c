@@ -693,13 +693,13 @@ void vent_drv(void)
 	
 	if(tempSL>3000L)vent_pwm_i_necc=1000;
 	else if(tempSL<300L)vent_pwm_i_necc=0;
-	else vent_pwm_i_necc=(short)(300L + ((tempSL-300L)/4L));
+	else vent_pwm_i_necc=(short)(400L + ((tempSL-300L)/4L));
 	gran(&vent_pwm_i_necc,0,1000);
 	//vent_pwm_i_necc=400;
 	tempSL=(signed long)T;
 	if(tempSL<=(ee_tsign-30L))vent_pwm_t_necc=0;
 	else if(tempSL>=ee_tsign)vent_pwm_t_necc=1000;
-	else vent_pwm_t_necc=(short)(150L+(28L*(tempSL-(((signed long)ee_tsign)-30L))));
+	else vent_pwm_t_necc=(short)(400L+(20L*(tempSL-(((signed long)ee_tsign)-30L))));
 	gran(&vent_pwm_t_necc,0,1000);
 	
 	vent_pwm_max_necc=vent_pwm_i_necc;
@@ -1561,7 +1561,7 @@ void init_CAN(void) {
 	
 	CAN->PSR= 6;								// *** BIT TIMING SETTINGS ***
 	
-	CAN->Page.Config.BTR1= 9;					// CAN_BTR1_BRP=9, 	tq= fcpu/(9+1)
+	CAN->Page.Config.BTR1= 19;					// CAN_BTR1_BRP=9, 	tq= fcpu/(9+1)
 	CAN->Page.Config.BTR2= (1<<7)|(6<<4) | 7; 		// BS2=8, BS1=7, 		
 	
 	CAN->IER|=(1<<1);
@@ -1983,7 +1983,7 @@ bCAN_RX=0;
 
 //-----------------------------------------------
 void t4_init(void){
-	TIM4->PSCR = 4;
+	TIM4->PSCR = 6;
 	TIM4->ARR= 61;
 	TIM4->IER|= TIM4_IER_UIE;					// enable break interrupt
 	
@@ -2070,7 +2070,7 @@ ADC2->CR1|=1;
 ADC2->TDRL=0xff;
 	
 ADC2->CR2=0x08;
-ADC2->CR1=0x40;
+ADC2->CR1=0x60;
 //if(adc_ch)
 	{
 	if(adc_ch==5)ADC2->CSR=0x22;
@@ -2384,7 +2384,7 @@ while (1)
 	if(b5Hz)
 		{
 		b5Hz=0;
-		//vent_pwm_integr=100;
+		//vent_pwm_integr=500;
 		//pwm_u=300;
 		//pwm_i=200;
 		
