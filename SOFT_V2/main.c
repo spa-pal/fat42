@@ -1561,7 +1561,7 @@ void init_CAN(void) {
 	
 	CAN->PSR= 6;								// *** BIT TIMING SETTINGS ***
 	
-	CAN->Page.Config.BTR1= 19;					// CAN_BTR1_BRP=9, 	tq= fcpu/(9+1)
+	CAN->Page.Config.BTR1= (3<<6)|19;					// CAN_BTR1_BRP=9, 	tq= fcpu/(9+1)
 	CAN->Page.Config.BTR2= (1<<7)|(6<<4) | 7; 		// BS2=8, BS1=7, 		
 	
 	CAN->IER|=(1<<1);

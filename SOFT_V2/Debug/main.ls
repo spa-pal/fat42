@@ -2485,8 +2485,8 @@
 6274  0f6a 72185432      	bset	21554,#4
 6275                     ; 1562 	CAN->PSR= 6;								// *** BIT TIMING SETTINGS ***
 6277  0f6e 35065427      	mov	21543,#6
-6278                     ; 1564 	CAN->Page.Config.BTR1= 19;					// CAN_BTR1_BRP=9, 	tq= fcpu/(9+1)
-6280  0f72 3513542c      	mov	21548,#19
+6278                     ; 1564 	CAN->Page.Config.BTR1= (3<<6)|19;					// CAN_BTR1_BRP=9, 	tq= fcpu/(9+1)
+6280  0f72 35d3542c      	mov	21548,#211
 6281                     ; 1565 	CAN->Page.Config.BTR2= (1<<7)|(6<<4) | 7; 		// BS2=8, BS1=7, 		
 6283  0f76 35e7542d      	mov	21549,#231
 6284                     ; 1567 	CAN->IER|=(1<<1);
