@@ -779,8 +779,8 @@ TIM1->CCR2L= (char)pwm_u;
 TIM1->CCR1H= (char)(pwm_i/256);	
 TIM1->CCR1L= (char)pwm_i;
 
-TIM1->CCR3H= (char)(vent_pwm/256);	
-TIM1->CCR3L= (char)vent_pwm;
+TIM1->CCR3H= 0;	
+TIM1->CCR3L= (char)(vent_pwm/4);
 }
 
 //-----------------------------------------------
@@ -1898,8 +1898,8 @@ void t4_init(void){
 //-----------------------------------------------
 void t1_init(void)
 {
-TIM1->ARRH= 0x03;
-TIM1->ARRL= 0xff;
+TIM1->ARRH= 0x00;
+TIM1->ARRL= 0x7f;
 TIM1->CCR1H= 0x00;	
 TIM1->CCR1L= 0xff;
 TIM1->CCR2H= 0x00;	
