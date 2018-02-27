@@ -1031,7 +1031,7 @@ else Unecc=ee_UAVT-Uin;
 //Ui=adc_plazma[0];
 //I=adc_plazma[1];
 //T=adc_plazma[2];
-
+if(Unecc<0)Unecc=0;
 temp_SL=(signed long)(T-ee_tsign);
 temp_SL*=1000L;
 temp_SL/=(signed long)(ee_tmax-ee_tsign);
