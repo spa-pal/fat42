@@ -793,7 +793,7 @@ else if(!bBL)
 	//GPIOB->ODR&=~(1<<2);
 	}
 */
-//gran(&pwm_u,0,2040);
+gran(&pwm_u,10,2000);
 
 //pwm_u=1000;
 //pwm_i=1000;
@@ -894,7 +894,10 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 			}
 		else
 			{
-			if((abs((int)(Ui-Unecc)))>50)	pwm_u_cnt=19;
+			int tempI;
+			tempI=(int)(Ui-Unecc);
+			if((tempI>20)||(tempI<-80))pwm_u_cnt=19;
+			//if((abs((int)(Ui-Unecc)))>50)	pwm_u_cnt=19;
 			}
 		
 		if(pwm_u_cnt)
