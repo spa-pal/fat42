@@ -876,12 +876,12 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 	{
 	if((flags&0b00100000)==0)	//если нет блокировки извне
 		{
-		if(((flags&0b00011010)==0b00000000)) 	//если нет аварий или если они заблокированы
+/*		if(((flags&0b00011010)==0b00000000)) 	//если нет аварий или если они заблокированы
 			{
 			pwm_u=vol_i_temp;					//управление от укушки + выравнивание токов
 			pwm_i=2000;
 			}	
-		else if(flags&0b00011010)					//если есть аварии
+		else*/ if(flags&0b00011010)					//если есть аварии
 			{
 			pwm_u=0;								//то полный стоп
 			pwm_i=0;
@@ -889,21 +889,25 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 		//pwm_u=(short)((1000L*((long)Unecc))/650L);
 		if(vol_i_temp==2000)
 			{
-			pwm_u=2000;
+			pwm_u=1500;
 			pwm_i=2000;
 			}
 		else
 			{
-			int tempI;
-			tempI=(int)(Ui-Unecc);
-			if((tempI>20)||(tempI<-80))pwm_u_cnt=19;
+			//int tempI;
+			//tempI=(int)(Ui-Unecc);
+			//if((tempI>20)||(tempI<-80))pwm_u_cnt=19;
 			//if((abs((int)(Ui-Unecc)))>50)	pwm_u_cnt=19;
-			}
+			//}
 		
-		if(pwm_u_cnt)
+		/*if(pwm_u_cnt)
 			{
-			pwm_u_cnt--;
+			pwm_u_cnt--;*/
 			pwm_u=(short)((2000L*((long)Unecc))/650L);
+			pwm_i=2000;
+			//pwm_u=1600;
+			//pwm_u=(short)Unecc;
+			/*}*/
 			}
 		}
 	else if(flags&0b00100000)	//если заблокирован извне то полное выключение
@@ -1017,7 +1021,7 @@ if(T>120)T=120;
 Uin=Usum-Ui;
 if(link==ON)
 	{
-	Unecc=U_out_const-Uin;
+	Unecc=U_out_const-Uin+vol_i_temp;
 /*	if(vol_i_temp!=1000)
 		{
 		gran(&vol_i_temp,-50,50);
@@ -1042,7 +1046,7 @@ temp_SL/=(signed long)(ee_tmax-ee_tsign);
 vol_i_temp_avar=(unsigned short)temp_SL; 
 
 debug_info_to_uku[0]=pwm_u;
-debug_info_to_uku[1]=vol_i_temp;
+debug_info_to_uku[1]=Unecc;
 //debug_info_to_uku[2]=5678;
 }
 
