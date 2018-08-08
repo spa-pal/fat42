@@ -766,6 +766,8 @@ else if(!bBL)
 gran(&pwm_u,2,1020);
 gran(&pwm_i,2,1020);
 
+if((bps_class==bpsIBEP)&&(main_cnt1<(5*(ee_TZAS+10))))pwm_u=10;
+
 //pwm_u=1000;
 //pwm_i=1000;
 
