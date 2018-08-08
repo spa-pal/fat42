@@ -764,6 +764,7 @@ else if(!bBL)
 	}
 
 gran(&pwm_u,2,1020);
+gran(&pwm_i,2,1020);
 
 //pwm_u=1000;
 //pwm_i=1000;
@@ -793,13 +794,17 @@ if(jp_mode==jp3)
 	if((flags&0b00001010)==0)
 		{
 		pwm_u=500;
-		//pwm_i=0x3ff;
+		if(pwm_i<1020)
+			{
+			pwm_i+=30;
+			if(pwm_i>1020)pwm_i=1020;
+			}
 		bBL=0;
 		}
 	else if(flags&0b00001010)
 		{
 		pwm_u=0;
-		//pwm_i=0;
+		pwm_i=0;
 		bBL=1;
 		}	
 	
@@ -807,20 +812,35 @@ if(jp_mode==jp3)
 else if(jp_mode==jp2)
 	{
 	pwm_u=0;
-	pwm_i=0x3ff;
+	//pwm_i=0x3ff;
+	if(pwm_i<1020)
+		{
+		pwm_i+=30;
+		if(pwm_i>1020)pwm_i=1020;
+		}
 	bBL=0;
 	}     
 else if(jp_mode==jp1)
 	{
 	pwm_u=0x3ff;
-	pwm_i=0x3ff;
+	//pwm_i=0x3ff;
+	if(pwm_i<1020)
+		{
+		pwm_i+=30;
+		if(pwm_i>1020)pwm_i=1020;
+		}
 	bBL=0;
 	} 
 
 else if((bMAIN)&&(link==ON)/*&&(ee_AVT_MODE!=0x55)*/)
 	{
 	pwm_u=volum_u_main_;
-	pwm_i=0x3ff;
+	//pwm_i=0x3ff;
+	if(pwm_i<1020)
+		{
+		pwm_i+=30;
+		if(pwm_i>1020)pwm_i=1020;
+		}
 	bBL_IPS=0;
 	}
 
@@ -845,7 +865,12 @@ else if(link==OFF)
 			{
 			pwm_u=ee_U_AVT;
 			gran(&pwm_u,0,1020);
-		    	pwm_i=0x3ff;
+		    	//pwm_i=0x3ff;
+			if(pwm_i<1020)
+				{
+				pwm_i+=30;
+				if(pwm_i>1020)pwm_i=1020;
+				}
 			bBL=0;
 			bBL_IPS=0;
 			}
@@ -870,14 +895,25 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 		if(((flags&0b00011110)==0b00000100)) 	//если нет аварий или если они заблокированы
 			{
 			pwm_u=vol_u_temp+_x_;					//управление от укушки + выравнивание токов
-			pwm_i=vol_i_temp_avar;
+			if(!ee_DEVICE)
+				{
+				if(pwm_i<vol_i_temp_avar)pwm_i+=vol_i_temp_avar/30;
+				else	pwm_i=vol_i_temp_avar;
+				}
+			else pwm_i=vol_i_temp_avar;
 			
 			bBL=0;
 			}	
 		if(((flags&0b00011010)==0)||(flags&0b01000000)) 	//если нет аварий или если они заблокированы
 			{
 			pwm_u=vol_u_temp+_x_;					//управление от укушки + выравнивание токов
-		    	pwm_i=vol_i_temp;
+		    	//pwm_i=vol_i_temp;
+			if(!ee_DEVICE)
+				{
+				if(pwm_i<vol_i_temp)pwm_i+=vol_i_temp/30;
+				else	pwm_i=vol_i_temp;
+				}
+			else pwm_i=vol_i_temp;			
 			bBL=0;
 			}
 		else if(flags&0b00011010)					//если есть аварии
