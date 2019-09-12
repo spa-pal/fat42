@@ -766,7 +766,7 @@ else if(!bBL)
 gran(&pwm_u,2,1020);
 gran(&pwm_i,2,1020);
 
-if((bps_class==bpsIBEP)&&(main_cnt1<(5*(ee_TZAS+10))))pwm_u=10;
+if((ee_DEVICE==0)&&(main_cnt1<(5*(ee_TZAS+10))))pwm_u=10;
 
 //pwm_u=1000;
 //pwm_i=1000;
@@ -986,7 +986,7 @@ temp_SL=adc_buff_[3];
 //temp_SL-=ee_K[2][0];
 if(temp_SL<0) temp_SL=0;
 temp_SL*=ee_K[1][1];
-temp_SL/=1800;
+temp_SL/=1000;
 Un=(unsigned short)temp_SL;
 //Un=adc_buff_[4];
 
@@ -1731,7 +1731,7 @@ else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==KLBR)&&(mess[9]==mess[10
 			{
 			ee_K[0][1]-=10;
 			}
-		granee(&ee_K[0][1],50,3000);									
+		granee(&ee_K[0][1],10,3000);									
 		}
 	else if((mess[9]&0xf0)==0x10)
 		{
@@ -2223,6 +2223,7 @@ enableInterrupts();
 adr_drv_v3();
 //adr_drv_v4(1);
 
+BLOCK_INIT
 
 t4_init();
 
