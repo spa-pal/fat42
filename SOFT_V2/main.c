@@ -1731,7 +1731,7 @@ else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==KLBR)&&(mess[9]==mess[10
 			{
 			ee_K[0][1]-=10;
 			}
-		granee(&ee_K[0][1],10,3000);									
+		granee(&ee_K[0][1],10,30000);									
 		}
 	else if((mess[9]&0xf0)==0x10)
 		{
