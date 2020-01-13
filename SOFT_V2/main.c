@@ -109,7 +109,7 @@ signed short tsign_cnt,tmax_cnt;
 signed short pwm_u=200,pwm_i=50;
 enum {jp0,jp1,jp2,jp3} jp_mode;
 char cnt_JP0,cnt_JP1;
-_Bool bBL;
+_Bool bBL=1;
 _Bool bBL_IPS=0;
 char apv_cnt[3];
 int apv_cnt_;
@@ -661,7 +661,19 @@ BLOCK_INIT
 
 if(main_cnt1<1500)main_cnt1++;
 
-if((main_cnt1<(5*ee_TZAS))&&(bps_class!=bpsIPS))
+
+if((ee_DEVICE))
+	{
+	if(bBL)
+		{
+		BLOCK_ON
+		}
+	else if(!bBL)
+		{
+		BLOCK_OFF
+		}	
+	}
+else if((main_cnt1<(5*ee_TZAS))&&(bps_class!=bpsIPS))
 	{
 	BLOCK_ON
 	//GPIOB->ODR|=(1<<2);
@@ -731,6 +743,9 @@ TIM1->CCR1L= (char)pwm_i;
 TIM1->CCR3H= (char)(vent_pwm/256);	
 TIM1->CCR3L= (char)vent_pwm;
 }
+
+
+
 
 //-----------------------------------------------
 //Вычисление воздействий на силу
