@@ -1689,8 +1689,9 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
  	//flags=0x55;
  	//_x_=33;
  	//rotor_int=1000;
-	if(vent_resurs_tx_cnt>1) plazma_int[2]=vent_resurs;
-	else plazma_int[2]=vent_resurs_sec_cnt;
+	//if(vent_resurs_tx_cnt>1) plazma_int[2]=vent_resurs;
+	//else plazma_int[2]=vent_resurs_sec_cnt;
+	plazma_int[2]=jp_mode;
  	rotor_int=flags_tu+(((short)flags)<<8);
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
 	can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
