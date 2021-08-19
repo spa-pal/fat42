@@ -896,9 +896,10 @@ Un=(unsigned short)temp_SL;
 temp_SL=adc_buff_[2];
 temp_SL*=ee_K[3][1];
 temp_SL/=1000;
-T=(signed short)(temp_SL-273L);
-if(T<-30)T=-30;
+T=(char)(temp_SL-273L);
+if(T<1)T=0;
 if(T>120)T=120;
+
 //T=-3;
 Udb=flags;
 
@@ -951,10 +952,10 @@ if(jp_mode!=jp3)
 	if(umax_cnt>=10)flags|=0b00001000; 	//ѕодн€ть аварию по превышению напр€жени€
 
 	
-	if((Ui<Un)&&((Un-Ui)>ee_dU)&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
+	/*if((Ui<Un)&&((Un-Ui)>ee_dU)&&(!BLOCK_IS_ON))umin_cnt++;	
 	else umin_cnt=0;
 	gran(&umin_cnt,0,10);	
-	if(umin_cnt>=10)flags|=0b00010000;	  
+	if(umin_cnt>=10)flags|=0b00010000;	*/  
 	}
 else if(jp_mode==jp3)
 	{        
@@ -1527,7 +1528,7 @@ void init_CAN(void) {
 }
 
 //-----------------------------------------------
-void can_transmit(unsigned short id_st,char data0,char data1,char data2,char data3,char data4,char data5,char data6,char data7)
+void can_transmit(unsigned short id_st,char data0,char data1,signed char data2,char data3,char data4,char data5,char data6,char data7)
 {
 
 if((can_buff_wr_ptr<0)||(can_buff_wr_ptr>3))can_buff_wr_ptr=0;
@@ -1660,7 +1661,8 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
  	//flags=0x55;
  	//_x_=33;
  	//rotor_int=1000;
-	plazma_int[2]=T;
+	//T=-3;
+	plazma_int[2]=pwm_u;
  	rotor_int=flags_tu+(((short)flags)<<8);
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
 	can_transmit(0x18e,adress,PUTTM2,T,0,flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
@@ -2360,7 +2362,7 @@ while (1)
 			init_CAN();
   			}
 		//
-
+		//ee_Umax++;
 		volum_u_main_drv();
 		
 		pwm_stat++;
