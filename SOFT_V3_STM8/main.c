@@ -1730,7 +1730,7 @@ else if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==KLBR)&&(mess[9]==mess[10
 		{
 		if((mess[9]&0x0f)==0x01)
 			{
-			ee_K[0][0]=adc_buff_[0];
+			ee_K[0][0]=adc_buff_[7];
 			}
 		else if((mess[9]&0x0f)==0x02)
 			{

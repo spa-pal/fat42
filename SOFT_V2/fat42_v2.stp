@@ -54,7 +54,7 @@ Settings.1.7=Root.Config.1.Settings.7
 Settings.1.8=Root.Config.1.Settings.8
 
 [Root.Config.0.Settings.0]
-String.6.0=2018,2,14,13,55,58
+String.6.0=2018,2,6,13,12,4
 String.100.0=ST Assembler Linker
 String.100.1=ST7 Cosmic
 String.100.2=STM8 Cosmic
@@ -106,7 +106,7 @@ String.3.0=clnk $(ToolsetLibOpts) -o $(OutputPath)$(TargetSName).sm8 -fakeIntege
 String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8
 String.4.0=$(OutputPath)$(TargetFName)
 String.5.0=$(OutputPath)$(ProjectSFile).elf $(OutputPath)$(TargetSName).map
-String.6.0=2018,2,14,13,55,58
+String.6.0=2018,2,13,13,12,15
 String.100.0=
 String.101.0=crtsi.st7
 String.102.0=+seg .const -b 0x8080 -m 0x7f80 -n .const -it
@@ -129,8 +129,8 @@ Int.1=0
 
 [Root.Config.0.Settings.7]
 String.2.0=Running Post-Build step
-String.3.0=chex -o $(OutputPath)fat42_v2_master.s19 $(OutputPath)$(TargetSName).sm8
-String.6.0=2018,2,14,13,55,58
+String.3.0=chex -o $(OutputPath)fat42_vd_fast.s19 $(OutputPath)$(TargetSName).sm8
+String.6.0=2018,2,13,13,12,15
 
 [Root.Config.0.Settings.8]
 String.2.0=Performing Custom Build on $(InputFile)
