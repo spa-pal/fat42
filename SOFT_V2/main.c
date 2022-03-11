@@ -187,6 +187,14 @@ char pwm_u_cnt;
 short debug_info_to_uku[3];
 
 //-----------------------------------------------
+//Ограничение тока по температуре и по перегрузке
+@near short alfa_pwm_max_t;
+@near short alfa_pwm_max_i;
+@near short alfa_pwm_max_i_cnt;
+@near short alfa_pwm_max_i_cnt__;
+
+
+//-----------------------------------------------
 void vent_resurs_hndl(void)
 {
 unsigned char temp;
@@ -795,6 +803,9 @@ else if(!bBL)
 */
 gran(&pwm_u,10,2000);
 
+gran(&pwm_i,10,alfa_pwm_max_t);
+gran(&pwm_i,10,alfa_pwm_max_i);
+gran(&pwm_i,10,2000);
 //pwm_u=1000;
 //pwm_i=1000;
 
@@ -811,6 +822,52 @@ TIM1->CCR1L= (char)pwm_i;
 
 TIM1->CCR3H= (char)(vent_pwm_integr/128);	
 TIM1->CCR3L= (char)(vent_pwm_integr*2);
+}
+
+//-----------------------------------------------
+//Ограничение тока по температуре и по перегрузке
+//1Hz
+void alfa_hndl(void)				
+{
+//по температуре
+if(T<=60)alfa_pwm_max_t=2000;
+else if(T>=80)alfa_pwm_max_t=1200;
+else
+	{
+	short temp=T;
+	temp=temp-60;
+	temp*=80;
+	temp/=2;
+	if(temp>800)temp=800;
+	if(temp<0)temp=0;
+	alfa_pwm_max_t=1200+temp;
+	}
+//по перегрузке
+if(I>=750)
+	{
+	if(alfa_pwm_max_i_cnt__<10)
+		{
+		alfa_pwm_max_i_cnt__++;
+		if(alfa_pwm_max_i_cnt__>=10)alfa_pwm_max_i_cnt=60;
+		}
+	}
+else if(I<500)
+	{
+	if(alfa_pwm_max_i_cnt__)
+		{
+		alfa_pwm_max_i_cnt__--;	
+		}
+	}
+	
+if(alfa_pwm_max_i_cnt)
+	{
+	alfa_pwm_max_i_cnt--;
+	alfa_pwm_max_i=1200;	
+	}
+else 
+	{
+	alfa_pwm_max_i=2000;
+	}
 }
 
 //-----------------------------------------------
@@ -2442,6 +2499,7 @@ while (1)
 //adc_plazma_short++;
 
 		vent_resurs_hndl();
+		alfa_hndl();
 		}
 
 	}
