@@ -836,9 +836,9 @@ else
 	{
 	short temp=T;
 	temp=temp-60;
-	temp*=80;
+	temp*=54;
 	temp/=2;
-	if(temp>800)temp=800;
+	if(temp>540)temp=540;
 	if(temp<0)temp=0;
 	alfa_pwm_max_t=2000-temp;
 	}
@@ -863,7 +863,8 @@ else if(I<500)
 if(alfa_pwm_max_i_cnt)
 	{
 	alfa_pwm_max_i_cnt--;
-	alfa_pwm_max_i=1200;	
+	if(alfa_pwm_max_i_cnt==0)alfa_pwm_max_i_cnt__=0;
+	alfa_pwm_max_i=1460;	
 	}
 else 
 	{
@@ -962,8 +963,9 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 			{
 			pwm_u_cnt--;*/
 			pwm_u=(short)((2000L*((long)Unecc))/650L);
+			//pwm_u+=vol_i_temp;
 			pwm_i=2000;
-			pwm_u=vol_i_temp;
+			//pwm_u=vol_i_temp;
 			//pwm_u=1600;
 			//pwm_u=(short)Unecc;
 			/*}*/
