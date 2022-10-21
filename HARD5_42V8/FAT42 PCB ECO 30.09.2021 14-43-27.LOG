@@ -1,0 +1,10 @@
+Change Component Footprint: Designator=R15 Old Footprint=_1206 New Footprint=_0603
+Change Component Footprint: Designator=R14 Old Footprint=_1206 New Footprint=_0603
+Change Component Footprint: Designator=R13 Old Footprint=_1206 New Footprint=_0603
+Change Component Footprint: Designator=R12 Old Footprint=_1206 New Footprint=_0603
+Change Component Footprint: Designator=R11 Old Footprint=_1206 New Footprint=_0603
+Change Component Footprint: Designator=R10 Old Footprint=_1206 New Footprint=_0603
+Change Net Name : Old Net Name=Net1_1 New Net Name=Net3_1
+Change Net Name : Old Net Name=Net3_1 New Net Name=Net1_1
+Change Net Name : Old Net Name=NetC3_2 New Net Name=NetJP1_16
+Change Net Name : Old Net Name=NetC4_2 New Net Name=NetJP1_15

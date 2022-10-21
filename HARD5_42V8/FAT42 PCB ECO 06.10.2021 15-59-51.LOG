@@ -1,0 +1,16 @@
+Removed Pin From Net: NetName=GND Pin=C12-1
+Removed Pin From Net: NetName=PB3 Pin=C12-2
+Removed Pin From Net: NetName=PB3 Pin=R16-1
+Removed Pin From Net: NetName=IN1 Pin=R16-2
+Removed Pin From Net: NetName=GND Pin=R20-1
+Removed Pin From Net: NetName=PB3 Pin=R20-2
+Removed Pin From Net: NetName=NetJP1_14 Pin=R30-2
+Removed Member From Class: ClassName=FAT42 Member=C12
+Removed Member From Class: ClassName=FAT42 Member=R20
+Change Component Comment : Designator=R16 Old Comment=33K New Comment=100R
+Change Net Name : Old Net Name=+12V New Net Name=IN1
+Change Net Name : Old Net Name=IN1 New Net Name=NetJP1_13
+Change Net Name : Old Net Name=NetL1_1 New Net Name=NetL2_1
+Change Net Name : Old Net Name=NetL2_1 New Net Name=NetL1_1
+Added Pin To Net: NetName=NetJP1_14 Pin=R16-2
+Added Pin To Net: NetName=IN1 Pin=R30-2

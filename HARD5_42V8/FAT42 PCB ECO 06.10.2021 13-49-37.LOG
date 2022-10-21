@@ -1,0 +1,5 @@
+Change Component Footprint: Designator=R25 Old Footprint=_1206 New Footprint=_0603
+Change Component Footprint: Designator=R3 Old Footprint=_1206 New Footprint=_0603
+Change Component Footprint: Designator=C23 Old Footprint=_1206 New Footprint=_0603
+Change Net Name : Old Net Name=NetL1_1 New Net Name=NetL2_1
+Change Net Name : Old Net Name=NetL2_1 New Net Name=NetL1_1

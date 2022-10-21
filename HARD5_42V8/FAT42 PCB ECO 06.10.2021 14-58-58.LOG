@@ -1,0 +1,3 @@
+Change Component Footprint: Designator=Y1 Old Footprint=QWARZ1 New Footprint=hc49/us
+Change Net Name : Old Net Name=NetL1_1 New Net Name=NetL2_1
+Change Net Name : Old Net Name=NetL2_1 New Net Name=NetL1_1

@@ -1,0 +1,21 @@
+Removed Pin From Net: NetName=Net1_1 Pin=C?-2
+Removed Pin From Net: NetName=NetL?_1 Pin=L?-1
+Removed Pin From Net: NetName=Net2_1 Pin=L?-2
+Removed Pin From Net: NetName=Net2_1 Pin=T?-1
+Change Component Designator: OldDesignator=C? NewDesignator=C4
+Change Component Designator: OldDesignator=C? NewDesignator=C25
+Change Component Designator: OldDesignator=L? NewDesignator=L1
+Change Component Designator: OldDesignator=L? NewDesignator=L2
+Change Component Designator: OldDesignator=T? NewDesignator=T1
+Change Net Name : Old Net Name=Net3_1 New Net Name=NetR1_1
+Change Net Name : Old Net Name=NetL?_1 New Net Name=NetL1_1
+Change Net Name : Old Net Name=NetL?_1 New Net Name=NetL2_1
+Change Net Name : Old Net Name=NetR1_1 New Net Name=Net3_1
+Added Pin To Net: NetName=+5V Pin=C4-2
+Added Pin To Net: NetName=GND Pin=C25-1
+Added Pin To Net: NetName=NetR1_1 Pin=C25-2
+Added Pin To Net: NetName=Net1_1 Pin=L1-2
+Added Pin To Net: NetName=Net2_1 Pin=L2-2
+Added Pin To Net: NetName=NetR2_2 Pin=T1-1
+Added Member To Class: ClassName=FAT42 Member=Component C4 22.0
+Added Member To Class: ClassName=FAT42 Member=Component L1 Inductor Iron

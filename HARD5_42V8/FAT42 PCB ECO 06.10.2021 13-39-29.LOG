@@ -1,0 +1,38 @@
+Removed Pin From Net: NetName=Net3_1 Pin=1-1
+Removed Pin From Net: NetName=Net2_1 Pin=2-1
+Change Component Footprint: Designator=U5 Old Footprint=SBT01DET01 New Footprint=SBT01L
+Change Component Comment : Designator=R25 Old Comment=560R New Comment=680R
+Change Component Comment : Designator=R3 Old Comment=560R New Comment=680R
+Change Component Comment : Designator=R2 Old Comment=JVR07N New Comment=ST1206K14G
+Change Component Comment : Designator=R1 Old Comment=JVR07N New Comment=ST1206K14G
+Added Component: Designator=C?(_1206)
+Added Component: Designator=C?(_1206)
+Added Component: Designator=L?(_1206)
+Added Component: Designator=L?(_1206)
+Added Component: Designator=T?(B82790)
+Change Net Name : Old Net Name=Net1_1 New Net Name=Net3_1
+Change Net Name : Old Net Name=Net2_1 New Net Name=NetR2_2
+Change Net Name : Old Net Name=Net3_1 New Net Name=NetR1_1
+Added Pin To Net: NetName=Net1_1 Pin=1-1
+Added Pin To Net: NetName=Net1_1 Pin=L?-2
+Added Net: Name=Net1_1
+Added Pin To Net: NetName=Net2_1 Pin=2-1
+Added Pin To Net: NetName=Net2_1 Pin=L?-2
+Added Net: Name=Net2_1
+Added Pin To Net: NetName=NetL?_1 Pin=L?-1
+Added Pin To Net: NetName=NetL?_1 Pin=T?-4
+Added Net: Name=NetL?_1
+Added Pin To Net: NetName=NetL?_1 Pin=L?-1
+Added Pin To Net: NetName=NetL?_1 Pin=T?-2
+Added Net: Name=NetL?_1
+Added Pin To Net: NetName=GND Pin=C?-1
+Added Pin To Net: NetName=GND Pin=C?-1
+Added Pin To Net: NetName=+5V Pin=C?-2
+Added Pin To Net: NetName=Net1_1 Pin=C?-2
+Added Pin To Net: NetName=Net2_1 Pin=T?-1
+Added Pin To Net: NetName=Net3_1 Pin=T?-3
+Added Member To Class: ClassName=FAT42 Member=Component C? 1n0 x 1000
+Added Member To Class: ClassName=FAT42 Member=Component C? 22.0
+Added Member To Class: ClassName=FAT42 Member=Component L? Inductor Iron
+Added Member To Class: ClassName=FAT42 Member=Component L? Inductor Iron
+Added Member To Class: ClassName=FAT42 Member=Component T? Trans Cupl

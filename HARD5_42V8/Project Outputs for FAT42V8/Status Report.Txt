@@ -1,0 +1,9 @@
+Output: Bill of Materials
+Type  : ReportComponents
+From  : Project [FAT42V8.PRJPCB]
+
+
+Files Generated   : 0
+Documents Printed : 0
+
+Finished Output Generation At 16:35:30 On 13.10.2021

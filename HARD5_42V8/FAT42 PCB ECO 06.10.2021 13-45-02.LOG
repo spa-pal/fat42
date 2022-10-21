@@ -1,0 +1,8 @@
+Added Component: Designator=T1(B82790)
+Change Net Name : Old Net Name=NetL1_1 New Net Name=NetL2_1
+Change Net Name : Old Net Name=NetL2_1 New Net Name=NetL1_1
+Added Pin To Net: NetName=NetR2_2 Pin=T1-1
+Added Pin To Net: NetName=NetL1_1 Pin=T1-2
+Added Pin To Net: NetName=NetR1_1 Pin=T1-3
+Added Pin To Net: NetName=NetL2_1 Pin=T1-4
+Added Member To Class: ClassName=FAT42 Member=Component T1 Trans Cupl

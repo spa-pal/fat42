@@ -1,0 +1,4 @@
+Change Component Footprint: Designator=R2 Old Footprint=JVR07N New Footprint=_1206
+Change Component Footprint: Designator=R1 Old Footprint=JVR07N New Footprint=_1206
+Change Net Name : Old Net Name=Net1_1 New Net Name=Net3_1
+Change Net Name : Old Net Name=Net3_1 New Net Name=Net1_1

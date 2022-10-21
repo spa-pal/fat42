@@ -1,0 +1,15 @@
+Creating   'bps.eep'
+Creating   'bps.obj'
+Creating   'bps.lst'
+
+Assembling 'bps.asm'
+Including  'bps.vec'
+Including  'bps.inc'
+
+Program memory usage:
+Code             : 4605 words
+Constants (dw/db):   50 words
+Unused           :    0 words
+Total            : 4655 words
+
+Assembly complete with no errors.

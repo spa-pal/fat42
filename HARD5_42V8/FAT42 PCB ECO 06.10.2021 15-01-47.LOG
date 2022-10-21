@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=GND Pin=C7-1
+Removed Pin From Net: NetName=+5V Pin=C7-2
+Removed Member From Class: ClassName=FAT42 Member=C7
+Change Component Footprint: Designator=C3 Old Footprint=_1206 New Footprint=_0603
+Change Net Name : Old Net Name=NetL1_1 New Net Name=NetL2_1
+Change Net Name : Old Net Name=NetL2_1 New Net Name=NetL1_1
