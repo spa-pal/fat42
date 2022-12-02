@@ -16,7 +16,8 @@
 #define Add_kf 0x60
 #define Sub_kf 0x61
 #define ALRM_RES 0x63
-#define Zero_kf2 0x64
+#define VENT_RES 0x64
+//#define Zero_kf2 0x64
 #define MEM_KF 0x62 
 #define MEM_KF1 0x26
 #define MEM_KF4 0x29

@@ -248,7 +248,7 @@ if((RXBUFF1[0]==adress)&&(RXBUFF1[1]==adress)&&(RXBUFF1[2]==GETTM))
     //flags = 0x55;     
     plazma_int[1]=((short)flags)*10;
 	can_transmit1(adress,PUTTM1,*((char*)&I),*(((char*)&I)+1),*((char*)&Un),*(((char*)&Un)+1),*((char*)&/*plazma_int[1]*/Ui),*(((char*)&/*plazma_int[1]*/Ui)+1));
-	can_transmit1(adress,PUTTM2,T,0,flags,_x_,*((char*)&plazma_int[2]/*rotor_int*/),*(((char*)&plazma_int[2]/*rotor_int*/)+1));
+	can_transmit1(adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*((char*)&plazma_int[2]/*rotor_int*/),*(((char*)&plazma_int[2]/*rotor_int*/)+1));
      link_cnt=0;
      link=ON;
      
@@ -454,7 +454,11 @@ else if((RXBUFF1[0]==adress)&&(RXBUFF1[1]==adress)&&(RXBUFF1[2]==CMND)&&(RXBUFF1
 	umax_cnt=0;
 	umin_cnt=0;
 	led_drv_cnt=30;
-	}		
+	}
+else if((RXBUFF1[0]==adress)&&(RXBUFF1[1]==adress)&&(RXBUFF1[2]==CMND)&&(RXBUFF1[3]==VENT_RES))
+	{
+	vent_resurs=0;
+	}    		
 else if((RXBUFF1[0]==0xff)&&(RXBUFF1[1]==0xff)&&(RXBUFF1[2]==CMND)&&(RXBUFF1[3]==CMND))
 	{
 	if((RXBUFF1[4]==0x55)&&(RXBUFF1[5]==0x55)) _x_++;
@@ -498,7 +502,7 @@ if(bMAIN)
 		{
 		plazma_int[2]=pwm_u;
 		can_transmit1(adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
-		can_transmit1(adress,PUTTM2,T,0,flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
+		can_transmit1(adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
 		}
 	}
 }   

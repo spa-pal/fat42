@@ -19,6 +19,7 @@
 #define Zero_kf2 0x64
 #define MEM_KF 0x62 
 #define MEM_KF1 0x26
+#define MEM_KF4 0x29
 #define MEM_KF2 0x27
 #define BLKON 0x80
 #define BLKOFF 0x81

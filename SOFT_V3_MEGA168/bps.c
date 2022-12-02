@@ -1136,7 +1136,7 @@ if(vent_resurs_sec_cnt>VENT_RESURS_SEC_IN_HOUR)
 	vent_resurs_sec_cnt=0;
 	}
 
-//vent_resurs=12345;
+//vent_resurs=12543;
 
 vent_resurs_buff[0]=0x00|((unsigned char)(vent_resurs&0x000f));
 vent_resurs_buff[1]=0x40|((unsigned char)((vent_resurs&0x00f0)>>4));
