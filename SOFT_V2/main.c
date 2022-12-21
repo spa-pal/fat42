@@ -16,8 +16,8 @@ char bVENT_BLOCK=0;
 //#include "main.h"
 @near short t0_cnt00=0;
 @near short t0_cnt0=0;
-@near char t0_cnt1=0,t0_cnt2=0,t0_cnt3=0,t0_cnt4=0;
-_Bool b100Hz, b10Hz, b5Hz, b2Hz, b1Hz, b1000Hz;
+@near char t0_cnt1=0,t0_cnt2=0,t0_cnt3=0,t0_cnt4=0,t0_cnt5=0;
+_Bool b100Hz, b10Hz, b5Hz, b2Hz, b1Hz, b1000Hz, b20Hz;
 
 u8 mess[14];
 @near short main_cnt, main_cnt10;
@@ -870,6 +870,12 @@ else if(link==OFF)
 	if(pwm_u_buff_cnt>=20)pwm_u_buff_cnt=20;
 	if(pwm_u_buff_cnt>=15)pwm_u=pwm_u_buff_;
 	//pwm_u=1900;
+	
+	if(flags&0b00011010)					//если есть аварии
+		{
+		pwm_u=0;								//то полный стоп
+		pwm_i=0;
+		}	
 	}
 	
 else	if(link==ON)				//если есть связьvol_i_temp_avar
@@ -886,24 +892,27 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 			pwm_u=0;								//то полный стоп
 			pwm_i=0;
 			}
-		//pwm_u=(short)((1000L*((long)Unecc))/650L);
-		if(vol_i_temp==2000)
-			{
-			pwm_u=2000;
-			pwm_i=2000;
-			}
 		else
 			{
-			int tempI;
-			tempI=(int)(Ui-Unecc);
-			if((tempI>20)||(tempI<-80))pwm_u_cnt=19;
-			//if((abs((int)(Ui-Unecc)))>50)	pwm_u_cnt=19;
-			}
-		
-		if(pwm_u_cnt)
-			{
-			pwm_u_cnt--;
-			pwm_u=(short)((2000L*((long)Unecc))/650L);
+			//pwm_u=(short)((1000L*((long)Unecc))/650L);
+			if(vol_i_temp==2000)
+				{
+				pwm_u=2000;
+				pwm_i=2000;
+				}
+			else
+				{
+				int tempI;
+				tempI=(int)(Ui-Unecc);
+				if((tempI>20)||(tempI<-80))pwm_u_cnt=19;
+				//if((abs((int)(Ui-Unecc)))>50)	pwm_u_cnt=19;
+				}
+			
+			if(pwm_u_cnt)
+				{
+				pwm_u_cnt--;
+				pwm_u=(short)((2000L*((long)Unecc))/650L);
+				}
 			}
 		}
 	else if(flags&0b00100000)	//если заблокирован извне то полное выключение
@@ -979,7 +988,7 @@ I=(signed short)temp_SL;
 //I=adc_buff_[4];
 
 temp_SL=(signed long)adc_buff_[1];//1;
-temp_SL=(signed long)adc_buff_[3];//1;
+//temp_SL=(signed long)adc_buff_[3];//1;
 //temp_SL-=ee_K[1,0];
 if(temp_SL<0) temp_SL=0;
 temp_SL*=(signed long)ee_K[2][1];
@@ -2112,6 +2121,12 @@ if(++t0_cnt0>=100)
 	{
 	t0_cnt0=0;
 	b100Hz=1;
+	
+	if(++t0_cnt5>=5)
+		{
+		t0_cnt5=0;
+		b20Hz=1;
+		}	
 
 	if(++t0_cnt1>=10)
 		{
@@ -2369,13 +2384,21 @@ while (1)
 		//adc2_init();
 		can_tx_hndl();
       	}  
-      	
+
+	if(b20Hz)
+		{
+		b20Hz=0;
+		
+		led_drv(); 
+
+      	}
+
 	if(b10Hz)
 		{
 		b10Hz=0;
 		
 		matemat();
-		led_drv(); 
+		//led_drv(); 
 	  link_drv();
 
 	  JP_drv();
@@ -2406,9 +2429,9 @@ while (1)
 //led_ind=adc_buff_[0]/100;
 
 //		GPIOA->ODR^=(1<<5);
-
-
-		
+		temper_drv();
+		u_drv();
+		vent_resurs_hndl();
 		}
       	
 	if(b1Hz)
@@ -2416,8 +2439,8 @@ while (1)
 		b1Hz=0;
 
 	  pwr_hndl();		//вычисление воздействий на силу
-		temper_drv();			//вычисление аварий температуры
-		u_drv();
+					//вычисление аварий температуры
+		
           //x_drv();
 		if(main_cnt<1000)main_cnt++;
   		if((link==OFF)||(jp_mode==jp3))apv_hndl();
@@ -2437,7 +2460,8 @@ while (1)
 		if(pwm_stat>=10)pwm_stat=0;*/
 //adc_plazma_short++;
 
-		vent_resurs_hndl();
+		
+		debug_info_to_uku[2]++;
 		}
 
 	}
