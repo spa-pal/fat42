@@ -16,11 +16,11 @@ char bVENT_BLOCK=0;
 //#include "main.h"
 @near short t0_cnt00=0;
 @near short t0_cnt0=0;
-@near char t0_cnt1=0,t0_cnt2=0,t0_cnt3=0,t0_cnt4=0,t0_cnt5=0;
+@near char t0_cnt1=0,t0_cnt2=0,t0_cnt3=0,t0_cnt4=1,t0_cnt5=0;
 _Bool b100Hz, b10Hz, b5Hz, b2Hz, b1Hz, b1000Hz, b20Hz;
 
 u8 mess[14];
-@near short main_cnt, main_cnt10;
+@near short main_cnt, main_cnt10 ;
 
 @near signed short adc_buff[10][16],adc_buff_[10],adc_buff_5,adc_buff_1;
 char adc_ch,adc_cnt;
@@ -71,10 +71,10 @@ char tx_busy_cnt;
 char bCAN_RX=0;
 char can_error_cnt;
 
-@near signed short I,Un,Ui,/*Udb,*/Unecc,U_out_const,Usum,Uin;
+@near signed short I,Un,Ui,/*Udb,*/Unecc,U_out_const,Usum,Uin,Udelt,Ufade;
 signed char T;
 @eeprom signed short ee_K[5][2];
-
+@near signed short pwm_peace_cnt, pwm_peace_cnt_, pwm_schot_cnt;
 
 signed short umax_cnt,umin_cnt;
 char link;
@@ -115,7 +115,7 @@ signed short main_cnt, main_cnt1;
 
 signed short tsign_cnt,tmax_cnt; 
 
-signed short pwm_u=200,pwm_i=50,pwm_u_;
+signed short pwm_u=200,pwm_i=50,pwm_u_,pwm_delt;
 enum {jp0,jp1,jp2,jp3} jp_mode;
 char cnt_JP0,cnt_JP1;
 _Bool bBL;
@@ -155,6 +155,7 @@ signed short i_main_avg;
 char i_main_num_of_bps;
 signed short i_main_sigma;
 char i_main_bps_cnt[6];
+char FADE_MODE;
 
 @eeprom int ee_AVT_MODE;			//какой-то переключатель, переключается последним байтом в посылке с MEM_KF
 @eeprom signed short ee_DEVICE;	//переключатель, переключается MEM_KF4 или MEM_KF1, MEM_KF4 устанавливает его в 1
@@ -953,6 +954,282 @@ if(pwm_i>2000)pwm_i=2000;
 }
 
 //-----------------------------------------------
+//Вычисление воздействий на силу
+//10Hz
+void pwr_hndl_new(void)				
+{
+if(jp_mode==jp3)
+	{
+	pwm_u=0;
+	pwm_i=0;
+	}  
+else if(jp_mode==jp2)
+	{
+	pwm_u=0;
+	pwm_i=0x7ff;
+	}     
+else if(jp_mode==jp1)
+	{
+	pwm_u=0x7ff;
+	pwm_i=0x7ff;
+	//bBL=0;
+	} 
+/*
+else if((bMAIN)&&(link==ON))
+	{
+	pwm_u=volum_u_main_;
+	pwm_i=0x3ff;
+	bBL_IPS=0;
+	}*/
+/*
+else if(link==OFF)
+	{
+	pwm_i=0x7ff;
+	pwm_u_=(short)((2000L*((long)Unecc))/650L);
+	
+	//pwm_u_=1900;
+	
+	pwm_u_buff[pwm_u_buff_ptr]=pwm_u_;
+	pwm_u_buff_ptr++;
+	if(pwm_u_buff_ptr>=16)pwm_u_buff_ptr=0;
+		{
+		char i;
+		signed long tempSL;
+		tempSL=0;
+		for(i=0;i<16;i++)
+			{
+			tempSL+=(signed long)pwm_u_buff[i];
+			}
+		tempSL>>=4;
+		pwm_u_buff_=(signed short)tempSL;
+		}
+	pwm_u=pwm_u_;
+	if((abs((int)(Ui-Unecc)))<20)pwm_u_buff_cnt++;
+	else pwm_u_buff_cnt=0;
+
+	if(pwm_u_buff_cnt>=20)pwm_u_buff_cnt=20;
+	if(pwm_u_buff_cnt>=15)pwm_u=pwm_u_buff_;
+	//pwm_u=1900;
+	
+	if(flags&0b00011010)					//если есть аварии
+		{
+		pwm_u=0;								//то полный стоп
+		pwm_i=0;
+		}	
+	}*/
+	
+else	if(link==ON)				//если есть связьvol_i_temp_avar
+	{
+	//if((flags&0b00100000)==0)	//если нет блокировки извне
+		//{
+/*		if(((flags&0b00011010)==0b00000000)) 	//если нет аварий или если они заблокированы
+			{
+			pwm_u=vol_i_temp;					//управление от укушки + выравнивание токов
+			pwm_i=2000;
+			}	
+		else if(flags&0b00011010)					//если есть аварии
+			{
+			pwm_u=0;								//то полный стоп
+			pwm_i=0;
+			}
+		else*/
+			//{
+			//pwm_u=(short)((1000L*((long)Unecc))/650L);
+			
+			signed long temp_SL;			
+			/*temp_SL=(signed long)adc_buff_[1];//1;
+			//temp_SL=(signed long)adc_buff_[3];//1;
+			//temp_SL-=ee_K[1,0];
+			if(temp_SL<0) temp_SL=0;
+			temp_SL*=(signed long)ee_K[2][1];
+			temp_SL/=1000L;
+			Ui=(unsigned short)temp_SL;*/
+			
+			temp_SL=(signed long)adc_buff_5;
+			//temp_SL-=ee_K[1,0];
+			if(temp_SL<0) temp_SL=0;
+			temp_SL*=(signed long)ee_K[4][1];
+			temp_SL/=1000L;
+			Usum=(unsigned short)temp_SL;	
+			/*Uin=Usum - Ui;
+			Unecc=2300-Uin;
+			Udelt=Unecc-Ui;*/
+			//Usum=1234;
+			
+			Udelt=U_out_const/*2300*/-Usum;
+			//Udelt+=vol_i_temp;	//выравнивание токов по командам от уку
+			if(FADE_MODE)Udelt-=Ufade;//наклон вниз выходной характеристики
+			
+			
+			if(pwm_peace_cnt)pwm_peace_cnt--;
+			if(pwm_peace_cnt_)pwm_peace_cnt_--;
+			
+			if((Udelt<-50)&&(pwm_peace_cnt==0))
+				{
+				pwm_delt= (short)(((long)Udelt*2000L)/650L);
+				
+				if(pwm_u!=0)
+					{
+					pwm_u+=pwm_delt;
+					pwm_schot_cnt++;
+					pwm_peace_cnt=30;
+					}
+				else	pwm_peace_cnt=0;
+				}
+			
+			else if((Udelt>50)&&(pwm_peace_cnt==0))
+				{
+				pwm_delt= (short)(((long)Udelt*2000L)/650L);
+				
+				if(pwm_u!=2000)
+					{
+					pwm_u+=pwm_delt;
+					pwm_schot_cnt++;
+					pwm_peace_cnt=30;
+					}
+				else	pwm_peace_cnt=0;
+				}
+
+			else if(pwm_peace_cnt_==0)
+				{
+				if(Udelt>10)pwm_u++;
+				else	if(Udelt>0)
+					{
+					pwm_u++;
+					pwm_peace_cnt_=3;
+					}
+				else if(Udelt<-10)pwm_u--;
+				else	if(Udelt<0)
+					{
+					pwm_u--;
+					pwm_peace_cnt_=3;
+					}
+				}
+
+			if(pwm_u<=0)
+				{
+				pwm_u=0;
+				pwm_peace_cnt=0;
+				pwm_peace_cnt_=500;
+				}
+			if(pwm_u>=2000)
+				{
+				pwm_u=2000;
+				pwm_peace_cnt=0;
+				pwm_peace_cnt_=500;
+				}
+/*
+			if(pwm_peace_cnt)pwm_peace_cnt--;
+			if(pwm_peace_cnt_)pwm_peace_cnt_--;
+			
+			if((((Udelt>50)&&(pwm_u!=2000))||((Udelt<-50)&&(pwm_u!=0)))&&(pwm_peace_cnt==0))
+				{
+				pwm_peace_cnt=1000;
+				pwm_delt= (short)(((long)Udelt*2000L)/650L);
+				
+				pwm_u+=pwm_delt;
+				pwm_schot_cnt++;
+				}
+			else if(pwm_peace_cnt_==0)
+				{
+				if(Udelt>10)
+					{
+					pwm_u++;
+					pwm_schot_cnt_++;
+					}
+				else	if(Udelt>0)
+					{
+					pwm_u++;
+					pwm_peace_cnt_=1000;
+					pwm_schot_cnt_++;
+					}
+				else if(Udelt<-10)
+					{
+					pwm_u--;
+					pwm_schot_cnt_++;
+					}
+				else	if(Udelt<0)
+					{
+					pwm_u--;
+					pwm_peace_cnt_=1000;
+					pwm_schot_cnt_++;
+					}
+				}
+
+				}	*/
+
+
+/*			if(vol_i_temp==2000)
+				{
+				pwm_u=2000;
+				pwm_i=2000;
+				}
+			else
+				{
+				int tempI;
+				tempI=(int)(Ui-Unecc);
+				if((tempI>20)||(tempI<-80))pwm_u_cnt=19;
+				//if((abs((int)(Ui-Unecc)))>50)	pwm_u_cnt=19;
+				}
+			
+			if(pwm_u_cnt)
+				{
+				pwm_u_cnt--;
+				pwm_u=(short)((2000L*((long)Unecc))/650L);
+				}*/
+			//}
+		//}
+	//else if(flags&0b00100000)	//если заблокирован извне то полное выключение
+		//{
+		//pwm_u=0;
+		//pwm_i=0;
+		//}
+	//pwm_u=1800;	
+	}	   
+/*
+pwm_u_buff[pwm_u_buff_ptr]=pwm_u_;
+pwm_u_buff_ptr++;
+if(pwm_u_buff_ptr>=16)pwm_u_buff_ptr=0;
+{
+char i;
+signed long tempSL;
+tempSL=0;
+for(i=0;i<16;i++)
+	{
+	tempSL+=(signed long)pwm_u_buff[i];
+	}
+tempSL>>=4;
+pwm_u_buff_=(signed short)tempSL;
+}
+pwm_u=pwm_u_;
+if((abs((int)(Ui-Unecc)))<20)pwm_u_buff_cnt++;
+else pwm_u_buff_cnt=0;
+
+if(pwm_u_buff_cnt>=20)pwm_u_buff_cnt=20;
+if(pwm_u_buff_cnt>=15)pwm_u=pwm_u_buff_;*/
+//pwm_i=950;
+//pwm_u=(short)((1000L*((long)Unecc))/650L);
+//if(pwm_u>main_cnt10*10)pwm_u=main_cnt10*10;
+if(pwm_u>2000)pwm_u=2000;
+if(pwm_u<0)pwm_u=0;
+if(pwm_i>2000)pwm_i=2000;
+//pwm_u=400+vol_i_temp;
+//pwm_u=vol_i_temp;
+
+
+TIM1->CCR2H= (char)(pwm_u/256);	
+TIM1->CCR2L= (char)pwm_u;
+
+TIM1->CCR1H= (char)(pwm_i/256);	
+TIM1->CCR1L= (char)pwm_i;
+
+TIM1->CCR3H= (char)(vent_pwm_integr/128);	
+TIM1->CCR3L= (char)(vent_pwm_integr*2);
+
+}
+
+
+//-----------------------------------------------
 void matemat(void)
 {
 signed long temp_SL;
@@ -1053,6 +1330,9 @@ vol_i_temp_avar=(unsigned short)temp_SL;
 debug_info_to_uku[0]=pwm_u;
 debug_info_to_uku[1]=vol_i_temp;
 //debug_info_to_uku[2]=5678;
+Ufade=I/50;
+if(Ufade<0)Ufade=0;
+if(Ufade>15)Ufade=15;
 }
 
 //-----------------------------------------------
@@ -1708,8 +1988,10 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
  	else flags&=0b10111111; 
  		
  	U_out_const=mess[10]+mess[11]*256;
- 	vol_i_temp=mess[12]+mess[13]*256;  
- 	
+ 	vol_i_temp=mess[12]+mess[13]*256;
+	if(vol_i_temp>20)vol_i_temp=20;
+ 	if(vol_i_temp<-20)vol_i_temp=-20;
+	
 	//if(ee_UAVT!=vol_i_temp)ee_UAVT=vol_i_temp;
  	//I=1234;
     //	Un=6543;
@@ -1721,6 +2003,12 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
 	if(vent_resurs_tx_cnt>1) plazma_int[2]=vent_resurs;
 	else plazma_int[2]=vent_resurs_sec_cnt;
  	rotor_int=flags_tu+(((short)flags)<<8);
+	
+	debug_info_to_uku[0]=pwm_u;
+	debug_info_to_uku[1]=Ufade;//Usum;
+	debug_info_to_uku[2]=FADE_MODE;//pwm_u;
+	
+	
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
 	can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&Usum)+1),*((char*)&Usum));
 	can_transmit(0x18e,adress,PUTTM3,*(((char*)&debug_info_to_uku[0])+1),*((char*)&debug_info_to_uku[0]),*(((char*)&debug_info_to_uku[1])+1),*((char*)&debug_info_to_uku[1]),*(((char*)&debug_info_to_uku[2])+1),*((char*)&debug_info_to_uku[2]));
@@ -1900,7 +2188,8 @@ else if((mess[6]==0xff)&&(mess[7]==0xff)&&(mess[8]==MEM_KF))
 		{
 		if(ee_AVT_MODE!=0x55)ee_AVT_MODE=0x55;
 		}
-	else if(ee_AVT_MODE==0x55)ee_AVT_MODE=0;	
+	else if(ee_AVT_MODE==0x55)ee_AVT_MODE=0;
+	FADE_MODE=mess[13];	
 	}
 
 else if((mess[6]==0xff)&&(mess[7]==0xff)&&((mess[8]==MEM_KF1)||(mess[8]==MEM_KF4)))
@@ -1996,7 +2285,7 @@ bCAN_RX=0;
 //-----------------------------------------------
 void t4_init(void){
 	TIM4->PSCR = 6;
-	TIM4->ARR= 61;
+	TIM4->ARR= 31;
 	TIM4->IER|= TIM4_IER_UIE;					// enable break interrupt
 	
 	TIM4->CR1=(TIM4_CR1_URS | TIM4_CR1_CEN | TIM4_CR1_ARPE);	
@@ -2363,7 +2652,8 @@ while (1)
 		b1000Hz=0;
 
 		adc2_init();
-		
+		//GPIOA->ODR^=(1<<4);
+		pwr_hndl_new();
 		}
 	if(bCAN_RX)
 		{
@@ -2383,20 +2673,21 @@ while (1)
 		
 		//adc2_init();
 		can_tx_hndl();
+		
       	}  
 
 	if(b20Hz)
 		{
 		b20Hz=0;
 		
-		led_drv(); 
-
+		 
+		
       	}
 
 	if(b10Hz)
 		{
 		b10Hz=0;
-		
+		led_drv();
 		matemat();
 		//led_drv(); 
 	  link_drv();
@@ -2415,7 +2706,7 @@ while (1)
 		//pwm_i=200;
 		
 		//pwm_u=1500;
-		pwr_drv();		//воздействие на силу
+		//pwr_drv();		//воздействие на силу
 		led_hndl();
 		
 		vent_drv();
@@ -2438,7 +2729,7 @@ while (1)
 		{
 		b1Hz=0;
 
-	  pwr_hndl();		//вычисление воздействий на силу
+	  //pwr_hndl();		//вычисление воздействий на силу
 					//вычисление аварий температуры
 		
           //x_drv();
@@ -2451,7 +2742,8 @@ while (1)
   			{
   			can_error_cnt=0;
 				init_CAN();
-  			}
+			}
+		
 		//
 
 		//volum_u_main_drv();
@@ -2461,7 +2753,7 @@ while (1)
 //adc_plazma_short++;
 
 		
-		debug_info_to_uku[2]++;
+		//debug_info_to_uku[2]++;
 		}
 
 	}

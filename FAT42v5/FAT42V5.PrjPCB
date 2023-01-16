@@ -41,27 +41,7 @@ AnnotateSuffix=
 DoLibraryUpdate=1
 DoDatabaseUpdate=1
 [GeneratedDocument1]
-DocumentPath=Project Outputs for FAT42V4\FAT42.DRL
-[GeneratedDocument2]
-DocumentPath=Project Outputs for FAT42V4\FAT42.DRR
-[GeneratedDocument3]
-DocumentPath=Project Outputs for FAT42V4\FAT42.GBL
-[GeneratedDocument4]
-DocumentPath=Project Outputs for FAT42V4\FAT42.GBS
-[GeneratedDocument5]
-DocumentPath=Project Outputs for FAT42V4\FAT42.GKO
-[GeneratedDocument6]
-DocumentPath=Project Outputs for FAT42V4\FAT42.GTL
-[GeneratedDocument7]
-DocumentPath=Project Outputs for FAT42V4\FAT42.GTS
-[GeneratedDocument8]
-DocumentPath=Project Outputs for FAT42V4\FAT42.LDP
-[GeneratedDocument9]
-DocumentPath=Project Outputs for FAT42V4\FAT42.REP
-[GeneratedDocument10]
-DocumentPath=Project Outputs for FAT42V4\FAT42.RUL
-[GeneratedDocument11]
-DocumentPath=Project Outputs for FAT42V4\FAT42.TXT
+DocumentPath=Project Outputs for FAT42V5\Pick Place for FAT42.txt
 [OutputGroup1]
 Name=Netlist Outputs
 Description=
@@ -148,35 +128,37 @@ Configuration3_Item1=Record=SchPrintView|BooleanThing=False
 Name=Assembly Outputs
 Description=
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintWhat=1
-OutputType1=Assembly
-OutputName1=Assembly Drawings
+OutputType1=Pick Place
+OutputName1=Generates pick and place files
 OutputDocumentPath1=
 OutputEnabled1=1
 OutputDefault1=0
-PageOptions1=Record=PageOptions|SelectedOnly=False|CenterHorizontal=True|CenterVertical=True|PrintScale=2.39|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-4|MediaType=1|DitherType=10|PaperKind=A4
-Configuration1_Name1=OutputConfigurationParameter2
-Configuration1_Item1=IncludeBottomLayerComponents=False|IncludeMultiLayerComponents=True|IncludeTopLayerComponents=True|Index=0|Mirror=False|Name=Top Assembly Drawing|Record=PcbPrintOut|ShowHoles=False|SubstituteFonts=False
-Configuration1_Name2=OutputConfigurationParameter3
-Configuration1_Item2=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=TopOverlay|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer
-Configuration1_Name3=OutputConfigurationParameter4
-Configuration1_Item3=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=KeepOutLayer|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer
-Configuration1_Name4=OutputConfigurationParameter5
-Configuration1_Item4=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=Mechanical1|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer
-Configuration1_Name5=OutputConfigurationParameter6
-Configuration1_Item5=CArc=Full|CFill=Hidden|Comment=Hidden|Coordinate=Hidden|CPad=Full|CText=Hidden|CTrack=Hidden|CVia=Hidden|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Hidden|Dimension=Hidden|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Hidden|FFill=Hidden|FPad=Hidden|FText=Hidden|FTrack=Hidden|FVia=Hidden|Layer=TopLayer|Polygon=Hidden|PrintOutIndex=0|Record=PcbPrintLayer
-Configuration1_Name6=OutputConfigurationParameter7
-Configuration1_Item6=IncludeBottomLayerComponents=True|IncludeMultiLayerComponents=True|IncludeTopLayerComponents=True|Index=1|Mirror=True|Name=New PrintOut 1|Record=PcbPrintOut|ShowHoles=False|SubstituteFonts=False
-Configuration1_Name7=OutputConfigurationParameter8
-Configuration1_Item7=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=BottomOverlay|Polygon=Full|PrintOutIndex=1|Record=PcbPrintLayer
-Configuration1_Name8=OutputConfigurationParameter9
-Configuration1_Item8=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=BottomLayer|Polygon=Full|PrintOutIndex=1|Record=PcbPrintLayer
-Configuration1_Name9=OutputConfigurationParameter10
-Configuration1_Item9=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=KeepOutLayer|Polygon=Full|PrintOutIndex=1|Record=PcbPrintLayer
-OutputType2=Pick Place
-OutputName2=Generates pick and place files
+Configuration1_Name1=OutputConfigurationParameter1
+Configuration1_Item1=Record=PickPlaceView|Units=Metric|GenerateCSVFormat=False|GenerateTextFormat=True
+OutputType2=Assembly
+OutputName2=Assembly Drawings
 OutputDocumentPath2=
 OutputEnabled2=1
 OutputDefault2=0
+PageOptions2=Record=PageOptions|SelectedOnly=False|CenterHorizontal=True|CenterVertical=True|PrintScale=2.39|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-4|MediaType=1|DitherType=10|PaperKind=A4
+Configuration2_Name1=OutputConfigurationParameter2
+Configuration2_Item1=IncludeBottomLayerComponents=False|IncludeMultiLayerComponents=True|IncludeTopLayerComponents=True|Index=0|Mirror=False|Name=Top Assembly Drawing|Record=PcbPrintOut|ShowHoles=False|SubstituteFonts=False
+Configuration2_Name2=OutputConfigurationParameter3
+Configuration2_Item2=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=TopOverlay|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer
+Configuration2_Name3=OutputConfigurationParameter4
+Configuration2_Item3=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=KeepOutLayer|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer
+Configuration2_Name4=OutputConfigurationParameter5
+Configuration2_Item4=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=Mechanical1|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer
+Configuration2_Name5=OutputConfigurationParameter6
+Configuration2_Item5=CArc=Full|CFill=Hidden|Comment=Hidden|Coordinate=Hidden|CPad=Full|CText=Hidden|CTrack=Hidden|CVia=Hidden|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Hidden|Dimension=Hidden|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Hidden|FFill=Hidden|FPad=Hidden|FText=Hidden|FTrack=Hidden|FVia=Hidden|Layer=TopLayer|Polygon=Hidden|PrintOutIndex=0|Record=PcbPrintLayer
+Configuration2_Name6=OutputConfigurationParameter7
+Configuration2_Item6=IncludeBottomLayerComponents=True|IncludeMultiLayerComponents=True|IncludeTopLayerComponents=True|Index=1|Mirror=True|Name=New PrintOut 1|Record=PcbPrintOut|ShowHoles=False|SubstituteFonts=False
+Configuration2_Name7=OutputConfigurationParameter8
+Configuration2_Item7=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=BottomOverlay|Polygon=Full|PrintOutIndex=1|Record=PcbPrintLayer
+Configuration2_Name8=OutputConfigurationParameter9
+Configuration2_Item8=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=BottomLayer|Polygon=Full|PrintOutIndex=1|Record=PcbPrintLayer
+Configuration2_Name9=OutputConfigurationParameter10
+Configuration2_Item9=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CText=Full|CTrack=Full|CVia=Full|DDSymbolKind=0|DDSymbolSize=500000|DDSymbolSortKind=0|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|FArc=Full|FFill=Full|FPad=Full|FText=Full|FTrack=Full|FVia=Full|Layer=KeepOutLayer|Polygon=Full|PrintOutIndex=1|Record=PcbPrintLayer
 [OutputGroup5]
 Name=Fabrication Outputs
 Description=
