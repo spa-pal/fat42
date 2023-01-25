@@ -1057,8 +1057,8 @@ else	if(link==ON)				//если есть св€зьvol_i_temp_avar
 			//Usum=1234;
 			
 			Udelt=U_out_const/*2300*/-Usum;
-			//Udelt+=vol_i_temp;	//выравнивание токов по командам от уку
-			if(FADE_MODE)Udelt-=Ufade;//наклон вниз выходной характеристики
+			Udelt+=vol_i_temp;	//выравнивание токов по командам от уку
+			//if(FADE_MODE)Udelt-=Ufade;//наклон вниз выходной характеристики
 			
 			
 			if(pwm_peace_cnt)pwm_peace_cnt--;
@@ -1330,7 +1330,8 @@ vol_i_temp_avar=(unsigned short)temp_SL;
 debug_info_to_uku[0]=pwm_u;
 debug_info_to_uku[1]=vol_i_temp;
 //debug_info_to_uku[2]=5678;
-Ufade=I/50;
+//Ufade=I/50;
+Ufade=(I-150)/10;
 if(Ufade<0)Ufade=0;
 if(Ufade>15)Ufade=15;
 }
@@ -1377,11 +1378,15 @@ if(jp_mode!=jp3)
 	gran(&umax_cnt,0,10);
 	if(umax_cnt>=10)flags|=0b00001000; 	//ѕодн€ть аварию по превышению напр€жени€
 
+	{
+	short Upwm=0;
+	Upwm=(pwm_u/3)-50;
 	
-	if((Ui<Un)&&((Un-Ui)>ee_dU)&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
+	if((/*((Ui<Un)&&((Un-Ui)>ee_dU)) || */(Ui < Upwm))&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
 	else umin_cnt=0;
 	gran(&umin_cnt,0,10);	
-	if(umin_cnt>=10)flags|=0b00010000;	  
+	if(umin_cnt>=10)flags|=0b00010000;
+	}	
 	}
 else if(jp_mode==jp3)
 	{        
@@ -2005,8 +2010,8 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
  	rotor_int=flags_tu+(((short)flags)<<8);
 	
 	debug_info_to_uku[0]=pwm_u;
-	debug_info_to_uku[1]=Ufade;//Usum;
-	debug_info_to_uku[2]=FADE_MODE;//pwm_u;
+	debug_info_to_uku[1]=Udelt;//Ufade;//Usum;
+	debug_info_to_uku[2]=vol_i_temp;//pwm_u;
 	
 	
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
@@ -2643,7 +2648,7 @@ GPIOC->DDR|=(1<<3);
 GPIOC->CR1|=(1<<3);
 GPIOC->CR2|=(1<<3);
 
-//if(bps_class==bpsIPS) volum_u_main_=ee_U_AVT;
+U_out_const=ee_UAVT;
 while (1)
 	{
 
