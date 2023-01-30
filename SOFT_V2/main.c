@@ -535,17 +535,20 @@ else if(bps_class==bpsIPS)	//если блок ИПСный
 			}  
 		}
 	}
+	
+//	led_red=0x0000555L;
+//	led_green=0xf5550000L;	
 }
 
 //-----------------------------------------------
 void led_drv(void)
 {
 //Красный светодиод
-GPIOA->DDR|=(1<<4);
-GPIOA->CR1|=(1<<4);
-GPIOA->CR2&=~(1<<4);
-if(led_red_buff&0b1L) GPIOA->ODR|=(1<<4); 	//Горит если в led_red_buff 1 и на ножке 1
-else GPIOA->ODR&=~(1<<4); 
+GPIOA->DDR|=(1<<6);
+GPIOA->CR1|=(1<<6);
+GPIOA->CR2&=~(1<<6);
+if(led_red_buff&0b1L) GPIOA->ODR|=(1<<6); 	//Горит если в led_red_buff 1 и на ножке 1
+else GPIOA->ODR&=~(1<<6); 
 
 //Зеленый светодиод
 GPIOA->DDR|=(1<<5);
@@ -565,8 +568,8 @@ if(++led_drv_cnt>32)
 	}
 
 //?
-//GPIOB->ODR|=(1<<4);
-//GPIOB->ODR|=(1<<5);
+//GPIOA->ODR|=(1<<6)|(1<<5);
+//GPIOA->ODR|=(1<<5);
 } 
 
 //-----------------------------------------------
@@ -1694,7 +1697,8 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
 	plazma_int[2]=jp_mode;
  	rotor_int=flags_tu+(((short)flags)<<8);
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
-	can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
+	//can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
+	can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,123,456);
      link_cnt=0;
      link=ON;
      
