@@ -54,14 +54,14 @@ Settings.1.7=Root.Config.1.Settings.7
 Settings.1.8=Root.Config.1.Settings.8
 
 [Root.Config.0.Settings.0]
-String.6.0=2015,5,14,16,4,43
+String.6.0=2023,2,6,9,56,28
 String.100.0=ST Assembler Linker
 String.100.1=ST7 Cosmic
 String.100.2=STM8 Cosmic
 String.100.3=ST7 Metrowerks V1.1
 String.100.4=Raisonance
 String.101.0=STM8 Cosmic
-String.102.0=C:\Program Files\COSMIC\CXSTM8_32K
+String.102.0=C:\Program Files (x86)\COSMIC\CXSTM8_32K
 String.103.0=
 String.104.0=Hstm8
 String.105.0=Lib
@@ -143,7 +143,7 @@ String.100.2=STM8 Cosmic
 String.100.3=ST7 Metrowerks V1.1
 String.100.4=Raisonance
 String.101.0=STM8 Cosmic
-String.102.0=C:\Program Files\COSMIC\CXSTM8_32K
+String.102.0=C:\Program Files (x86)\COSMIC\CXSTM8_32K
 String.103.0=
 String.104.0=Hstm8
 String.105.0=Lib

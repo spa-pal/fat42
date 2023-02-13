@@ -16,7 +16,7 @@
 short t0_cnt0=0;
 char t0_cnt1=0,t0_cnt2=0,t0_cnt3=0,t0_cnt4=0;
 _Bool b100Hz, b10Hz, b5Hz, b2Hz, b1Hz;
-
+//@eeprom short ee_CANSTART;
 u8 mess[14];
 
 @near signed short adc_buff[10][16],adc_buff_[10];
@@ -61,7 +61,7 @@ char can_buff_rd_ptr;
 char bTX_FREE=1;
 char tx_busy_cnt;
 char bCAN_RX=0;
-char can_error_cnt;
+char can_error_cnt, can1_error_cnt;
 
 signed short I,Un,Ui,Udb;
 signed char T;
@@ -161,6 +161,8 @@ enum {bpsIBEP,bpsIPS} bps_class;
 @eeprom short ee_IMAXVENT;
 
 signed short plazma_adress[2];
+
+//@eeprom short ee_CANSTART;
 
 //-----------------------------------------------
 void gran(signed short *adr, signed short min, signed short max)
@@ -518,7 +520,8 @@ if(++led_drv_cnt>32)
 	}
 
 //?
-//GPIOB->ODR|=(1<<4);
+//CAN->PSR= 6;									// set page 6
+//if((CAN->Page.Config.ESR)&0x01)GPIOA->ODR|=(1<<6);
 //GPIOB->ODR|=(1<<5);
 } 
 
@@ -1617,7 +1620,7 @@ void can_in_an(void)
 char temp,i;
 signed temp_S;
 int tempI;
-
+//char tr0,tr1;
 
 
 //if((mess[0]==1)&&(mess[1]==2)&&(mess[2]==3)&&(mess[3]==4)&&(mess[4]==5)&&(mess[5]==6)&&(mess[6]==7)&&(mess[7]==8))can_transmit1(1,2,3,4,5,6,7//,8);
@@ -1666,10 +1669,18 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
  	//flags=0x55;
  	//_x_=33;
  	//rotor_int=1000;
+
+//	CAN->PSR= 6;									// set page 6
+//	tr0=CAN->Page.Config.TECR;
+	//tr1=CAN->Page.Config.RECR;	
+	
+//	tr1=(char)ee_CANSTART;
+	
 	plazma_int[2]=T;
  	rotor_int=flags_tu+(((short)flags)<<8);
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
 	can_transmit(0x18e,adress,PUTTM2,T,0,flags,_x_,*(((char*)&plazma_int[2])+1),*((char*)&plazma_int[2]));
+	//can_transmit(0x18e,adress,PUTTM2,T,0,flags,_x_,tr0,tr1);
      link_cnt=0;
      link=ON;
      
@@ -2267,6 +2278,7 @@ if(bps_class==bpsIPS)
 	pwm_u=ee_U_AVT;
 	volum_u_main_=ee_U_AVT;
 	}
+//	ee_CANSTART=0;
 while (1)
 	{
 
@@ -2344,6 +2356,18 @@ while (1)
 			init_CAN();
   			}
 		//
+		CAN->PSR= 6;									// set page 6
+		if((CAN->Page.Config.ESR)&0x01)
+			{
+			can1_error_cnt++;
+			if(can1_error_cnt>=10)
+				{
+				can1_error_cnt=0;
+				init_CAN();
+				//ee_CANSTART++;
+				}			
+			}
+		else can1_error_cnt=0;
 
 		volum_u_main_drv();
 		
@@ -2351,7 +2375,7 @@ while (1)
 		if(pwm_stat>=10)pwm_stat=0;
 adc_plazma_short++;
 
-		
+//		ee_CANSTART++;
 		}
 
 	}
