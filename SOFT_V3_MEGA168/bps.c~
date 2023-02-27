@@ -165,7 +165,7 @@ char cnt_net_drv;
 eeprom unsigned short vent_resurs;
 unsigned short vent_resurs_sec_cnt;
 //#define VENT_RESURS_SEC_IN_HOUR	3600
-#define VENT_RESURS_SEC_IN_HOUR	360/*0 */
+#define VENT_RESURS_SEC_IN_HOUR	3600
 unsigned char vent_resurs_buff[4];
 unsigned char vent_resurs_tx_cnt;
 

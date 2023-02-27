@@ -2520,7 +2520,7 @@ _0x78:
 _0x390:
 	__PUTW1EN _K,2
 ;			}
-;		granee(&K[0][1],420,5000);
+;		granee(&K[0][1],300,5000);
 _0x7A:
 _0x79:
 _0x75:
@@ -2528,8 +2528,8 @@ _0x73:
 	__POINTW1MN _K,2
 	ST   -Y,R31
 	ST   -Y,R30
-	LDI  R30,LOW(420)
-	LDI  R31,HIGH(420)
+	LDI  R30,LOW(300)
+	LDI  R31,HIGH(300)
 	ST   -Y,R31
 	ST   -Y,R30
 	LDI  R26,LOW(5000)
@@ -6812,7 +6812,7 @@ _0x3B0:
 ; 0000 059F //pwm_u=800;
 ; 0000 05A0 //pwm_u=400;
 ; 0000 05A1 
-; 0000 05A2 gran(&pwm_u,10,1020);
+; 0000 05A2 gran(&pwm_u,1,1020);
 _0x2F8:
 _0x2F3:
 _0x2E0:
@@ -6820,7 +6820,7 @@ _0x2D1:
 	LDI  R30,LOW(_pwm_u)
 	LDI  R31,HIGH(_pwm_u)
 	CALL SUBOPT_0x63
-; 0000 05A3 gran(&pwm_i,10,1020);
+; 0000 05A3 gran(&pwm_i,1,1020);
 	LDI  R30,LOW(_pwm_i)
 	LDI  R31,HIGH(_pwm_i)
 	CALL SUBOPT_0x63
@@ -9001,8 +9001,8 @@ SUBOPT_0x62:
 SUBOPT_0x63:
 	ST   -Y,R31
 	ST   -Y,R30
-	LDI  R30,LOW(10)
-	LDI  R31,HIGH(10)
+	LDI  R30,LOW(1)
+	LDI  R31,HIGH(1)
 	RJMP SUBOPT_0x5D
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS

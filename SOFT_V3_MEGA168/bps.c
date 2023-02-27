@@ -1439,8 +1439,8 @@ else if(!bBL)
 //pwm_u=800;
 //pwm_u=400;
 
-gran(&pwm_u,10,1020);
-gran(&pwm_i,10,1020);
+gran(&pwm_u,1,1020);
+gran(&pwm_i,1,1020);
 
 if((ee_DEVICE==0)&&(main_cnt1<(5*(ee_TZAS+10))))pwm_u=10;
 

@@ -455,7 +455,7 @@ else if((RXBUFF1[0]==adress)&&(RXBUFF1[1]==adress)&&(RXBUFF1[2]==CMND)&&(RXBUFF1
 	umin_cnt=0;
 	led_drv_cnt=30;
 	}
-else if((RXBUFF1[0]==adress)&&(RXBUFF1[1]==adress)&&(RXBUFF1[2]==CMND)&&&&(RXBUFF1[3]==VENT_RES))
+else if((RXBUFF1[0]==adress)&&(RXBUFF1[1]==adress)&&(RXBUFF1[2]==CMND)&&(RXBUFF1[3]==VENT_RES))
 	{
 	vent_resurs=0;
 	}    		

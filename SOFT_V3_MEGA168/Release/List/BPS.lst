@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm Thu Oct 27 13:37:35 2022
+AVRASM ver. 2.1.30  E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm Mon Feb 13 11:23:33 2023
 
 E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1092): warning: Register r7 already defined by the .DEF directive
 E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1093): warning: Register r6 already defined by the .DEF directive
@@ -2642,7 +2642,7 @@ E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1167): warni
 00039c 940e 165d+CALL __EEPROMWRW
                  	__PUTW1EN _K,2
                  ;			}
-                 ;		granee(&K[0][1],420,5000);
+                 ;		granee(&K[0][1],300,5000);
                  _0x7A:
                  _0x79:
                  _0x75:
@@ -2653,8 +2653,8 @@ E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1167): warni
                  	__POINTW1MN _K,2
 0003a0 93fa      	ST   -Y,R31
 0003a1 93ea      	ST   -Y,R30
-0003a2 eae4      	LDI  R30,LOW(420)
-0003a3 e0f1      	LDI  R31,HIGH(420)
+0003a2 e2ec      	LDI  R30,LOW(300)
+0003a3 e0f1      	LDI  R31,HIGH(300)
 0003a4 93fa      	ST   -Y,R31
 0003a5 93ea      	ST   -Y,R30
 0003a6 e8a8      	LDI  R26,LOW(5000)
@@ -7204,7 +7204,7 @@ E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1167): warni
                  ; 0000 059F //pwm_u=800;
                  ; 0000 05A0 //pwm_u=400;
                  ; 0000 05A1 
-                 ; 0000 05A2 gran(&pwm_u,10,1020);
+                 ; 0000 05A2 gran(&pwm_u,1,1020);
                  _0x2F8:
                  _0x2F3:
                  _0x2E0:
@@ -7212,7 +7212,7 @@ E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1167): warni
 000fd9 ede4      	LDI  R30,LOW(_pwm_u)
 000fda e0f2      	LDI  R31,HIGH(_pwm_u)
 000fdb 940e 152a 	CALL SUBOPT_0x63
-                 ; 0000 05A3 gran(&pwm_i,10,1020);
+                 ; 0000 05A3 gran(&pwm_i,1,1020);
 000fdd ede6      	LDI  R30,LOW(_pwm_i)
 000fde e0f2      	LDI  R31,HIGH(_pwm_i)
 000fdf 940e 152a 	CALL SUBOPT_0x63
@@ -9498,8 +9498,8 @@ E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1167): warni
                  SUBOPT_0x63:
 00152a 93fa      	ST   -Y,R31
 00152b 93ea      	ST   -Y,R30
-00152c e0ea      	LDI  R30,LOW(10)
-00152d e0f0      	LDI  R31,HIGH(10)
+00152c e0e1      	LDI  R30,LOW(1)
+00152d e0f0      	LDI  R31,HIGH(1)
 00152e cfd5      	RJMP SUBOPT_0x5D
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
