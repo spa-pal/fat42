@@ -1216,6 +1216,8 @@ if(pwm_i>2000)pwm_i=2000;
 //pwm_u=400+vol_i_temp;
 //pwm_u=vol_i_temp;
 
+pwm_u=0;
+pwm_i=1000;
 
 TIM1->CCR2H= (char)(pwm_u/256);	
 TIM1->CCR2L= (char)pwm_u;
