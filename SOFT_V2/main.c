@@ -3,17 +3,17 @@
 //#define _24_
 char bVENT_BLOCK=0;
 
-#define BLOCK_INIT  GPIOB->DDR|=(1<<2);GPIOB->CR1|=(1<<2);GPIOB->CR2&=~(1<<2);
-#define BLOCK_ON 	{GPIOB->ODR|=(1<<2);bVENT_BLOCK=1;}
-#define BLOCK_OFF 	{GPIOB->ODR&=~(1<<2);bVENT_BLOCK=0;}
-#define BLOCK_IS_ON (GPIOB->ODR&(1<<2))
+#define BLOCK_INIT  GPIOC->DDR|=(1<<5);GPIOC->CR1|=(1<<5);GPIOC->CR2&=~(1<<5);
+#define BLOCK_ON 	{GPIOC->ODR|=(1<<5);bVENT_BLOCK=1;}
+#define BLOCK_OFF 	{GPIOC->ODR&=~(1<<5);bVENT_BLOCK=0;}
+#define BLOCK_IS_ON (GPIOC->ODR&(1<<5))
 
 #include "string.h"
 //#include <iostm8s208.h>
 #include <iostm8s103.h>
 #include <stdlib.h>
 #include "stm8s.h"
-//#include "main.h"
+#include "curr_version.h"
 @near short t0_cnt00=0;
 @near short t0_cnt0=0;
 @near char t0_cnt1=0,t0_cnt2=0,t0_cnt3=0,t0_cnt4=1,t0_cnt5=0;
@@ -55,7 +55,11 @@ char adc_cnt_cnt;
 #define PUTTM1 		0xDA
 #define PUTTM2 	0xDB
 #define PUTTM3 	0xDC
-#define PUTTM 		0xDE
+#define PUTTM31 	0xDD
+#define PUTTM32 	0xD5
+//#define PUTTM 		0xDE
+#define GETTM1 	0xEb
+#define GETTM2		0xEc
 #define GETTM 		0xED 
 #define KLBR 		0xEE
 
@@ -738,11 +742,16 @@ void pwr_drv(void)
 GPIOB->CR1|=(1<<2);
 GPIOB->CR2&=~(1<<2);*/
 
-/*
+
 BLOCK_INIT
 
 if(main_cnt1<1500)main_cnt1++;
 
+if(flags&0b00101010)BLOCK_ON //GPIOB->ODR|=(1<<2);
+else	BLOCK_OFF //GPIOB->ODR&=~(1<<2);
+
+
+/*
 if((main_cnt1<(5*ee_TZAS))&&(bps_class!=bpsIPS))
 	{
 	BLOCK_ON
@@ -794,7 +803,7 @@ else if(!bBL)
 	//GPIOB->ODR&=~(1<<2);
 	}
 */
-gran(&pwm_u,10,2000);
+//gran(&pwm_u,10,2000);
 
 //pwm_u=1000;
 //pwm_i=1000;
@@ -804,14 +813,14 @@ gran(&pwm_u,10,2000);
 //pwm_u=300;
 //vent_pwm=600;
 
-TIM1->CCR2H= (char)(pwm_u/256);	
-TIM1->CCR2L= (char)pwm_u;
+//TIM1->CCR2H= (char)(pwm_u/256);	
+//TIM1->CCR2L= (char)pwm_u;
 
-TIM1->CCR1H= (char)(pwm_i/256);	
-TIM1->CCR1L= (char)pwm_i;
+//TIM1->CCR1H= (char)(pwm_i/256);	
+//TIM1->CCR1L= (char)pwm_i;
 
-TIM1->CCR3H= (char)(vent_pwm_integr/128);	
-TIM1->CCR3L= (char)(vent_pwm_integr*2);
+//TIM1->CCR3H= (char)(vent_pwm_integr/128);	
+//TIM1->CCR3L= (char)(vent_pwm_integr*2);
 }
 
 //-----------------------------------------------
@@ -981,10 +990,48 @@ else if((bMAIN)&&(link==ON))
 	pwm_i=0x3ff;
 	bBL_IPS=0;
 	}*/
-/*
+
 else if(link==OFF)
 	{
-	pwm_i=0x7ff;
+		{
+		signed long temp_SL,temp_SL1;
+		
+		temp_SL=(signed long)(ee_UAVT);
+		
+/*		temp_SL1=(signed long)(I-450);   //ток после 45А на 1А отнимаем 0.1В
+		
+		if(temp_SL1<0) temp_SL1=0;
+		
+		temp_SL-=temp_SL1/10;*/
+		
+		temp_SL1=(signed long)(I-250);   //ток после 25А на 1А отнимаем 0.1В
+		
+		if(temp_SL1<0) temp_SL1=0;
+		
+		temp_SL-=temp_SL1/10;
+		
+		temp_SL-=2250L;//2100L;	//225(900) - 235(1500)
+		temp_SL*=90L;//2048L;
+		temp_SL/=15L;//250L;
+		temp_SL+=900L;//250L;
+		
+		/*temp_SL-=2250L;//2100L;	//210 - 240
+		temp_SL*=100L;//2048L;
+		temp_SL/=15L;//250L;
+		temp_SL+=1000L;//250L;*/
+		
+		/*temp_SL-=2250L;//2100L;  210 - 235
+		temp_SL*=800L;//2048L;
+		temp_SL/=100L;//250L;
+		temp_SL+=1200L;//250L;*/
+		
+		if(temp_SL<0) temp_SL=0;
+		if(temp_SL>2040) temp_SL=2040L;
+		
+		pwm_u=(signed short)temp_SL;
+		}		
+		
+	/*pwm_i=0x7ff;
 	pwm_u_=(short)((2000L*((long)Unecc))/650L);
 	
 	//pwm_u_=1900;
@@ -1015,8 +1062,8 @@ else if(link==OFF)
 		{
 		pwm_u=0;								//то полный стоп
 		pwm_i=0;
-		}	
-	}*/
+		}*/	
+	}
 	
 else	if(link==ON)				//если есть связьvol_i_temp_avar
 	{
@@ -1027,13 +1074,14 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 			pwm_u=vol_i_temp;					//управление от укушки + выравнивание токов
 			pwm_i=2000;
 			}	
-		else if(flags&0b00011010)					//если есть аварии
+		else*/
+		if(flags&0b00011010)					//если есть аварии
 			{
 			pwm_u=0;								//то полный стоп
 			pwm_i=0;
 			}
-		else*/
-			//{
+		else
+			{
 			//pwm_u=(short)((1000L*((long)Unecc))/650L);
 			
 			signed long temp_SL;			
@@ -1056,7 +1104,7 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 			Udelt=Unecc-Ui;*/
 			//Usum=1234;
 			
-			Udelt=U_out_const/*2300*/-Usum;
+			Udelt++;//=U_out_const/*2300*/-Usum;
 			Udelt+=vol_i_temp;	//выравнивание токов по командам от уку
 			//if(FADE_MODE)Udelt-=Ufade;//наклон вниз выходной характеристики
 			
@@ -1185,6 +1233,34 @@ else	if(link==ON)				//если есть связьvol_i_temp_avar
 		//pwm_i=0;
 		//}
 	//pwm_u=1800;	
+	
+		{
+		signed long temp_SL;
+		
+		temp_SL=(signed long)(U_out_const+vol_i_temp);
+		
+		temp_SL-=2250L;//2100L;	//225(900) - 235(1500)
+		temp_SL*=90L;//2048L;
+		temp_SL/=15L;//250L;
+		temp_SL+=900L;//250L;
+		
+		/*temp_SL-=2250L;//2100L;	//210 - 240
+		temp_SL*=100L;//2048L;
+		temp_SL/=15L;//250L;
+		temp_SL+=1000L;//250L;*/
+		
+		/*temp_SL-=2250L;//2100L; 210 - 235
+		temp_SL*=800L;//2048L;
+		temp_SL/=100L;//250L;
+		temp_SL+=1200L;//250L;*/
+		
+		if(temp_SL<0) temp_SL=0;
+		if(temp_SL>2040) temp_SL=2040L;
+		
+		pwm_u=(signed short)temp_SL;
+		}
+	}
+	
 	}	   
 /*
 pwm_u_buff[pwm_u_buff_ptr]=pwm_u_;
@@ -1216,7 +1292,7 @@ if(pwm_i>2000)pwm_i=2000;
 //pwm_u=400+vol_i_temp;
 //pwm_u=vol_i_temp;
 
-pwm_u=0;
+//pwm_u=123;
 pwm_i=1000;
 
 TIM1->CCR2H= (char)(pwm_u/256);	
@@ -1387,7 +1463,7 @@ if(jp_mode!=jp3)
 	if((/*((Ui<Un)&&((Un-Ui)>ee_dU)) || */(Ui < Upwm))&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
 	else umin_cnt=0;
 	gran(&umin_cnt,0,10);	
-	if(umin_cnt>=10)flags|=0b00010000;
+	//if(umin_cnt>=10)flags|=0b00010000;
 	}	
 	}
 else if(jp_mode==jp3)
@@ -1961,7 +2037,7 @@ int tempI;
 //if((mess[0]==1)&&(mess[1]==2)&&(mess[2]==3)&&(mess[3]==4)&&(mess[4]==5)&&(mess[5]==6)&&(mess[6]==7)&&(mess[7]==8))can_transmit1(1,2,3,4,5,6,7//,8);
 
 
-if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))	
+if((mess[6]==adress)&&(mess[7]==adress)&&((mess[8]==GETTM) || (mess[8]==GETTM1) || (mess[8]==GETTM2)))	
 	{ 
 	
 	can_error_cnt=0;
@@ -1996,8 +2072,8 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
  		
  	U_out_const=mess[10]+mess[11]*256;
  	vol_i_temp=mess[12]+mess[13]*256;
-	if(vol_i_temp>20)vol_i_temp=20;
- 	if(vol_i_temp<-20)vol_i_temp=-20;
+	//if(vol_i_temp>20)vol_i_temp=20;
+ 	//if(vol_i_temp<-20)vol_i_temp=-20;
 	
 	//if(ee_UAVT!=vol_i_temp)ee_UAVT=vol_i_temp;
  	//I=1234;
@@ -2011,14 +2087,17 @@ if((mess[6]==adress)&&(mess[7]==adress)&&(mess[8]==GETTM))
 	else plazma_int[2]=vent_resurs_sec_cnt;
  	rotor_int=flags_tu+(((short)flags)<<8);
 	
-	debug_info_to_uku[0]=pwm_u;
-	debug_info_to_uku[1]=Udelt;//Ufade;//Usum;
-	debug_info_to_uku[2]=vol_i_temp;//pwm_u;
+	debug_info_to_uku[0]=U_out_const;
+	debug_info_to_uku[1]=ee_UAVT;//Ufade;//Usum;
+	debug_info_to_uku[2]=pwm_u;//vol_i_temp;//U_out_const;//pwm_u;
 	
 	
 	can_transmit(0x18e,adress,PUTTM1,*(((char*)&I)+1),*((char*)&I),*(((char*)&Un)+1),*((char*)&Un),*(((char*)&Ui)+1),*((char*)&Ui));
 	can_transmit(0x18e,adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*(((char*)&Usum)+1),*((char*)&Usum));
-	can_transmit(0x18e,adress,PUTTM3,*(((char*)&debug_info_to_uku[0])+1),*((char*)&debug_info_to_uku[0]),*(((char*)&debug_info_to_uku[1])+1),*((char*)&debug_info_to_uku[1]),*(((char*)&debug_info_to_uku[2])+1),*((char*)&debug_info_to_uku[2]));
+	if(mess[8]==GETTM)	can_transmit(0x18e,adress,PUTTM3,*(((char*)&debug_info_to_uku[0])+1),*((char*)&debug_info_to_uku[0]),*(((char*)&debug_info_to_uku[1])+1),*((char*)&	debug_info_to_uku[1]),*(((char*)&debug_info_to_uku[2])+1),*((char*)&debug_info_to_uku[2]));
+	if(mess[8]==GETTM1)	can_transmit(0x18e,adress,PUTTM31,*(((char*)&HARDVARE_VERSION)+1),*((char*)&HARDVARE_VERSION),*(((char*)&SOFT_VERSION)+1),*((char*)&SOFT_VERSION),*(((char*)&BUILD)+1),*((char*)&BUILD));
+	if(mess[8]==GETTM2)	can_transmit(0x18e,adress,PUTTM32,*(((char*)&BUILD_YEAR)+1),*((char*)&BUILD_YEAR),*(((char*)&BUILD_MONTH)+1),*((char*)&BUILD_MONTH),*(((char*)&BUILD_DAY)+1),*((char*)&BUILD_DAY));
+	
      link_cnt=0;
      link=ON;
      
@@ -2407,13 +2486,13 @@ if(pwm_vent_cnt>=5)GPIOB->ODR&=~(1<<3);
 
 //GPIOB->ODR|=(1<<3);
 
-if(++t0_cnt00>=10)
+if(++t0_cnt00>=20)
 	{
 	t0_cnt00=0;
 	b1000Hz=1;
 	}
 
-if(++t0_cnt0>=100)
+if(++t0_cnt0>=200)
 	{
 	t0_cnt0=0;
 	b100Hz=1;
@@ -2686,7 +2765,7 @@ while (1)
 	if(b20Hz)
 		{
 		b20Hz=0;
-		
+		led_drv();
 		 
 		
       	}
@@ -2694,7 +2773,7 @@ while (1)
 	if(b10Hz)
 		{
 		b10Hz=0;
-		led_drv();
+		
 		matemat();
 		//led_drv(); 
 	  link_drv();
@@ -2713,7 +2792,7 @@ while (1)
 		//pwm_i=200;
 		
 		//pwm_u=1500;
-		//pwr_drv();		//воздействие на силу
+		pwr_drv();		//воздействие на силу
 		led_hndl();
 		
 		vent_drv();
