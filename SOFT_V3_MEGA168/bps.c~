@@ -140,7 +140,7 @@ char adr_drv_stat=0;
 char adr[3],adress;
 char adress_error;
 
-enum {bpsIBEP,bpsIPS} bps_class;
+enum {bpsIBEP,bpsIPS,bpsIBEP_AVT} bps_class;
 
 eeprom signed short ee_TZAS;
 eeprom signed short ee_Umax;
@@ -179,6 +179,8 @@ char i_main_num_of_bps;
 signed short i_main_sigma;
 char i_main_bps_cnt[6];
 unsigned short vol_i_temp_avar=0;
+
+//eeprom short AVT_MODE;
 
 #include "can_slave.c"
 
@@ -287,7 +289,7 @@ else cnt_adc_ch_2_delta=0;
 }
 
 //-----------------------------------------------
-void led_drv_(void)
+void led_drv_1(void)
 {
 DDRD.1=1;
 if(led_green_buff&0b1L) PORTD.1=1;
@@ -595,11 +597,24 @@ if(jp_mode!=jp3)
 	gran(&umax_cnt,0,10);
 	if(umax_cnt>=10)flags|=0b00001000; 	//ѕодн€ть аварию по превышению напр€жени€
 
-	
-	if((Ui<Un)&&((Un-Ui)>ee_dU)&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
-	else umin_cnt=0;
-	gran(&umin_cnt,0,10);	
-	if(umin_cnt>=10)flags|=0b00010000;	  
+    if(ee_AVT_MODE==0x55)
+        {
+        short temp=ee_Umax;
+        temp/=10;
+        temp*=9;
+        if((Ui<temp)&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
+        else umin_cnt=0;
+        gran(&umin_cnt,0,10);	
+        if(umin_cnt>=10)flags|=0b00010000;
+        }
+    else
+        {	
+        if((Ui<Un)&&((Un-Ui)>ee_dU)&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
+        else umin_cnt=0;
+        gran(&umin_cnt,0,10);	
+        if(umin_cnt>=10)flags|=0b00010000; 
+        
+        }	  
 	}
 else if(jp_mode==jp3)
 	{        
@@ -617,7 +632,7 @@ else if(jp_mode==jp3)
 }
 
 //-----------------------------------------------
-void led_hndl_(void)
+void led_hndl_1(void)
 { 
 if(jp_mode!=jp3)
 	{
@@ -768,7 +783,89 @@ else if(link_cnt>50)
 	led_red=0x5555ff55L;
 	led_green=0x55555555L;
 	} */
+else if(ee_AVT_MODE==0x55)
+	{ 
+    
+    led_red=0x00000000L;
+	led_green=0xffffffffL;
+            
+	if(jp_mode!=jp3)
+		{
+/*		if(main_cnt1<(5*ee_TZAS))
+			{
+			led_red=0x00000000L;
+			led_green=0x03030303L;
+			}  
 
+		else if((link==ON)&&(flags_tu&0b10000000))
+			{
+			led_red=0x00055555L;
+			led_green=0xffffffffL;
+			}   */
+
+/*		else if(((main_cnt1>(5*ee_TZAS))&&(main_cnt1<(100+(5*ee_TZAS)))) && (ee_AVT_MODE!=0x55)&& (!ee_DEVICE))
+			{
+			led_red=0x00000000L;
+			led_green=0xffffffffL;	
+			} */ 
+		
+/*		else  if(link==OFF)
+			{
+			led_red=0x55555555L;
+			led_green=0xffffffffL;
+			}
+				    
+		else*/ if((link==ON)&&((flags&0b00111110)==0))
+			{
+			led_red=0x00000111L;
+			led_green=0x00000111L;
+			}
+			
+		else if((flags&0b00111110)==0b00000100)
+			{
+			led_red=0x00010001L;
+			led_green=0xffffffffL;	
+			}
+		else if(flags&0b00000010)
+			{
+			led_red=0x00010001L;
+			led_green=0x00000000L;	
+			} 
+		else if(flags&0b00001000)
+			{
+			led_red=0x00090009L;
+			led_green=0x00000000L;	
+			}
+		else if(flags&0b00010000)
+			{
+			led_red=0x00490049L;
+			led_green=0x00000000L;	
+			}			
+	
+/*		else if((link==ON)&&(flags&0b00100000))
+			{
+			led_red=0x00000000L;
+			led_green=0x00030003L;
+			} */
+	
+		if((jp_mode==jp1))
+			{
+			led_red=0x00000000L;
+			led_green=0x33333333L;
+			}
+		else if((jp_mode==jp2))
+			{
+			led_red=0xccccccccL;
+			led_green=0x00000000L;
+			}
+		}		
+
+/*    if(umin_cnt)
+        {
+        led_red=0x00c900c9L;
+		led_green=0x00c000c0L;
+        } */
+	}
 else if(bps_class==bpsIBEP)	//если блок »ЅЁѕный
 	{
 	if(jp_mode!=jp3)
@@ -1212,7 +1309,49 @@ if(bMAIN)
 //10Hz
 void pwr_hndl(void)				
 {
-if(jp_mode==jp3)
+if(ee_AVT_MODE==0x55)
+	{
+/*	if(ee_Device==0x55)
+		{
+		pwm_u=0x3ff;
+		pwm_i=0x3ff;
+		bBL=0;
+		}
+	else
+ 	if(ee_DEVICE)
+		{
+		pwm_u=0x00;
+		pwm_i=0x00;
+		bBL=1;
+		}
+	else */
+		{
+		if((flags&0b00011010)==0)
+			{
+			pwm_u=ee_U_AVT;
+			gran(&pwm_u,0,1020);
+		    	//pwm_i=0x3ff;
+			if(pwm_i<1020)
+				{
+				pwm_i+=30;
+				if(pwm_i>1020)pwm_i=1020;
+				}
+			bBL=0;
+			bBL_IPS=0;
+			}
+		else if(flags&0b00011010)
+			{
+			pwm_u=0;
+			pwm_i=0;
+			bBL=1;
+			bBL_IPS=1;
+			}
+		}
+//pwm_u=950;
+//		pwm_i=950;
+	}
+    
+else if(jp_mode==jp3)
 	{
 	if((flags&0b00001010)==0)
 		{
@@ -1439,10 +1578,13 @@ else if(!bBL)
 //pwm_u=800;
 //pwm_u=400;
 
-gran(&pwm_u,10,1020);
-gran(&pwm_i,10,1020);
+gran(&pwm_u,1,1020);
+gran(&pwm_i,1,1020);
 
-if((ee_DEVICE==0)&&(main_cnt1<(5*(ee_TZAS+10))))pwm_u=10;
+if(ee_AVT_MODE!=0x55)
+    {
+    if((ee_DEVICE==0)&&(main_cnt1<(5*(ee_TZAS+10))))pwm_u=10;
+    }
 
 //pwm_u=1000;
 //pwm_i=1000;
@@ -1883,14 +2025,14 @@ delay_ms(100);*/
 ///	delay_ms(100);
 ///	}
 //adr_drv_v3();
-
+//AVT_MODE=1;
 adr_hndl();
 t0_init();
 
 
 
 link_cnt=0;
-link=ON;
+if(ee_AVT_MODE!=0x55)link=ON;
 /*
 Umax=1000;
 dU=100;
@@ -1930,6 +2072,8 @@ can_init1();
 //DDRD.1=1;
 //PORTD.1=0;
 DDRD.0=1;
+
+//ee_AVT_MODE=0x55;
 while (1)
 	{
      

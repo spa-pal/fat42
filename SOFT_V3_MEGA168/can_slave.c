@@ -424,6 +424,14 @@ else if((RXBUFF1[0]==0xff)&&(RXBUFF1[1]==0xff)&&(RXBUFF1[2]==MEM_KF))
 	if(ee_Umax!=(RXBUFF1[3]+(RXBUFF1[4]*256))) ee_Umax=(RXBUFF1[3]+(RXBUFF1[4]*256)); 
 	if(ee_dU!=(RXBUFF1[5]+(RXBUFF1[6]*256))) ee_dU=(RXBUFF1[5]+(RXBUFF1[6]*256));
 	
+    if((RXBUFF1[7]&0x0f)==0x05)
+		{
+		if(ee_AVT_MODE!=0x55)ee_AVT_MODE=0x55;
+		}
+	else if((RXBUFF1[7]&0x0f)==0x0a) 
+        {
+        if(ee_AVT_MODE!=0)ee_AVT_MODE=0;
+        }
 	}
 
 else if((RXBUFF1[0]==0xff)&&(RXBUFF1[1]==0xff)&&((RXBUFF1[2]==MEM_KF1)||(RXBUFF1[2]==MEM_KF4)))
