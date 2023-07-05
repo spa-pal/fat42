@@ -839,7 +839,7 @@ else if(ee_AVT_MODE==0x55)
 		else if(flags&0b00010000)
 			{
 			led_red=0x00490049L;
-			led_green=0x00000000L;	
+			led_green=0xffffffffL;	
 			}			
 	
 /*		else if((link==ON)&&(flags&0b00100000))
@@ -1339,7 +1339,7 @@ if(ee_AVT_MODE==0x55)
 			bBL=0;
 			bBL_IPS=0;
 			}
-		else if(flags&0b00011010)
+		else if(flags&0b00001010)
 			{
 			pwm_u=0;
 			pwm_i=0;
