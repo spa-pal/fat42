@@ -341,7 +341,7 @@ void flags_drv(void)
 static char flags_old;
 if(jp_mode!=jp3) 
 	{
-	if(((flags&0b00001000)&&(!(flags_old&0b00001000)))||((flags&0b00010000)&&(!(flags_old&0b00010000)))) 
+	if(((flags&0b00001000)&&(!(flags_old&0b00001000)))||((flags&0b00010000)&&(!(flags_old&0b00010000))&&(ee_AVT_MODE!=0x55))) 
     		{	
     		if(link==OFF)apv_start();
     		}
@@ -603,9 +603,10 @@ if(jp_mode!=jp3)
         temp/=10;
         temp*=9;
         if((Ui<temp)&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
-        else umin_cnt=0;
+        else umin_cnt--;
         gran(&umin_cnt,0,10);	
         if(umin_cnt>=10)flags|=0b00010000;
+        if(umin_cnt<=0)flags&=~0b00010000;
         }
     else
         {	
@@ -614,7 +615,10 @@ if(jp_mode!=jp3)
         gran(&umin_cnt,0,10);	
         if(umin_cnt>=10)flags|=0b00010000; 
         
-        }	  
+        }
+        
+   // if(ee_AVT_MODE==0x55) && 
+    	  
 	}
 else if(jp_mode==jp3)
 	{        

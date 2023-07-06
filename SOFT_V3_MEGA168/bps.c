@@ -3,6 +3,7 @@
 #include <mega168.h>
 #include "mega168_bits.h"
 #include <delay.h> 
+#include "curr_version.h"
 
 //#define KAN_XTAL	8
 #define KAN_XTAL	10  

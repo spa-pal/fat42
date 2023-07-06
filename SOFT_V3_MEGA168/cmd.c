@@ -29,6 +29,11 @@
 #define PUTID 0x91
 #define PUTTM1 0xDA
 #define PUTTM2 0xDB
+#define PUTTM3 0xDC
 #define PUTTM 0xDE
+#define PUTTM31 	0xDD
+#define PUTTM32 	0xD5
 #define GETTM 0xED 
+#define GETTM1 	0xEb
+#define GETTM2	0xEc
 #define KLBR 0xEE

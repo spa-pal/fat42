@@ -201,7 +201,7 @@ int tempI;
 if((RXBUFF1[0]==1)&&(RXBUFF1[1]==2)&&(RXBUFF1[2]==3)&&(RXBUFF1[3]==4)&&(RXBUFF1[4]==5)&&(RXBUFF1[5]==6)&&(RXBUFF1[6]==7)&&(RXBUFF1[7]==8))can_transmit1(1,2,3,4,5,6,7,8);
 
 
-if((RXBUFF1[0]==adress)&&(RXBUFF1[1]==adress)&&((RXBUFF1[2]==GETTM) || (RXBUFF1[2]==GETTM1) || (RXBUFF1[2]==GETTM2)))	
+if((RXBUFF1[0]==adress)&&(RXBUFF1[1]==adress)&&(RXBUFF1[2]==GETTM))	
 	{ 
 	
 	can_error_cnt=0;
@@ -249,10 +249,6 @@ if((RXBUFF1[0]==adress)&&(RXBUFF1[1]==adress)&&((RXBUFF1[2]==GETTM) || (RXBUFF1[
     plazma_int[1]=((short)flags)*10;
 	can_transmit1(adress,PUTTM1,*((char*)&I),*(((char*)&I)+1),*((char*)&Un),*(((char*)&Un)+1),*((char*)&/*plazma_int[1]*/Ui),*(((char*)&/*plazma_int[1]*/Ui)+1));
 	can_transmit1(adress,PUTTM2,T,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*((char*)&plazma_int[2]/*rotor_int*/),*(((char*)&plazma_int[2]/*rotor_int*/)+1));
-	if(RXBUFF1[2]==GETTM)	can_transmit1(adress,PUTTM3,/**(((char*)&debug_info_to_uku[0])+1)*/0,/**((char*)&debug_info_to_uku[0])*/0,/**(((char*)&debug_info_to_uku[1])+1)*/0,/**((char*)&	debug_info_to_uku[1])*/0,/**(((char*)&debug_info_to_uku[2])+1)*/0,/**((char*)&debug_info_to_uku[2])*/0);
-	if(RXBUFF1[2]==GETTM1)	can_transmit1(adress,PUTTM31,*(((char*)&HARDVARE_VERSION)+1),*((char*)&HARDVARE_VERSION),*(((char*)&SOFT_VERSION)+1),*((char*)&SOFT_VERSION),*(((char*)&BUILD)+1),*((char*)&BUILD));
-	if(RXBUFF1[2]==GETTM2)	can_transmit1(adress,PUTTM32,*(((char*)&BUILD_YEAR)+1),*((char*)&BUILD_YEAR),*(((char*)&BUILD_MONTH)+1),*((char*)&BUILD_MONTH),*(((char*)&BUILD_DAY)+1),*((char*)&BUILD_DAY));
-
      link_cnt=0;
      link=ON;
      

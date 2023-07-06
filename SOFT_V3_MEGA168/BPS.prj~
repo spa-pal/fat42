@@ -2,7 +2,7 @@
 Toolset=AVR
 FormatVersion=2
 Files=2
-OpenedFiles=8
+OpenedFiles=7
 TerminalState=-1
 Top0=341
 Left0=595
@@ -58,7 +58,7 @@ Height5=341
 Width5=489
 Row5=78
 Collumn5=13
-Active5=0
+Active5=1
 State5=0
 OF6=can_slave.c
 Top6=314
@@ -87,24 +87,24 @@ EditorPanel1=0
 TimeStamp1=1401847860
 PageIndex1=1
 EditorPanel2=0
-TimeStamp2=1457873460
+TimeStamp2=1456363574
 PageIndex2=2
 EditorPanel3=0
-TimeStamp3=1457873460
+TimeStamp3=1456363574
 PageIndex3=3
 EditorPanel4=0
-TimeStamp4=1457873460
+TimeStamp4=1456363574
 PageIndex4=4
 EditorPanel5=0
-TimeStamp5=1457875047
+TimeStamp5=1456962977
 PageIndex5=5
 EditorPanel6=0
-TimeStamp6=1457874753
+TimeStamp6=1456371116
 PageIndex6=6
 EditorPanel7=0
-TimeStamp7=1457873805
+TimeStamp7=1456363574
 PageIndex7=7
-AllowDisplayFunctionCallTree=1
+AllowDisplayFunctionCallTree=0
 ActiveBuildConfiguration=1
 DebugOutputListFilesDirectory=Debug\List
 DebugOutputObjectFilesDirectory=Debug
@@ -116,11 +116,6 @@ OutputExecutableFilesDirectory=Release\Exe
 OutputLinkerFilesDirectory=Release\Link
 F1=bps.c
 F2=curr_version.c
-OF8=curr_version.c
-Active8=1
-EditorPanel8=0
-TimeStamp8=1457939632
-PageIndex8=8
 [Compiler]
 Chip=ATmega168
 CPUClock=8000000
@@ -149,7 +144,7 @@ BitVariablesSize=56
 StackEndMarkers=0
 Warnings=1
 DebugBootLoader=0
-Build=470
+Build=465
 UseEEPROMLocation0=1
 IncludePath0=
 IncludePath1=
@@ -217,7 +212,7 @@ LibraryPath30=
 LibraryPath31=
 RebuildAll=0
 LinkageInformationPresent=1
-COFFileTimeStamp=1457939633
+COFFileTimeStamp=1457875202
 OptimizationLevel=2
 OutputFormat=1
 AVR8LHardwareStackSize=16
@@ -423,7 +418,7 @@ Fuse46=0
 Fuse47=0
 Fuse48=0
 [CompilerDebug]
-Build=470
+Build=465
 RebuildAll=1
 LinkageInformationPresent=0
 UseEEPROMLocation0=1
@@ -539,7 +534,7 @@ L13=Enhanced function parameters passing: Yes
 L14=Automatic register allocation: Yes
 L15=Smart register allocation: Yes
 L16=
-L17=Build: 469
+L17=Build: 465
 L18=14983 line(s) compiled
 L19=No errors
 L20=36 warning(s)
@@ -576,7 +571,7 @@ L8=[.dseg] 0x000100 0x0003a0      0    416    416    1024  40.6%
 L9=[.eseg] 0x000000 0x00002b      0     43     43     512   8.4%
 L10=
 [BookmarksFoldedCode]
-Files=9
+Files=8
 F1=e:\users\pal\cvproects\bps1000kan\bps1000.c
 F2=bps.c
 F3=mcp2510.h
@@ -585,7 +580,6 @@ F5=bps.asm
 F6=c:\cvavr\inc\mega168.h
 F7=cmd.c
 F8=can_slave.c
-F9=curr_version.c
 [Bookmarks1]
 TimeStamp=1014925458
 Row=0
@@ -609,13 +603,13 @@ Row=0
 Column=0
 ScrollPosX=0
 ScrollPosY=0
-TimeStamp=1457943542
+TimeStamp=1456963363
 [Bookmarks2]
-TimeStamp=1457875047
-Row=0
-Column=0
+TimeStamp=1456962977
+Row=1341
+Column=22
 ScrollPosX=0
-ScrollPosY=1967
+ScrollPosY=1312
 BK0=-1
 BK1=-1
 BK2=-1
@@ -627,7 +621,7 @@ BK7=-1
 BK8=-1
 BK9=-1
 [Bookmarks3]
-TimeStamp=1457873460
+TimeStamp=1456363574
 Row=0
 Column=0
 ScrollPosX=0
@@ -643,7 +637,7 @@ BK7=-1
 BK8=-1
 BK9=-1
 [Bookmarks4]
-TimeStamp=1457873460
+TimeStamp=1456363574
 Row=0
 Column=0
 ScrollPosX=0
@@ -659,7 +653,7 @@ BK7=-1
 BK8=-1
 BK9=-1
 [Bookmarks5]
-TimeStamp=1457873460
+TimeStamp=1456363574
 Row=0
 Column=0
 ScrollPosX=0
@@ -691,7 +685,7 @@ BK7=-1
 BK8=-1
 BK9=-1
 [Bookmarks7]
-TimeStamp=1457873805
+TimeStamp=1456363574
 Row=0
 Column=0
 ScrollPosX=0
@@ -707,11 +701,11 @@ BK7=-1
 BK8=-1
 BK9=-1
 [Bookmarks8]
-TimeStamp=1457874753
-Row=253
-Column=66
+TimeStamp=1456371116
+Row=423
+Column=4
 ScrollPosX=0
-ScrollPosY=237
+ScrollPosY=0
 BK0=-1
 BK1=-1
 BK2=-1
@@ -722,6 +716,20 @@ BK6=-1
 BK7=-1
 BK8=-1
 BK9=-1
+[FoldedCode2]
+Blocks=0
+[FoldedCode7]
+Blocks=0
+[FoldedCode8]
+Blocks=0
+[FoldedCode3]
+Blocks=0
+[FoldedCode4]
+Blocks=0
+[FoldedCode5]
+Blocks=0
+[FoldedCode6]
+Blocks=0
 [DefinedSymbolsDebug]
 Count=0
 [StartUp]
@@ -743,9 +751,9 @@ HIDKeyboard=0
 HIDMouse=0
 HIDJoystick=0
 [BeforeMake]
-RunUserProg=1
+RunUserProg=0
 WaitUserProgFinish=1
-UserProgPath=python curr_version.py
+UserProgPath=
 UserProgCmdLine=
 UserProgWorkDir=
 [HeadersList]
@@ -769,35 +777,3 @@ F12=C:\cvavr\inc\spi.h
 [Header2]
 Files=1
 F1=curr_version.h
-[FoldedCode2]
-Blocks=0
-[Bookmarks9]
-TimeStamp=1457939632
-Row=0
-Column=0
-ScrollPosX=0
-ScrollPosY=0
-BK0=-1
-BK1=-1
-BK2=-1
-BK3=-1
-BK4=-1
-BK5=-1
-BK6=-1
-BK7=-1
-BK8=-1
-BK9=-1
-[FoldedCode9]
-Blocks=0
-[FoldedCode7]
-Blocks=0
-[FoldedCode8]
-Blocks=0
-[FoldedCode3]
-Blocks=0
-[FoldedCode4]
-Blocks=0
-[FoldedCode5]
-Blocks=0
-[FoldedCode6]
-Blocks=0
