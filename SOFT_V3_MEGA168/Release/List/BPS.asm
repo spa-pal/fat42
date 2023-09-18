@@ -1165,13 +1165,13 @@ _0x20003:
 _0x20004:
 	.DB  0x9
 _0x20005:
-	.DB  0x4
+	.DB  0x5
 _0x20006:
 	.DB  0xE7,0x7
 _0x20007:
-	.DB  0x7
+	.DB  0x9
 _0x20008:
-	.DB  0x6
+	.DB  0x12
 _0x20A0060:
 	.DB  0x1
 _0x20A0000:
@@ -8415,10 +8415,10 @@ _0x3BD:
 
 	.DSEG
 ;const short SOFT_VERSION = 9;
-;const short BUILD = 4;
+;const short BUILD = 5;
 ;const short BUILD_YEAR = 2023;
-;const short BUILD_MONTH = 7;
-;const short BUILD_DAY = 6;
+;const short BUILD_MONTH = 9;
+;const short BUILD_DAY = 18;
 	#ifndef __SLEEP_DEFINED__
 	#define __SLEEP_DEFINED__
 	.EQU __se_bit=0x01

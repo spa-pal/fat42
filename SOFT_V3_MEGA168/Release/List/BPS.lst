@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm Thu Jul 06 12:37:32 2023
+AVRASM ver. 2.1.30  E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm Mon Sep 18 13:11:49 2023
 
 E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1092): warning: Register r7 already defined by the .DEF directive
 E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1093): warning: Register r6 already defined by the .DEF directive
@@ -1203,15 +1203,15 @@ E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1166): warni
 000055 0009      	.DB  0x9
                  _0x20005:
 E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1168): warning: .cseg .db misalignment - padding zero byte
-000056 0004      	.DB  0x4
+000056 0005      	.DB  0x5
                  _0x20006:
 000057 07e7      	.DB  0xE7,0x7
                  _0x20007:
 E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1172): warning: .cseg .db misalignment - padding zero byte
-000058 0007      	.DB  0x7
+000058 0009      	.DB  0x9
                  _0x20008:
 E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1174): warning: .cseg .db misalignment - padding zero byte
-000059 0006      	.DB  0x6
+000059 0012      	.DB  0x12
                  _0x20A0060:
 E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1176): warning: .cseg .db misalignment - padding zero byte
 00005a 0001      	.DB  0x1
@@ -8860,10 +8860,10 @@ E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\Release\List\BPS.asm(1179): warni
                  
                  	.DSEG
                  ;const short SOFT_VERSION = 9;
-                 ;const short BUILD = 4;
+                 ;const short BUILD = 5;
                  ;const short BUILD_YEAR = 2023;
-                 ;const short BUILD_MONTH = 7;
-                 ;const short BUILD_DAY = 6;
+                 ;const short BUILD_MONTH = 9;
+                 ;const short BUILD_DAY = 18;
                  	#ifndef __SLEEP_DEFINED__
                  	#endif
                  
