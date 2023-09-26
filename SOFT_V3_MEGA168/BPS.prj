@@ -96,7 +96,7 @@ EditorPanel4=0
 TimeStamp4=1462728005
 PageIndex4=4
 EditorPanel5=0
-TimeStamp5=1195724183
+TimeStamp5=1462728005
 PageIndex5=5
 EditorPanel6=0
 TimeStamp6=1462728005
@@ -119,7 +119,7 @@ F2=curr_version.c
 OF8=curr_version.c
 Active8=0
 EditorPanel8=0
-TimeStamp8=1462728005
+TimeStamp8=1462921677
 PageIndex8=8
 [Compiler]
 Chip=ATmega168
@@ -149,7 +149,7 @@ BitVariablesSize=56
 StackEndMarkers=0
 Warnings=1
 DebugBootLoader=0
-Build=470
+Build=472
 UseEEPROMLocation0=1
 IncludePath0=
 IncludePath1=
@@ -217,7 +217,7 @@ LibraryPath30=
 LibraryPath31=
 RebuildAll=0
 LinkageInformationPresent=1
-COFFileTimeStamp=1462921593
+COFFileTimeStamp=1462921678
 OptimizationLevel=2
 OutputFormat=1
 AVR8LHardwareStackSize=16
@@ -423,7 +423,7 @@ Fuse46=0
 Fuse47=0
 Fuse48=0
 [CompilerDebug]
-Build=470
+Build=472
 RebuildAll=1
 LinkageInformationPresent=0
 UseEEPROMLocation0=1
@@ -539,7 +539,7 @@ L13=Enhanced function parameters passing: Yes
 L14=Automatic register allocation: Yes
 L15=Smart register allocation: Yes
 L16=
-L17=Build: 470
+L17=Build: 471
 L18=14983 line(s) compiled
 L19=No errors
 L20=36 warning(s)
@@ -609,13 +609,13 @@ Row=0
 Column=0
 ScrollPosX=0
 ScrollPosY=0
-TimeStamp=1462921032
+TimeStamp=1463379370
 [Bookmarks2]
 TimeStamp=1462728005
 Row=0
 Column=0
 ScrollPosX=0
-ScrollPosY=0
+ScrollPosY=2051
 BK0=-1
 BK1=-1
 BK2=-1
@@ -708,8 +708,8 @@ BK8=-1
 BK9=-1
 [Bookmarks8]
 TimeStamp=1462728005
-Row=0
-Column=0
+Row=21
+Column=39
 ScrollPosX=0
 ScrollPosY=0
 BK0=-1
@@ -749,7 +749,7 @@ UserProgPath=python curr_version.py
 UserProgCmdLine=
 UserProgWorkDir=
 [Bookmarks9]
-TimeStamp=1462728005
+TimeStamp=1462921677
 Row=0
 Column=0
 ScrollPosX=0
@@ -764,22 +764,6 @@ BK6=-1
 BK7=-1
 BK8=-1
 BK9=-1
-[FoldedCode2]
-Blocks=0
-[FoldedCode9]
-Blocks=0
-[FoldedCode7]
-Blocks=0
-[FoldedCode8]
-Blocks=0
-[FoldedCode3]
-Blocks=0
-[FoldedCode4]
-Blocks=0
-[FoldedCode5]
-Blocks=0
-[FoldedCode6]
-Blocks=0
 [HeadersList]
 Files=2
 F1=E:\Users\Pal\DEVICES\FAT42_dev\SOFT_V3_MEGA168\bps.c
@@ -801,3 +785,19 @@ F12=C:\cvavr\inc\spi.h
 [Header2]
 Files=1
 F1=curr_version.h
+[FoldedCode2]
+Blocks=0
+[FoldedCode9]
+Blocks=0
+[FoldedCode7]
+Blocks=0
+[FoldedCode8]
+Blocks=0
+[FoldedCode3]
+Blocks=0
+[FoldedCode4]
+Blocks=0
+[FoldedCode5]
+Blocks=0
+[FoldedCode6]
+Blocks=0

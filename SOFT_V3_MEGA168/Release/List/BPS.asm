@@ -1165,7 +1165,7 @@ _0x20003:
 _0x20004:
 	.DB  0x9
 _0x20005:
-	.DB  0x5
+	.DB  0x6
 _0x20006:
 	.DB  0xE7,0x7
 _0x20007:
@@ -8415,7 +8415,7 @@ _0x3BD:
 
 	.DSEG
 ;const short SOFT_VERSION = 9;
-;const short BUILD = 5;
+;const short BUILD = 6;
 ;const short BUILD_YEAR = 2023;
 ;const short BUILD_MONTH = 9;
 ;const short BUILD_DAY = 18;
