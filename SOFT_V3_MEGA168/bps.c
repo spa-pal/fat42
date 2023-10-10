@@ -1962,9 +1962,9 @@ TCNT1H=0x00;
 TCNT1L=0x00;
 ICR1H=0x00;
 ICR1L=0x00;
-OCR1AH=0x01;
+OCR1AH=0x00;
 OCR1AL=0x00;
-OCR1BH=0x03;
+OCR1BH=0x00;
 OCR1BL=0x00;
 
 DDRB.1=1;
@@ -2079,6 +2079,11 @@ can_init1();
 DDRD.0=1;
 
 //ee_AVT_MODE=0x55;
+		pwm_u=0x00;
+		pwm_i=0x00;
+		bBL=1;
+        
+
 while (1)
 	{
      
