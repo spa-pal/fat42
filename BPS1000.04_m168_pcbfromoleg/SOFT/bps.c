@@ -1274,7 +1274,7 @@ if((_x_>XMAX)||(_x_<-XMAX))_x_=0;
 if(!((TZAS>=0)&&(TZAS<=3))) TZAS=3;
 
 #asm("sei")
-granee(&K[0][1],420,1100);
+//granee(&K[0][1],420,1100);
 
 #ifdef _220_
 granee(&K[1,1],4500,5500);
