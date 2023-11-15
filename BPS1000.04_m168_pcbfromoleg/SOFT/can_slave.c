@@ -306,7 +306,7 @@ else if((RXBUFF1[0]==adr)&&(RXBUFF1[1]==adr)&&(RXBUFF1[2]==KLBR)&&(RXBUFF1[3]==R
             {
             K[0][1]-=10;
             }
-        granee(&K[0][1],300,5000);                                    
+        granee(&K[0][1],200,5000);                                    
         }
     else if((RXBUFF1[3]&0xf0)==0x10)
         {

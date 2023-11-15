@@ -1001,10 +1001,10 @@ if(++adc_ch>=4)
 DDRC&=0b11000000;
 PORTC&=0b11000000;
 
-if(adc_ch==0) ADMUX=0b01000001; //ток
-else if(adc_ch==1) ADMUX=0b01000100; //напр ист
-else if(adc_ch==2) ADMUX=0b01000010; //напр нагр
-else if(adc_ch==3) ADMUX=0b01000011; //темпер
+if(adc_ch==0) ADMUX=0b00000001; //ток
+else if(adc_ch==1) ADMUX=0b00000100; //напр ист
+else if(adc_ch==2) ADMUX=0b00000010; //напр нагр
+else if(adc_ch==3) ADMUX=0b00000011; //темпер
 
 ADCSRA=0b10100110;
 ADCSRA|=0b01000000;	
