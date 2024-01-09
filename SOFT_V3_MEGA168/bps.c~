@@ -75,6 +75,7 @@ eeprom signed int K[4][2];
 
 unsigned int I,Un,Ui,Udb;
 signed T;
+unsigned char Ttr;
 char flags=0; // состояние источника
 // 0 -  если одет джампер то 0, если нет то 1
 // 1 -  авария по Tmax (1-активн.);
@@ -1860,6 +1861,9 @@ temp_SL/=1326;
 T=(signed)(temp_SL-273);
 //T=TZAS;
 
+if(T<0)Ttr=0;
+else if(T>255)Ttr=255;
+else Ttr=(unsigned char)T;
 Udb=flags;
 
 
@@ -1962,9 +1966,9 @@ TCNT1H=0x00;
 TCNT1L=0x00;
 ICR1H=0x00;
 ICR1L=0x00;
-OCR1AH=0x01;
+OCR1AH=0x00;
 OCR1AL=0x00;
-OCR1BH=0x03;
+OCR1BH=0x00;
 OCR1BL=0x00;
 
 DDRB.1=1;
