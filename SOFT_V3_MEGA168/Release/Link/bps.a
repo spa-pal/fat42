@@ -138,7 +138,7 @@
 ;
 ;unsigned int I,Un,Ui,Udb;
 ;signed T;
-;unsigned char Ttr;
+;signed char Ttr;
 ;char flags=0; // состояние источника
 ;// 0 -  если одет джампер то 0, если нет то 1
 ;// 1 -  авария по Tmax (1-активн.);
@@ -1466,7 +1466,7 @@
 ;PCODE: $00000388 VOL: 0
 ;PCODE: $00000389 VOL: 0
 ;PCODE: $0000038A VOL: 0
-;	can_transmit1(adress,PUTTM2,Ttr,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*((char*)&plazma_int[2]/*rotor_int*/),*( ...
+;	can_transmit1(adress,PUTTM2,(unsigned char)Ttr,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*((char*)&plazma_int[2]/* ...
 ;PCODE: $0000038B VOL: 0
 ;PCODE: $0000038C VOL: 0
 ;PCODE: $0000038D VOL: 0
@@ -8256,13 +8256,13 @@
 ;PCODE: $00001654 VOL: 0
 ; 0000 0746 //T=TZAS;
 ; 0000 0747 
-; 0000 0748 if(T<0)Ttr=0;
+; 0000 0748 if(T<-125)Ttr=-125;
 ;PCODE: $00001655 VOL: 0
 ;PCODE: $00001656 VOL: 0
 ;PCODE: $00001657 VOL: 0
 ;PCODE: $00001658 VOL: 0
 ;PCODE: $00001659 VOL: 0
-; 0000 0749 else if(T>255)Ttr=255;
+; 0000 0749 else if(T>125)Ttr=125;
 ;PCODE: $0000165A VOL: 0
 ;PCODE: $0000165B VOL: 0
 ;PCODE: $0000165C VOL: 0
@@ -8270,7 +8270,7 @@
 ;PCODE: $0000165E VOL: 0
 ;PCODE: $0000165F VOL: 0
 ;PCODE: $00001660 VOL: 0
-; 0000 074A else Ttr=(unsigned char)T;
+; 0000 074A else Ttr=(signed char)T;
 ;PCODE: $00001661 VOL: 0
 ;PCODE: $00001662 VOL: 0
 ;PCODE: $00001663 VOL: 0

@@ -1165,13 +1165,13 @@ _0x20003:
 _0x20004:
 	.DB  0xA
 _0x20005:
-	.DB  0x6
+	.DB  0x7
 _0x20006:
 	.DB  0xE8,0x7
 _0x20007:
 	.DB  0x1
 _0x20008:
-	.DB  0x9
+	.DB  0x12
 _0x20A0060:
 	.DB  0x1
 _0x20A0000:
@@ -1453,7 +1453,7 @@ __GLOBAL_INI_END:
 ;
 ;unsigned int I,Un,Ui,Udb;
 ;signed T;
-;unsigned char Ttr;
+;signed char Ttr;
 ;char flags=0; // состояние источника
 ;// 0 -  если одет джампер то 0, если нет то 1
 ;// 1 -  авария по Tmax (1-активн.);
@@ -7897,22 +7897,24 @@ _0x394:
 	STS  _T,R30
 	STS  _T+1,R31
 ; 0000 07AE //T=TZAS;
-; 0000 07AF if(T<0)Ttr=0;
-	LDS  R26,_T+1
-	TST  R26
-	BRPL _0x395
-	LDI  R30,LOW(0)
+; 0000 07AF if(T<-125)Ttr=-125;
+	CALL SUBOPT_0x36
+	CPI  R26,LOW(0xFF83)
+	LDI  R30,HIGH(0xFF83)
+	CPC  R27,R30
+	BRGE _0x395
+	LDI  R30,LOW(131)
 	RJMP _0x401
-; 0000 07B0 else if(T>255)Ttr=255;
+; 0000 07B0 else if(T>125)Ttr=125;
 _0x395:
 	CALL SUBOPT_0x36
-	CPI  R26,LOW(0x100)
-	LDI  R30,HIGH(0x100)
+	CPI  R26,LOW(0x7E)
+	LDI  R30,HIGH(0x7E)
 	CPC  R27,R30
 	BRLT _0x397
-	LDI  R30,LOW(255)
+	LDI  R30,LOW(125)
 	RJMP _0x401
-; 0000 07B1 else Ttr=(unsigned char)T;
+; 0000 07B1 else Ttr=(signed char)T;
 _0x397:
 	LDS  R30,_T
 _0x401:
@@ -8461,10 +8463,10 @@ _0x3D2:
 
 	.DSEG
 ;const short SOFT_VERSION = 10;
-;const short BUILD = 6;
+;const short BUILD = 7;
 ;const short BUILD_YEAR = 2024;
 ;const short BUILD_MONTH = 1;
-;const short BUILD_DAY = 9;
+;const short BUILD_DAY = 18;
 	#ifndef __SLEEP_DEFINED__
 	#define __SLEEP_DEFINED__
 	.EQU __se_bit=0x01
@@ -9165,7 +9167,7 @@ SUBOPT_0x35:
 	LDS  R27,_link_cnt+1
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:5 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:7 WORDS
 SUBOPT_0x36:
 	LDS  R26,_T
 	LDS  R27,_T+1

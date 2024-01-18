@@ -138,7 +138,7 @@
 ;
 ;unsigned int I,Un,Ui,Udb;
 ;signed T;
-;unsigned char Ttr;
+;signed char Ttr;
 ;char flags=0; // состояние источника
 ;// 0 -  если одет джампер то 0, если нет то 1
 ;// 1 -  авария по Tmax (1-активн.);
@@ -8549,13 +8549,13 @@
 ;PCODE: $0000170E VOL: 0
 ;PCODE: $0000170F VOL: 0
 ; 0000 07AE //T=TZAS;
-; 0000 07AF if(T<0)Ttr=0;
+; 0000 07AF if(T<-125)Ttr=-125;
 ;PCODE: $00001710 VOL: 0
 ;PCODE: $00001711 VOL: 0
 ;PCODE: $00001712 VOL: 0
 ;PCODE: $00001713 VOL: 0
 ;PCODE: $00001714 VOL: 0
-; 0000 07B0 else if(T>255)Ttr=255;
+; 0000 07B0 else if(T>125)Ttr=125;
 ;PCODE: $00001715 VOL: 0
 ;PCODE: $00001716 VOL: 0
 ;PCODE: $00001717 VOL: 0
@@ -8563,7 +8563,7 @@
 ;PCODE: $00001719 VOL: 0
 ;PCODE: $0000171A VOL: 0
 ;PCODE: $0000171B VOL: 0
-; 0000 07B1 else Ttr=(unsigned char)T;
+; 0000 07B1 else Ttr=(signed char)T;
 ;PCODE: $0000171C VOL: 0
 ;PCODE: $0000171D VOL: 0
 ;PCODE: $0000171E VOL: 0

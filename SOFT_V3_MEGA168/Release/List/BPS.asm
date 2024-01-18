@@ -1165,13 +1165,13 @@ _0x20003:
 _0x20004:
 	.DB  0x9
 _0x20005:
-	.DB  0xD
+	.DB  0xF
 _0x20006:
 	.DB  0xE8,0x7
 _0x20007:
 	.DB  0x1
 _0x20008:
-	.DB  0x9
+	.DB  0xC
 _0x20A0060:
 	.DB  0x1
 _0x20A0000:
@@ -1453,7 +1453,7 @@ __GLOBAL_INI_END:
 ;
 ;unsigned int I,Un,Ui,Udb;
 ;signed T;
-;unsigned char Ttr;
+;signed char Ttr;
 ;char flags=0; // состояние источника
 ;// 0 -  если одет джампер то 0, если нет то 1
 ;// 1 -  авария по Tmax (1-активн.);
@@ -2417,7 +2417,7 @@ _0x3C5:
 	ST   -Y,R30
 	__GETB2MN _Ui,1
 	CALL SUBOPT_0xC
-;	can_transmit1(adress,PUTTM2,Ttr,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*((char*)&plazma_int[2]/*rotor_int*/),*( ...
+;	can_transmit1(adress,PUTTM2,(unsigned char)Ttr,vent_resurs_buff[vent_resurs_tx_cnt],flags,_x_,*((char*)&plazma_int[2]/* ...
 	LDS  R30,_Ttr
 	CALL SUBOPT_0xD
 	__GETB1MN _plazma_int,4
@@ -7868,22 +7868,24 @@ _0x385:
 	STS  _T+1,R31
 ; 0000 0746 //T=TZAS;
 ; 0000 0747 
-; 0000 0748 if(T<0)Ttr=0;
-	LDS  R26,_T+1
-	TST  R26
-	BRPL _0x386
-	LDI  R30,LOW(0)
+; 0000 0748 if(T<-125)Ttr=-125;
+	CALL SUBOPT_0x34
+	CPI  R26,LOW(0xFF83)
+	LDI  R30,HIGH(0xFF83)
+	CPC  R27,R30
+	BRGE _0x386
+	LDI  R30,LOW(131)
 	RJMP _0x3F0
-; 0000 0749 else if(T>255)Ttr=255;
+; 0000 0749 else if(T>125)Ttr=125;
 _0x386:
 	CALL SUBOPT_0x34
-	CPI  R26,LOW(0x100)
-	LDI  R30,HIGH(0x100)
+	CPI  R26,LOW(0x7E)
+	LDI  R30,HIGH(0x7E)
 	CPC  R27,R30
 	BRLT _0x388
-	LDI  R30,LOW(255)
+	LDI  R30,LOW(125)
 	RJMP _0x3F0
-; 0000 074A else Ttr=(unsigned char)T;
+; 0000 074A else Ttr=(signed char)T;
 _0x388:
 	LDS  R30,_T
 _0x3F0:
@@ -8432,10 +8434,10 @@ _0x3C3:
 
 	.DSEG
 ;const short SOFT_VERSION = 9;
-;const short BUILD = 13;
+;const short BUILD = 15;
 ;const short BUILD_YEAR = 2024;
 ;const short BUILD_MONTH = 1;
-;const short BUILD_DAY = 9;
+;const short BUILD_DAY = 12;
 	#ifndef __SLEEP_DEFINED__
 	#define __SLEEP_DEFINED__
 	.EQU __se_bit=0x01
@@ -9119,7 +9121,7 @@ SUBOPT_0x33:
 	LDS  R27,_link_cnt+1
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 5 TIMES, CODE SIZE REDUCTION:5 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:7 WORDS
 SUBOPT_0x34:
 	LDS  R26,_T
 	LDS  R27,_T+1
