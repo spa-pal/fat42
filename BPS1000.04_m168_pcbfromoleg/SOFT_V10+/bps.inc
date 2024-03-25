@@ -1,0 +1,59 @@
+	.DEF _t0_cnt0=R9
+	.DEF _t0_cnt1=R10
+	.DEF _t0_cnt2=R11
+	.DEF _t0_cnt3=R12
+	.DEF _t0_cnt4=R13
+	.DEF _cnt_ind=R14
+_3:
+	.DW  0x0,0x48,0x7D,0xB1,0xD9,0xFE,0x11E,0x13E
+	.DW  0x15A,0x174,0x190,0x1AB,0x1C5,0x1DE,0x1F6,0x20D
+_4:
+	.DW  0x5550,0x5555
+_5:
+	.DW  0xAAAA,0xAAAA
+_6:
+	.DB  0x1E
+_7:
+	.DW  0x32
+_8:
+	.DW  0x32
+_CONST_ADR:
+	.DB  0x7,0x7,0x7,0x2,0x3,0x1,0x0,0x7
+_14:
+	.DW  0x7B
+
+;GPIOR0-GPIOR2 INITIALIZATION
+	.EQU  __GPIOR0_INIT=0x00
+	.EQU  __GPIOR1_INIT=0x00
+	.EQU  __GPIOR2_INIT=0x00
+
+__GLOBAL_INI_TBL:
+	.DW  0x20
+	.DW  _tabl
+	.DW  _3*2
+
+	.DW  0x04
+	.DW  _led_red
+	.DW  _4*2
+
+	.DW  0x04
+	.DW  _led_green
+	.DW  _5*2
+
+	.DW  0x01
+	.DW  _led_drv_cnt
+	.DW  _6*2
+
+	.DW  0x02
+	.DW  _pwm_u
+	.DW  _7*2
+
+	.DW  0x02
+	.DW  _pwm_i
+	.DW  _8*2
+
+	.DW  0x02
+	.DW  _rotor_int
+	.DW  _14*2
+
+	.DW  0
