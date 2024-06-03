@@ -75,6 +75,7 @@ eeprom signed int K[4][2];
 
 unsigned int I,Un,Ui,Udb;
 signed T;
+signed char Ttr;
 char flags=0; // состояние источника
 // 0 -  если одет джампер то 0, если нет то 1
 // 1 -  авария по Tmax (1-активн.);
@@ -601,8 +602,8 @@ if(jp_mode!=jp3)
     if(ee_AVT_MODE==0x55)
         {
         short temp=ee_Umax;
-        temp/=10;
-        temp*=9;
+        temp/=20;
+        temp*=13;
         if((Ui<temp)&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
         else umin_cnt--;
         gran(&umin_cnt,0,10);	
@@ -1860,6 +1861,9 @@ temp_SL/=1326;
 T=(signed)(temp_SL-273);
 //T=TZAS;
 
+if(T<-125)Ttr=-125;
+else if(T>125)Ttr=125;
+else Ttr=(signed char)T;
 Udb=flags;
 
 

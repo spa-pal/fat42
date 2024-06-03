@@ -75,6 +75,10 @@ eeprom signed int K[4][2];
 
 unsigned int I,Un,Ui,Udb;
 signed T;
+<<<<<<< HEAD
+=======
+unsigned char Ttr;
+>>>>>>> 034089cdda30a03993cc4a102fc7335b01543bf4
 char flags=0; // состояние источника
 // 0 -  если одет джампер то 0, если нет то 1
 // 1 -  авария по Tmax (1-активн.);
@@ -445,7 +449,15 @@ else if((aaa[0]==100)&&(aaa[1]==100)&&(aaa[2]==100))adress=aaaa[0]+ (aaaa[1]*4)+
    /*	{
 	adr=0;
 	} */
+<<<<<<< HEAD
 else adress=100;
+=======
+else 
+    {
+    adress=100;
+    adress_error=1;
+    }
+>>>>>>> 034089cdda30a03993cc4a102fc7335b01543bf4
 /*if(adr_gran(aaa[2])==100)adr=2;
 else *///adr=adr_gran(aaa[2]);
 ///adr=0;
@@ -1959,7 +1971,13 @@ temp_SL*=K[3][1];
 temp_SL/=1326;
 T=(signed)(temp_SL-273);
 //T=TZAS;
+<<<<<<< HEAD
 
+=======
+if(T<0)Ttr=0;
+else if(T>255)Ttr=255;
+else Ttr=(unsigned char)T;
+>>>>>>> 034089cdda30a03993cc4a102fc7335b01543bf4
 Udb=flags;
 
 

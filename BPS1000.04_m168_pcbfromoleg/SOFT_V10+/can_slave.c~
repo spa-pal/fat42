@@ -4,6 +4,10 @@
 //#define _220_
 //#define _24_
 #include "mcp2510.h"
+<<<<<<< HEAD
+=======
+#include "curr_version.h"
+>>>>>>> 034089cdda30a03993cc4a102fc7335b01543bf4
 
 extern flash char Table87[];
 extern flash char Table95[];

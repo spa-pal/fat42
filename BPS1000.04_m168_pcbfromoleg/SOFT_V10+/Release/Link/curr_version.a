@@ -4,7 +4,14 @@
 
 	.DSEG
 ;const short SOFT_VERSION = 10;
+<<<<<<< HEAD
 ;const short BUILD = 4;
 ;const short BUILD_YEAR = 2023;
 ;const short BUILD_MONTH = 11;
 ;const short BUILD_DAY = 27;
+=======
+;const short BUILD = 7;
+;const short BUILD_YEAR = 2024;
+;const short BUILD_MONTH = 1;
+;const short BUILD_DAY = 18;
+>>>>>>> 034089cdda30a03993cc4a102fc7335b01543bf4
