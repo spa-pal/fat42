@@ -602,8 +602,8 @@ if(jp_mode!=jp3)
     if(ee_AVT_MODE==0x55)
         {
         short temp=ee_Umax;
-        temp/=10;
-        temp*=9;
+        temp/=20;
+        temp*=13;
         if((Ui<temp)&&(!BLOCK_IS_ON/*(GPIOB->ODR&(1<<2))*/))umin_cnt++;	
         else umin_cnt--;
         gran(&umin_cnt,0,10);	
@@ -1941,6 +1941,8 @@ void main(void)
 	DDRB.2=1;
 DDRB|=0b00110110;
 
+BLOK_INIT
+BLOK_ON
 
 
 // Timer/Counter 1 initialization

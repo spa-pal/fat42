@@ -2044,6 +2044,8 @@ void main(void)
 	DDRB.2=1;
 DDRB|=0b00110110;
 
+BLOCK_INIT
+BLOCK_ON
 
 
 // Timer/Counter 1 initialization
@@ -2109,7 +2111,6 @@ OCR1BL=0x00;  */
 
 SPCR=0x5D;
 SPSR=0x00;
-/*delay_ms(100);
 delay_ms(100);
 delay_ms(100);
 delay_ms(100);
@@ -2118,7 +2119,8 @@ delay_ms(100);
 delay_ms(100);
 delay_ms(100);
 delay_ms(100);
-delay_ms(100);*/
+delay_ms(100);
+delay_ms(100);
 ///delay_ms(100);
 ///delay_ms(100);
 ///delay_ms(100);
@@ -2139,6 +2141,18 @@ delay_ms(100);*/
 //adr_drv_v3();
 //AVT_MODE=1;
 adr_hndl_100004();
+
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+delay_ms(100);
+
 t0_init();
 
 

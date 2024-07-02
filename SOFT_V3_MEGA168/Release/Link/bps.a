@@ -1748,7 +1748,7 @@
 ;PCODE: $00000469 VOL: 0
 ;PCODE: $0000046A VOL: 0
 ;			}
-;		granee(&K[0][1],200,5000);
+;		granee(&K[0][1],200,7000);
 ;PCODE: $0000046B VOL: 0
 ;PCODE: $0000046C VOL: 0
 ;PCODE: $0000046D VOL: 0
@@ -8423,341 +8423,270 @@
 ;PCODE: $000016AA VOL: 0
 ;PCODE: $000016AB VOL: 0
 ; 0000 0797 
-; 0000 0798 
-; 0000 0799 
-; 0000 079A // Timer/Counter 1 initialization
-; 0000 079B // Clock source: System Clock
-; 0000 079C // Clock value: 8000.000 kHz
-; 0000 079D // Mode: Fast PWM top=0x03FF
-; 0000 079E // OC1A output: Non-Inverted PWM
-; 0000 079F // OC1B output: Non-Inverted PWM
-; 0000 07A0 // Noise Canceler: Off
-; 0000 07A1 // Input Capture on Falling Edge
-; 0000 07A2 // Timer Period: 0.128 ms
-; 0000 07A3 // Output Pulse(s):
-; 0000 07A4 // OC1A Period: 0.128 ms Width: 0.032031 ms
-; 0000 07A5 // OC1B Period: 0.128 ms Width: 0.032031 ms
-; 0000 07A6 // Timer1 Overflow Interrupt: Off
-; 0000 07A7 // Input Capture Interrupt: Off
-; 0000 07A8 // Compare A Match Interrupt: Off
-; 0000 07A9 // Compare B Match Interrupt: Off
-; 0000 07AA TCCR1A=(1<<COM1A1) | (0<<COM1A0) | (1<<COM1B1) | (0<<COM1B0) | (1<<WGM11) | (1<<WGM10);
+; 0000 0798 BLOCK_INIT
 ;PCODE: $000016AC VOL: 0
 ;PCODE: $000016AD VOL: 0
-; 0000 07AB TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (0<<CS12) | (0<<CS11) | (1<<CS10);
+; 0000 0799 BLOCK_ON
 ;PCODE: $000016AE VOL: 0
 ;PCODE: $000016AF VOL: 0
-; 0000 07AC 
-; 0000 07AD TCNT1H=0x00;
 ;PCODE: $000016B0 VOL: 0
 ;PCODE: $000016B1 VOL: 0
-; 0000 07AE TCNT1L=0x00;
+; 0000 079A 
+; 0000 079B 
+; 0000 079C // Timer/Counter 1 initialization
+; 0000 079D // Clock source: System Clock
+; 0000 079E // Clock value: 8000.000 kHz
+; 0000 079F // Mode: Fast PWM top=0x03FF
+; 0000 07A0 // OC1A output: Non-Inverted PWM
+; 0000 07A1 // OC1B output: Non-Inverted PWM
+; 0000 07A2 // Noise Canceler: Off
+; 0000 07A3 // Input Capture on Falling Edge
+; 0000 07A4 // Timer Period: 0.128 ms
+; 0000 07A5 // Output Pulse(s):
+; 0000 07A6 // OC1A Period: 0.128 ms Width: 0.032031 ms
+; 0000 07A7 // OC1B Period: 0.128 ms Width: 0.032031 ms
+; 0000 07A8 // Timer1 Overflow Interrupt: Off
+; 0000 07A9 // Input Capture Interrupt: Off
+; 0000 07AA // Compare A Match Interrupt: Off
+; 0000 07AB // Compare B Match Interrupt: Off
+; 0000 07AC TCCR1A=(1<<COM1A1) | (0<<COM1A0) | (1<<COM1B1) | (0<<COM1B0) | (1<<WGM11) | (1<<WGM10);
 ;PCODE: $000016B2 VOL: 0
 ;PCODE: $000016B3 VOL: 0
-; 0000 07AF ICR1H=0x00;
+; 0000 07AD TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (0<<CS12) | (0<<CS11) | (1<<CS10);
 ;PCODE: $000016B4 VOL: 0
 ;PCODE: $000016B5 VOL: 0
-; 0000 07B0 ICR1L=0x00;
+; 0000 07AE 
+; 0000 07AF TCNT1H=0x00;
 ;PCODE: $000016B6 VOL: 0
 ;PCODE: $000016B7 VOL: 0
-; 0000 07B1 OCR1AH=0x00;
+; 0000 07B0 TCNT1L=0x00;
 ;PCODE: $000016B8 VOL: 0
 ;PCODE: $000016B9 VOL: 0
-; 0000 07B2 OCR1AL=0x00;
+; 0000 07B1 ICR1H=0x00;
 ;PCODE: $000016BA VOL: 0
 ;PCODE: $000016BB VOL: 0
-; 0000 07B3 OCR1BH=0x00;
+; 0000 07B2 ICR1L=0x00;
 ;PCODE: $000016BC VOL: 0
 ;PCODE: $000016BD VOL: 0
-; 0000 07B4 OCR1BL=0x00;
+; 0000 07B3 OCR1AH=0x00;
 ;PCODE: $000016BE VOL: 0
 ;PCODE: $000016BF VOL: 0
-; 0000 07B5 
-; 0000 07B6 DDRB.1=1;
+; 0000 07B4 OCR1AL=0x00;
 ;PCODE: $000016C0 VOL: 0
 ;PCODE: $000016C1 VOL: 0
-; 0000 07B7 DDRB.2=1;
+; 0000 07B5 OCR1BH=0x00;
 ;PCODE: $000016C2 VOL: 0
 ;PCODE: $000016C3 VOL: 0
-; 0000 07B8 
-; 0000 07B9 
-; 0000 07BA // Timer/Counter 2 initialization
-; 0000 07BB // Clock source: System Clock
-; 0000 07BC // Clock value: 8000.000 kHz
-; 0000 07BD // Mode: Fast PWM top=0xFF
-; 0000 07BE // OC2A output: Disconnected
-; 0000 07BF // OC2B output: Non-Inverted PWM
-; 0000 07C0 // Timer Period: 0.032 ms
-; 0000 07C1 // Output Pulse(s):
-; 0000 07C2 // OC2B Period: 0.032 ms Width: 6.0235 us
-; 0000 07C3 ASSR=(0<<EXCLK) | (0<<AS2);
+; 0000 07B6 OCR1BL=0x00;
 ;PCODE: $000016C4 VOL: 0
 ;PCODE: $000016C5 VOL: 0
-; 0000 07C4 TCCR2A=(0<<COM2A1) | (0<<COM2A0) | (1<<COM2B1) | (0<<COM2B0) | (1<<WGM21) | (1<<WGM20);
+; 0000 07B7 
+; 0000 07B8 DDRB.1=1;
 ;PCODE: $000016C6 VOL: 0
 ;PCODE: $000016C7 VOL: 0
-; 0000 07C5 TCCR2B=(0<<WGM22) | (0<<CS22) | (0<<CS21) | (1<<CS20);
+; 0000 07B9 DDRB.2=1;
 ;PCODE: $000016C8 VOL: 0
 ;PCODE: $000016C9 VOL: 0
-; 0000 07C6 TCNT2=0x00;
+; 0000 07BA 
+; 0000 07BB 
+; 0000 07BC // Timer/Counter 2 initialization
+; 0000 07BD // Clock source: System Clock
+; 0000 07BE // Clock value: 8000.000 kHz
+; 0000 07BF // Mode: Fast PWM top=0xFF
+; 0000 07C0 // OC2A output: Disconnected
+; 0000 07C1 // OC2B output: Non-Inverted PWM
+; 0000 07C2 // Timer Period: 0.032 ms
+; 0000 07C3 // Output Pulse(s):
+; 0000 07C4 // OC2B Period: 0.032 ms Width: 6.0235 us
+; 0000 07C5 ASSR=(0<<EXCLK) | (0<<AS2);
 ;PCODE: $000016CA VOL: 0
 ;PCODE: $000016CB VOL: 0
-; 0000 07C7 OCR2A=0x00;
+; 0000 07C6 TCCR2A=(0<<COM2A1) | (0<<COM2A0) | (1<<COM2B1) | (0<<COM2B0) | (1<<WGM21) | (1<<WGM20);
 ;PCODE: $000016CC VOL: 0
 ;PCODE: $000016CD VOL: 0
-; 0000 07C8 OCR2B=0x30;
+; 0000 07C7 TCCR2B=(0<<WGM22) | (0<<CS22) | (0<<CS21) | (1<<CS20);
 ;PCODE: $000016CE VOL: 0
 ;PCODE: $000016CF VOL: 0
-; 0000 07C9 
-; 0000 07CA DDRD.3=1;
+; 0000 07C8 TCNT2=0x00;
 ;PCODE: $000016D0 VOL: 0
 ;PCODE: $000016D1 VOL: 0
-; 0000 07CB 
-; 0000 07CC /*
-; 0000 07CD 
-; 0000 07CE TCCR1A=0x83;
-; 0000 07CF TCCR1B=0x09;
-; 0000 07D0 TCNT1H=0x00;
-; 0000 07D1 TCNT1L=0x00;
-; 0000 07D2 OCR1AH=0x00;
-; 0000 07D3 OCR1AL=0x00;
-; 0000 07D4 OCR1BH=0x00;
-; 0000 07D5 OCR1BL=0x00;  */
-; 0000 07D6 
-; 0000 07D7 SPCR=0x5D;
+; 0000 07C9 OCR2A=0x00;
 ;PCODE: $000016D2 VOL: 0
 ;PCODE: $000016D3 VOL: 0
-; 0000 07D8 SPSR=0x00;
+; 0000 07CA OCR2B=0x30;
 ;PCODE: $000016D4 VOL: 0
 ;PCODE: $000016D5 VOL: 0
-; 0000 07D9 /*delay_ms(100);
-; 0000 07DA delay_ms(100);
-; 0000 07DB delay_ms(100);
-; 0000 07DC delay_ms(100);
-; 0000 07DD delay_ms(100);
-; 0000 07DE delay_ms(100);
-; 0000 07DF delay_ms(100);
-; 0000 07E0 delay_ms(100);
-; 0000 07E1 delay_ms(100);
-; 0000 07E2 delay_ms(100);*/
-; 0000 07E3 ///delay_ms(100);
-; 0000 07E4 ///delay_ms(100);
-; 0000 07E5 ///delay_ms(100);
-; 0000 07E6 ///delay_ms(100);
-; 0000 07E7 ///delay_ms(100);
-; 0000 07E8 ///adr_hndl();
-; 0000 07E9 
-; 0000 07EA ///if(adr==100)
-; 0000 07EB ///	{
-; 0000 07EC ///	adr_hndl();
-; 0000 07ED ///	delay_ms(100);
-; 0000 07EE ///	}
-; 0000 07EF ///if(adr==100)
-; 0000 07F0 ///	{
-; 0000 07F1 ///	adr_hndl();
-; 0000 07F2 ///	delay_ms(100);
-; 0000 07F3 ///	}
-; 0000 07F4 //adr_drv_v3();
-; 0000 07F5 //AVT_MODE=1;
-; 0000 07F6 adr_hndl();
+; 0000 07CB 
+; 0000 07CC DDRD.3=1;
 ;PCODE: $000016D6 VOL: 0
-; 0000 07F7 t0_init();
 ;PCODE: $000016D7 VOL: 0
-; 0000 07F8 
-; 0000 07F9 
-; 0000 07FA 
-; 0000 07FB link_cnt=0;
+; 0000 07CD 
+; 0000 07CE /*
+; 0000 07CF 
+; 0000 07D0 TCCR1A=0x83;
+; 0000 07D1 TCCR1B=0x09;
+; 0000 07D2 TCNT1H=0x00;
+; 0000 07D3 TCNT1L=0x00;
+; 0000 07D4 OCR1AH=0x00;
+; 0000 07D5 OCR1AL=0x00;
+; 0000 07D6 OCR1BH=0x00;
+; 0000 07D7 OCR1BL=0x00;  */
+; 0000 07D8 
+; 0000 07D9 SPCR=0x5D;
 ;PCODE: $000016D8 VOL: 0
 ;PCODE: $000016D9 VOL: 0
-; 0000 07FC if(ee_AVT_MODE!=0x55)link=ON;
+; 0000 07DA SPSR=0x00;
 ;PCODE: $000016DA VOL: 0
 ;PCODE: $000016DB VOL: 0
+; 0000 07DB delay_ms(100);
 ;PCODE: $000016DC VOL: 0
 ;PCODE: $000016DD VOL: 0
 ;PCODE: $000016DE VOL: 0
+; 0000 07DC delay_ms(100);
 ;PCODE: $000016DF VOL: 0
-; 0000 07FD /*
-; 0000 07FE Umax=1000;
-; 0000 07FF dU=100;
-; 0000 0800 tmax=60;
-; 0000 0801 tsign=50;
-; 0000 0802 */
-; 0000 0803 main_cnt1=0;
 ;PCODE: $000016E0 VOL: 0
 ;PCODE: $000016E1 VOL: 0
+; 0000 07DD delay_ms(100);
 ;PCODE: $000016E2 VOL: 0
-; 0000 0804 //_x_ee_=20;
-; 0000 0805 _x_=_x_ee_;
 ;PCODE: $000016E3 VOL: 0
 ;PCODE: $000016E4 VOL: 0
+; 0000 07DE delay_ms(100);
 ;PCODE: $000016E5 VOL: 0
-; 0000 0806 
-; 0000 0807 if((_x_>XMAX)||(_x_<-XMAX))_x_=0;
 ;PCODE: $000016E6 VOL: 0
 ;PCODE: $000016E7 VOL: 0
+; 0000 07DF delay_ms(100);
 ;PCODE: $000016E8 VOL: 0
 ;PCODE: $000016E9 VOL: 0
 ;PCODE: $000016EA VOL: 0
+; 0000 07E0 delay_ms(100);
 ;PCODE: $000016EB VOL: 0
 ;PCODE: $000016EC VOL: 0
 ;PCODE: $000016ED VOL: 0
+; 0000 07E1 delay_ms(100);
 ;PCODE: $000016EE VOL: 0
 ;PCODE: $000016EF VOL: 0
-; 0000 0808 
-; 0000 0809 if(!((TZAS>=0)&&(TZAS<=3))) TZAS=3;
 ;PCODE: $000016F0 VOL: 0
+; 0000 07E2 delay_ms(100);
 ;PCODE: $000016F1 VOL: 0
 ;PCODE: $000016F2 VOL: 0
 ;PCODE: $000016F3 VOL: 0
+; 0000 07E3 delay_ms(100);
 ;PCODE: $000016F4 VOL: 0
 ;PCODE: $000016F5 VOL: 0
 ;PCODE: $000016F6 VOL: 0
+; 0000 07E4 delay_ms(100);
 ;PCODE: $000016F7 VOL: 0
 ;PCODE: $000016F8 VOL: 0
 ;PCODE: $000016F9 VOL: 0
+; 0000 07E5 ///delay_ms(100);
+; 0000 07E6 ///delay_ms(100);
+; 0000 07E7 ///delay_ms(100);
+; 0000 07E8 ///delay_ms(100);
+; 0000 07E9 ///delay_ms(100);
+; 0000 07EA ///adr_hndl();
+; 0000 07EB 
+; 0000 07EC ///if(adr==100)
+; 0000 07ED ///	{
+; 0000 07EE ///	adr_hndl();
+; 0000 07EF ///	delay_ms(100);
+; 0000 07F0 ///	}
+; 0000 07F1 ///if(adr==100)
+; 0000 07F2 ///	{
+; 0000 07F3 ///	adr_hndl();
+; 0000 07F4 ///	delay_ms(100);
+; 0000 07F5 ///	}
+; 0000 07F6 //adr_drv_v3();
+; 0000 07F7 //AVT_MODE=1;
+; 0000 07F8 adr_hndl();
 ;PCODE: $000016FA VOL: 0
+; 0000 07F9 
+; 0000 07FA delay_ms(100);
 ;PCODE: $000016FB VOL: 0
-; 0000 080A 
-; 0000 080B #asm("sei")
 ;PCODE: $000016FC VOL: 0
 ;PCODE: $000016FD VOL: 0
-	sei
+; 0000 07FB delay_ms(100);
 ;PCODE: $000016FE VOL: 0
-; 0000 080C //granee(&K[0][1],420,1100);
-; 0000 080D 
-; 0000 080E #ifdef _220_
-; 0000 080F //granee(&K[1][1],4500,5500);
-; 0000 0810 //granee(&K[2][1],4500,5500);
-; 0000 0811 #else
-; 0000 0812 //granee(&K[1][1],1360,1700);
-; 0000 0813 //granee(&K[2][1],1360,1700);
-; 0000 0814 #endif
-; 0000 0815 
-; 0000 0816 
-; 0000 0817 //K[1][1]=123;
-; 0000 0818 //K[2][1]=456;
-; 0000 0819 //granee(&K[1,1],1510,1850);
-; 0000 081A //granee(&K[2,1],1510,1850);
-; 0000 081B ///DDRD.2=1;
-; 0000 081C ///PORTD.2=0;
-; 0000 081D ///delay_ms(100);
-; 0000 081E ///PORTD.2=1;
-; 0000 081F can_init1();
 ;PCODE: $000016FF VOL: 0
-; 0000 0820 
-; 0000 0821 //DDRD.1=1;
-; 0000 0822 //PORTD.1=0;
-; 0000 0823 DDRD.0=1;
 ;PCODE: $00001700 VOL: 0
+; 0000 07FC delay_ms(100);
 ;PCODE: $00001701 VOL: 0
-; 0000 0824 
-; 0000 0825 //ee_AVT_MODE=0x55;
-; 0000 0826 		pwm_u=0x00;
 ;PCODE: $00001702 VOL: 0
 ;PCODE: $00001703 VOL: 0
-; 0000 0827 		pwm_i=0x00;
+; 0000 07FD delay_ms(100);
 ;PCODE: $00001704 VOL: 0
 ;PCODE: $00001705 VOL: 0
-; 0000 0828 		bBL=1;
 ;PCODE: $00001706 VOL: 0
+; 0000 07FE delay_ms(100);
 ;PCODE: $00001707 VOL: 0
-; 0000 0829 
-; 0000 082A 
-; 0000 082B while (1)
 ;PCODE: $00001708 VOL: 0
-; 0000 082C 	{
-; 0000 082D 
-; 0000 082E     //delay_ms(100);
-; 0000 082F 	if(bIN1)
 ;PCODE: $00001709 VOL: 0
+; 0000 07FF delay_ms(100);
 ;PCODE: $0000170A VOL: 0
 ;PCODE: $0000170B VOL: 0
-; 0000 0830 		{
-; 0000 0831 		bIN1=0;
 ;PCODE: $0000170C VOL: 0
+; 0000 0800 delay_ms(100);
 ;PCODE: $0000170D VOL: 0
-; 0000 0832 
-; 0000 0833 		can_in_an1();
 ;PCODE: $0000170E VOL: 0
-; 0000 0834 		}
-; 0000 0835 
-; 0000 0836 /*	if(b100Hz)
-; 0000 0837 		{
-; 0000 0838 		b100Hz=0;
-; 0000 0839 		}*/
-; 0000 083A 	if(b33Hz)
 ;PCODE: $0000170F VOL: 0
+; 0000 0801 delay_ms(100);
 ;PCODE: $00001710 VOL: 0
 ;PCODE: $00001711 VOL: 0
 ;PCODE: $00001712 VOL: 0
-; 0000 083B 		{
-; 0000 083C 		b33Hz=0;
+; 0000 0802 delay_ms(100);
 ;PCODE: $00001713 VOL: 0
 ;PCODE: $00001714 VOL: 0
-; 0000 083D 
-; 0000 083E         adc_hndl();
 ;PCODE: $00001715 VOL: 0
-; 0000 083F 		}
-; 0000 0840 	if(b10Hz)
+; 0000 0803 delay_ms(100);
 ;PCODE: $00001716 VOL: 0
 ;PCODE: $00001717 VOL: 0
 ;PCODE: $00001718 VOL: 0
+; 0000 0804 t0_init();
 ;PCODE: $00001719 VOL: 0
-; 0000 0841 		{
-; 0000 0842 		b10Hz=0;
+; 0000 0805 
+; 0000 0806 
+; 0000 0807 
+; 0000 0808 link_cnt=0;
 ;PCODE: $0000171A VOL: 0
 ;PCODE: $0000171B VOL: 0
-; 0000 0843 
-; 0000 0844 		matemat();
+; 0000 0809 if(ee_AVT_MODE!=0x55)link=ON;
 ;PCODE: $0000171C VOL: 0
-; 0000 0845 		led_drv();
 ;PCODE: $0000171D VOL: 0
-; 0000 0846 	    link_drv();
 ;PCODE: $0000171E VOL: 0
-; 0000 0847 	    pwr_hndl();		//вычисление воздействий на силу
 ;PCODE: $0000171F VOL: 0
-; 0000 0848 	    JP_drv();
 ;PCODE: $00001720 VOL: 0
-; 0000 0849 	    flags_drv();
 ;PCODE: $00001721 VOL: 0
-; 0000 084A 		net_drv();
+; 0000 080A /*
+; 0000 080B Umax=1000;
+; 0000 080C dU=100;
+; 0000 080D tmax=60;
+; 0000 080E tsign=50;
+; 0000 080F */
+; 0000 0810 main_cnt1=0;
 ;PCODE: $00001722 VOL: 0
-; 0000 084B 		}
-; 0000 084C 	if(b5Hz)
 ;PCODE: $00001723 VOL: 0
 ;PCODE: $00001724 VOL: 0
+; 0000 0811 //_x_ee_=20;
+; 0000 0812 _x_=_x_ee_;
 ;PCODE: $00001725 VOL: 0
 ;PCODE: $00001726 VOL: 0
-; 0000 084D 		{
-; 0000 084E 		b5Hz=0;
 ;PCODE: $00001727 VOL: 0
+; 0000 0813 
+; 0000 0814 if((_x_>XMAX)||(_x_<-XMAX))_x_=0;
 ;PCODE: $00001728 VOL: 0
-; 0000 084F 
-; 0000 0850         pwr_drv();
 ;PCODE: $00001729 VOL: 0
-; 0000 0851  		led_hndl();
 ;PCODE: $0000172A VOL: 0
-; 0000 0852         vent_drv();
 ;PCODE: $0000172B VOL: 0
-; 0000 0853 		}
-; 0000 0854     if(b1Hz)
 ;PCODE: $0000172C VOL: 0
 ;PCODE: $0000172D VOL: 0
 ;PCODE: $0000172E VOL: 0
 ;PCODE: $0000172F VOL: 0
-; 0000 0855 		{
-; 0000 0856 		b1Hz=0;
 ;PCODE: $00001730 VOL: 0
 ;PCODE: $00001731 VOL: 0
-; 0000 0857 
-; 0000 0858         temper_drv();			//вычисление аварий температуры
+; 0000 0815 
+; 0000 0816 if(!((TZAS>=0)&&(TZAS<=3))) TZAS=3;
 ;PCODE: $00001732 VOL: 0
-; 0000 0859 		u_drv();
 ;PCODE: $00001733 VOL: 0
-; 0000 085A         x_drv();
 ;PCODE: $00001734 VOL: 0
-; 0000 085B 
-; 0000 085C         if(main_cnt<1000)main_cnt++;
 ;PCODE: $00001735 VOL: 0
 ;PCODE: $00001736 VOL: 0
 ;PCODE: $00001737 VOL: 0
@@ -8765,56 +8694,206 @@
 ;PCODE: $00001739 VOL: 0
 ;PCODE: $0000173A VOL: 0
 ;PCODE: $0000173B VOL: 0
-; 0000 085D   		if((link==OFF)||(jp_mode==jp3))apv_hndl();
 ;PCODE: $0000173C VOL: 0
 ;PCODE: $0000173D VOL: 0
+; 0000 0817 
+; 0000 0818 #asm("sei")
 ;PCODE: $0000173E VOL: 0
 ;PCODE: $0000173F VOL: 0
+	sei
 ;PCODE: $00001740 VOL: 0
+; 0000 0819 //granee(&K[0][1],420,1100);
+; 0000 081A 
+; 0000 081B #ifdef _220_
+; 0000 081C //granee(&K[1][1],4500,5500);
+; 0000 081D //granee(&K[2][1],4500,5500);
+; 0000 081E #else
+; 0000 081F //granee(&K[1][1],1360,1700);
+; 0000 0820 //granee(&K[2][1],1360,1700);
+; 0000 0821 #endif
+; 0000 0822 
+; 0000 0823 
+; 0000 0824 //K[1][1]=123;
+; 0000 0825 //K[2][1]=456;
+; 0000 0826 //granee(&K[1,1],1510,1850);
+; 0000 0827 //granee(&K[2,1],1510,1850);
+; 0000 0828 ///DDRD.2=1;
+; 0000 0829 ///PORTD.2=0;
+; 0000 082A ///delay_ms(100);
+; 0000 082B ///PORTD.2=1;
+; 0000 082C can_init1();
 ;PCODE: $00001741 VOL: 0
+; 0000 082D 
+; 0000 082E //DDRD.1=1;
+; 0000 082F //PORTD.1=0;
+; 0000 0830 DDRD.0=1;
 ;PCODE: $00001742 VOL: 0
 ;PCODE: $00001743 VOL: 0
+; 0000 0831 
+; 0000 0832 //ee_AVT_MODE=0x55;
+; 0000 0833 		pwm_u=0x00;
 ;PCODE: $00001744 VOL: 0
 ;PCODE: $00001745 VOL: 0
-; 0000 085E 
-; 0000 085F 		//Пересброс КАНа в случае зависания
-; 0000 0860   		can_error_cnt++;
+; 0000 0834 		pwm_i=0x00;
 ;PCODE: $00001746 VOL: 0
 ;PCODE: $00001747 VOL: 0
+; 0000 0835 		bBL=1;
 ;PCODE: $00001748 VOL: 0
 ;PCODE: $00001749 VOL: 0
-; 0000 0861   		if(can_error_cnt>=10)
+; 0000 0836 
+; 0000 0837 
+; 0000 0838 while (1)
 ;PCODE: $0000174A VOL: 0
+; 0000 0839 	{
+; 0000 083A 
+; 0000 083B     //delay_ms(100);
+; 0000 083C 	if(bIN1)
 ;PCODE: $0000174B VOL: 0
 ;PCODE: $0000174C VOL: 0
-; 0000 0862   			{
-; 0000 0863   			can_error_cnt=0;
 ;PCODE: $0000174D VOL: 0
+; 0000 083D 		{
+; 0000 083E 		bIN1=0;
 ;PCODE: $0000174E VOL: 0
-; 0000 0864 			can_init1();;
 ;PCODE: $0000174F VOL: 0
-; 0000 0865   			}
-; 0000 0866 
-; 0000 0867 		volum_u_main_drv();
+; 0000 083F 
+; 0000 0840 		can_in_an1();
 ;PCODE: $00001750 VOL: 0
+; 0000 0841 		}
+; 0000 0842 
+; 0000 0843 /*	if(b100Hz)
+; 0000 0844 		{
+; 0000 0845 		b100Hz=0;
+; 0000 0846 		}*/
+; 0000 0847 	if(b33Hz)
 ;PCODE: $00001751 VOL: 0
-; 0000 0868 
-; 0000 0869 		//pwm_stat++;
-; 0000 086A 		//if(pwm_stat>=10)pwm_stat=0;
-; 0000 086B         //adc_plazma_short++;
-; 0000 086C 
-; 0000 086D 		vent_resurs_hndl();
 ;PCODE: $00001752 VOL: 0
-; 0000 086E         }
-; 0000 086F      #asm("wdr")
 ;PCODE: $00001753 VOL: 0
 ;PCODE: $00001754 VOL: 0
-	wdr
+; 0000 0848 		{
+; 0000 0849 		b33Hz=0;
 ;PCODE: $00001755 VOL: 0
-; 0000 0870 	}
 ;PCODE: $00001756 VOL: 0
+; 0000 084A 
+; 0000 084B         adc_hndl();
 ;PCODE: $00001757 VOL: 0
-; 0000 0871 }
+; 0000 084C 		}
+; 0000 084D 	if(b10Hz)
 ;PCODE: $00001758 VOL: 0
 ;PCODE: $00001759 VOL: 0
 ;PCODE: $0000175A VOL: 0
+;PCODE: $0000175B VOL: 0
+; 0000 084E 		{
+; 0000 084F 		b10Hz=0;
+;PCODE: $0000175C VOL: 0
+;PCODE: $0000175D VOL: 0
+; 0000 0850 
+; 0000 0851 		matemat();
+;PCODE: $0000175E VOL: 0
+; 0000 0852 		led_drv();
+;PCODE: $0000175F VOL: 0
+; 0000 0853 	    link_drv();
+;PCODE: $00001760 VOL: 0
+; 0000 0854 	    pwr_hndl();		//вычисление воздействий на силу
+;PCODE: $00001761 VOL: 0
+; 0000 0855 	    JP_drv();
+;PCODE: $00001762 VOL: 0
+; 0000 0856 	    flags_drv();
+;PCODE: $00001763 VOL: 0
+; 0000 0857 		net_drv();
+;PCODE: $00001764 VOL: 0
+; 0000 0858 		}
+; 0000 0859 	if(b5Hz)
+;PCODE: $00001765 VOL: 0
+;PCODE: $00001766 VOL: 0
+;PCODE: $00001767 VOL: 0
+;PCODE: $00001768 VOL: 0
+; 0000 085A 		{
+; 0000 085B 		b5Hz=0;
+;PCODE: $00001769 VOL: 0
+;PCODE: $0000176A VOL: 0
+; 0000 085C 
+; 0000 085D         pwr_drv();
+;PCODE: $0000176B VOL: 0
+; 0000 085E  		led_hndl();
+;PCODE: $0000176C VOL: 0
+; 0000 085F         vent_drv();
+;PCODE: $0000176D VOL: 0
+; 0000 0860 		}
+; 0000 0861     if(b1Hz)
+;PCODE: $0000176E VOL: 0
+;PCODE: $0000176F VOL: 0
+;PCODE: $00001770 VOL: 0
+;PCODE: $00001771 VOL: 0
+; 0000 0862 		{
+; 0000 0863 		b1Hz=0;
+;PCODE: $00001772 VOL: 0
+;PCODE: $00001773 VOL: 0
+; 0000 0864 
+; 0000 0865         temper_drv();			//вычисление аварий температуры
+;PCODE: $00001774 VOL: 0
+; 0000 0866 		u_drv();
+;PCODE: $00001775 VOL: 0
+; 0000 0867         x_drv();
+;PCODE: $00001776 VOL: 0
+; 0000 0868 
+; 0000 0869         if(main_cnt<1000)main_cnt++;
+;PCODE: $00001777 VOL: 0
+;PCODE: $00001778 VOL: 0
+;PCODE: $00001779 VOL: 0
+;PCODE: $0000177A VOL: 0
+;PCODE: $0000177B VOL: 0
+;PCODE: $0000177C VOL: 0
+;PCODE: $0000177D VOL: 0
+; 0000 086A   		if((link==OFF)||(jp_mode==jp3))apv_hndl();
+;PCODE: $0000177E VOL: 0
+;PCODE: $0000177F VOL: 0
+;PCODE: $00001780 VOL: 0
+;PCODE: $00001781 VOL: 0
+;PCODE: $00001782 VOL: 0
+;PCODE: $00001783 VOL: 0
+;PCODE: $00001784 VOL: 0
+;PCODE: $00001785 VOL: 0
+;PCODE: $00001786 VOL: 0
+;PCODE: $00001787 VOL: 0
+; 0000 086B 
+; 0000 086C 		//Пересброс КАНа в случае зависания
+; 0000 086D   		can_error_cnt++;
+;PCODE: $00001788 VOL: 0
+;PCODE: $00001789 VOL: 0
+;PCODE: $0000178A VOL: 0
+;PCODE: $0000178B VOL: 0
+; 0000 086E   		if(can_error_cnt>=10)
+;PCODE: $0000178C VOL: 0
+;PCODE: $0000178D VOL: 0
+;PCODE: $0000178E VOL: 0
+; 0000 086F   			{
+; 0000 0870   			can_error_cnt=0;
+;PCODE: $0000178F VOL: 0
+;PCODE: $00001790 VOL: 0
+; 0000 0871 			can_init1();;
+;PCODE: $00001791 VOL: 0
+; 0000 0872   			}
+; 0000 0873 
+; 0000 0874 		volum_u_main_drv();
+;PCODE: $00001792 VOL: 0
+;PCODE: $00001793 VOL: 0
+; 0000 0875 
+; 0000 0876 		//pwm_stat++;
+; 0000 0877 		//if(pwm_stat>=10)pwm_stat=0;
+; 0000 0878         //adc_plazma_short++;
+; 0000 0879 
+; 0000 087A 		vent_resurs_hndl();
+;PCODE: $00001794 VOL: 0
+; 0000 087B         }
+; 0000 087C      #asm("wdr")
+;PCODE: $00001795 VOL: 0
+;PCODE: $00001796 VOL: 0
+	wdr
+;PCODE: $00001797 VOL: 0
+; 0000 087D 	}
+;PCODE: $00001798 VOL: 0
+;PCODE: $00001799 VOL: 0
+; 0000 087E }
+;PCODE: $0000179A VOL: 0
+;PCODE: $0000179B VOL: 0
+;PCODE: $0000179C VOL: 0
